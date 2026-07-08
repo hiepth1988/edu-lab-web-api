@@ -1,0 +1,49 @@
+# Reference compose file for the deploy server.
+# Copy this to the server as docker-compose.yml (alongside a real .env file)
+# — CI/CD only runs `docker compose pull/up`, it does not build images on the server.
+#
+# Image tag is selected by the branch that triggered the deploy:
+#   master -> ghcr.io/hiepth1988/edu-lab-web-api:production
+#   dev    -> ghcr.io/hiepth1988/edu-lab-web-api:dev
+services:
+  app:
+    image: ghcr.io/hiepth1988/edu-lab-web-api:${IMAGE_TAG:-production}
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - storage:/var/www/html/storage
+      - public-assets:/var/www/html/public
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - public-assets:/var/www/html/public:ro
+    depends_on:
+      - app
+
+  queue:
+    image: ghcr.io/hiepth1988/edu-lab-web-api:${IMAGE_TAG:-production}
+    restart: unless-stopped
+    command: php artisan queue:work redis --sleep=3 --tries=3
+    env_file:
+      - .env
+    volumes:
+      - storage:/var/www/html/storage
+
+  scheduler:
+    image: ghcr.io/hiepth1988/edu-lab-web-api:${IMAGE_TAG:-production}
+    restart: unless-stopped
+    entrypoint: ["sh", "-c", "while true; do php artisan schedule:run; sleep 60; done"]
+    env_file:
+      - .env
+    volumes:
+      - storage:/var/www/html/storage
+
+volumes:
+  storage:
+  public-assets:
