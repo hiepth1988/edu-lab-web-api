@@ -66,13 +66,13 @@ class ResearchSeeder extends Seeder
                     'slug' => 'cong-nghe-giao-duc-va-tiem-nang-con-nguoi',
                     'title' => 'Công nghệ giáo dục và tiềm năng con người',
                     'excerpt' => 'Mục tiêu cuối cùng của công nghệ giáo dục là giúp mỗi người học đạt đúng tiềm năng của mình.',
-                    'content' => 'Công nghệ chỉ là công cụ. Mục tiêu dài hạn của XO Education Technology Lab là dùng dữ liệu và AI để hiểu rõ hơn cách mỗi người học tiếp thu kiến thức, từ đó giúp họ đạt đúng tiềm năng thay vì áp một khuôn mẫu chung.',
+                    'content' => 'Công nghệ chỉ là công cụ. Mục tiêu dài hạn của XO Edu Lab là dùng dữ liệu và AI để hiểu rõ hơn cách mỗi người học tiếp thu kiến thức, từ đó giúp họ đạt đúng tiềm năng thay vì áp một khuôn mẫu chung.',
                 ],
                 'en' => [
                     'slug' => 'education-technology-and-human-potential',
                     'title' => 'Education Technology and Human Potential',
                     'excerpt' => 'The ultimate goal of education technology is helping each learner reach their true potential.',
-                    'content' => 'Technology is just a tool. XO Education Technology Lab\'s long-term goal is to use data and AI to better understand how each learner absorbs knowledge, helping them reach their true potential instead of forcing a one-size-fits-all mold.',
+                    'content' => 'Technology is just a tool. XO Edu Lab\'s long-term goal is to use data and AI to better understand how each learner absorbs knowledge, helping them reach their true potential instead of forcing a one-size-fits-all mold.',
                 ],
             ],
         ];

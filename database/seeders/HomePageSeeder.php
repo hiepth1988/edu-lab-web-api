@@ -13,19 +13,19 @@ class HomePageSeeder extends Seeder
         $this->seedSimplePage('about', [
             'vi' => [
                 'title' => 'Về chúng tôi',
-                'excerpt' => 'XO Education Technology Lab — đối tác công nghệ cho giáo dục.',
-                'content' => 'XO Education Technology Lab thiết kế và phát triển hạ tầng công nghệ cho giáo dục: LMS, nền tảng thi trực tuyến, AI Education và Learning Analytics. Chúng tôi tin rằng mỗi dự án nên để lại một tài sản công nghệ, không chỉ là doanh thu.',
+                'excerpt' => 'XO Edu Lab — đối tác công nghệ cho giáo dục.',
+                'content' => 'XO Edu Lab thiết kế và phát triển hạ tầng công nghệ cho giáo dục: LMS, nền tảng thi trực tuyến, AI Education và Learning Analytics. Chúng tôi tin rằng mỗi dự án nên để lại một tài sản công nghệ, không chỉ là doanh thu.',
             ],
             'en' => [
                 'title' => 'About us',
-                'excerpt' => 'XO Education Technology Lab — your education technology partner.',
-                'content' => 'XO Education Technology Lab designs and builds technology infrastructure for education: LMS, online exam platforms, AI Education and Learning Analytics. We believe every project should leave behind a technology asset, not just revenue.',
+                'excerpt' => 'XO Edu Lab — your education technology partner.',
+                'content' => 'XO Edu Lab designs and builds technology infrastructure for education: LMS, online exam platforms, AI Education and Learning Analytics. We believe every project should leave behind a technology asset, not just revenue.',
             ],
         ]);
         $this->seedSimplePage('contact', [
             'vi' => [
                 'title' => 'Liên hệ',
-                'excerpt' => 'Đặt lịch tư vấn hoặc gửi yêu cầu dự án cho XO Education Technology Lab.',
+                'excerpt' => 'Đặt lịch tư vấn hoặc gửi yêu cầu dự án cho XO Edu Lab.',
                 'content' => 'Bạn đang xây LMS, Exam Platform hay AI Learning? Hãy để lại thông tin, chúng tôi sẽ phản hồi trong 24 giờ làm việc.',
             ],
             'en' => [
@@ -61,16 +61,16 @@ class HomePageSeeder extends Seeder
             'slug' => 'home',
             'title' => 'Building the Future of Education Technology',
             'excerpt' => 'Chúng tôi thiết kế và phát triển nền tảng giáo dục hiện đại, có khả năng mở rộng, tích hợp AI và dữ liệu học tập.',
-            'meta_title' => 'XO Education Technology Lab — Đối tác công nghệ giáo dục',
-            'meta_description' => 'XO Education Technology Lab xây dựng hạ tầng công nghệ cho giáo dục: LMS, nền tảng thi trực tuyến, AI Education, Learning Analytics và Adaptive Learning.',
+            'meta_title' => 'XO Edu Lab — Đối tác công nghệ giáo dục',
+            'meta_description' => 'XO Edu Lab xây dựng hạ tầng công nghệ cho giáo dục: LMS, nền tảng thi trực tuyến, AI Education, Learning Analytics và Adaptive Learning.',
         ]);
 
         $page->translations()->updateOrCreate(['locale' => 'en'], [
             'slug' => 'home',
             'title' => 'Building the Future of Education Technology',
             'excerpt' => 'We design and build modern, scalable education platforms powered by AI and learning data.',
-            'meta_title' => 'XO Education Technology Lab — Education Technology Partner',
-            'meta_description' => 'XO Education Technology Lab builds technology infrastructure for education: LMS, online exam platforms, AI Education, Learning Analytics and Adaptive Learning.',
+            'meta_title' => 'XO Edu Lab — Education Technology Partner',
+            'meta_description' => 'XO Edu Lab builds technology infrastructure for education: LMS, online exam platforms, AI Education, Learning Analytics and Adaptive Learning.',
         ]);
 
         $sections = [
