@@ -14,7 +14,7 @@ class EditorUserSeeder extends Seeder
             ['email' => 'editor@xoedulab.local'],
             [
                 'name' => 'XO EdTech Editor',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(env('EDITOR_SEED_PASSWORD', 'password')),
                 'email_verified_at' => now(),
             ]
         );

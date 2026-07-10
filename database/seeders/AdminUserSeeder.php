@@ -14,7 +14,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@xoedulab.local'],
             [
                 'name' => 'XO EdTech Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(env('ADMIN_SEED_PASSWORD', 'password')),
                 'email_verified_at' => now(),
             ]
         );
