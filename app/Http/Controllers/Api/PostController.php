@@ -118,6 +118,7 @@ class PostController extends Controller
             'meta_title' => $translation?->meta_title,
             'meta_description' => $translation?->meta_description,
             'og_image' => $translation?->og_image,
+            'canonical_url' => $translation?->canonical_url,
             'featured_image' => $post->featured_image,
             'is_featured' => $post->is_featured,
             'published_at' => $post->published_at?->toIso8601String(),

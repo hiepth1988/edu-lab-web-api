@@ -76,6 +76,7 @@ class PostController extends Controller
             'translations.*.meta_title' => ['nullable', 'string', 'max:255'],
             'translations.*.meta_description' => ['nullable', 'string'],
             'translations.*.og_image' => ['nullable', 'string', 'max:2048'],
+            'translations.*.canonical_url' => ['nullable', 'string', 'max:2048'],
         ]);
     }
 
@@ -107,6 +108,7 @@ class PostController extends Controller
                     'meta_title' => $payload['meta_title'] ?? null,
                     'meta_description' => $payload['meta_description'] ?? null,
                     'og_image' => $payload['og_image'] ?? null,
+                    'canonical_url' => $payload['canonical_url'] ?? null,
                 ]
             );
         }
