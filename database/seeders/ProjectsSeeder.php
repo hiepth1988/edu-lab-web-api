@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\CaseStudy;
-use App\Models\CaseStudyTranslation;
+use App\Models\Project;
+use App\Models\ProjectTranslation;
 use Illuminate\Database\Seeder;
 
-class CaseStudiesSeeder extends Seeder
+class ProjectsSeeder extends Seeder
 {
     public function run(): void
     {
@@ -16,13 +16,13 @@ class CaseStudiesSeeder extends Seeder
 
     private function seedTopThi(): void
     {
-        if (CaseStudyTranslation::where('slug', 'topthi')->exists()) {
+        if (ProjectTranslation::where('slug', 'topthi')->exists()) {
             return;
         }
 
-        $case = CaseStudy::create(['status' => 'published', 'published_at' => now()]);
+        $project = Project::create(['status' => 'published', 'published_at' => now()]);
 
-        $case->translations()->create([
+        $project->translations()->create([
             'locale' => 'vi',
             'slug' => 'topthi',
             'title' => 'TopThi — Living Lab cho Exam & AI Learning',
@@ -34,7 +34,7 @@ class CaseStudiesSeeder extends Seeder
             'meta_description' => 'Case study TopThi: nền tảng thi trực tuyến làm bằng chứng năng lực Exam Engine và Learning Analytics.',
         ]);
 
-        $case->translations()->create([
+        $project->translations()->create([
             'locale' => 'en',
             'slug' => 'topthi',
             'title' => 'TopThi — A Living Lab for Exam & AI Learning',
@@ -53,7 +53,7 @@ class CaseStudiesSeeder extends Seeder
         ];
 
         foreach ($metrics as $i => $metric) {
-            $m = $case->metrics()->create(['value' => $metric['value'], 'sort_order' => $i]);
+            $m = $project->metrics()->create(['value' => $metric['value'], 'sort_order' => $i]);
             $m->translations()->create(['locale' => 'vi', 'label' => $metric['vi']]);
             $m->translations()->create(['locale' => 'en', 'label' => $metric['en']]);
         }
@@ -67,11 +67,11 @@ class CaseStudiesSeeder extends Seeder
     // trống, cần ảnh chụp màn hình thật (xem checklist trong chat).
     private function seedMsd(): void
     {
-        if (CaseStudyTranslation::where('slug', 'msd-learning-platform')->exists()) {
+        if (ProjectTranslation::where('slug', 'msd-learning-platform')->exists()) {
             return;
         }
 
-        $msd = CaseStudy::create(['status' => 'draft', 'published_at' => null]);
+        $msd = Project::create(['status' => 'draft', 'published_at' => null]);
 
         $msd->translations()->create([
             'locale' => 'vi',

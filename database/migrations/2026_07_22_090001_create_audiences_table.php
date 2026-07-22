@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_studies', function (Blueprint $table) {
+        Schema::create('audiences', function (Blueprint $table) {
             $table->id();
             $table->string('status')->default('draft');
-            $table->string('featured_image')->nullable();
-            $table->timestamp('published_at')->nullable();
+            $table->string('hero_image')->nullable();
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_studies');
+        Schema::dropIfExists('audiences');
     }
 };

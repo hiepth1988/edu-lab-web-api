@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_study_translations', function (Blueprint $table) {
+        Schema::create('project_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('case_study_id')->constrained('case_studies')->cascadeOnDelete();
+            $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete();
             $table->string('locale', 5);
             $table->string('slug');
             $table->string('title');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('og_image')->nullable();
             $table->timestamps();
 
-            $table->unique(['case_study_id', 'locale']);
+            $table->unique(['project_id', 'locale']);
             $table->unique(['locale', 'slug']);
         });
     }
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_study_translations');
+        Schema::dropIfExists('project_translations');
     }
 };

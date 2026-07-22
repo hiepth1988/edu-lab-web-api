@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_metrics', function (Blueprint $table) {
+        Schema::create('audience_recommended_solutions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('case_study_id')->constrained('case_studies')->cascadeOnDelete();
-            $table->string('value');
+            $table->foreignId('audience_id')->constrained('audiences')->cascadeOnDelete();
+            $table->foreignId('solution_id')->constrained('solutions')->cascadeOnDelete();
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
+
+            $table->unique(['audience_id', 'solution_id']);
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_metrics');
+        Schema::dropIfExists('audience_recommended_solutions');
     }
 };

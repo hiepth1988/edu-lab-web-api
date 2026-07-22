@@ -4,22 +4,22 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\Admin\Concerns\EnforcesPublishPermission;
 use App\Http\Controllers\Controller;
-use App\Models\CaseStudy;
+use App\Models\Project;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class CaseStudyController extends Controller
+class ProjectController extends Controller
 {
     use EnforcesPublishPermission;
 
     public function index(): JsonResponse
     {
-        $caseStudies = CaseStudy::with(['translations', 'metrics.translations'])
+        $projects = Project::with(['translations', 'metrics.translations'])
             ->latest()
             ->get();
 
-        return response()->json(['data' => $caseStudies]);
+        return response()->json(['data' => $projects]);
     }
 
     public function store(Request $request): JsonResponse
@@ -27,43 +27,45 @@ class CaseStudyController extends Controller
         $data = $this->validated($request);
         $this->ensureCanSetStatus($data['status']);
 
-        $case = CaseStudy::create([
+        $project = Project::create([
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
             'published_at' => $data['published_at'] ?? ($data['status'] === 'published' ? now() : null),
         ]);
 
-        $this->syncTranslations($case, $data['translations']);
-        $this->syncMetrics($case, $data['metrics'] ?? []);
+        $this->syncTranslations($project, $data['translations']);
+        $this->syncMetrics($project, $data['metrics'] ?? []);
+        $this->syncSectionImages($project, $data['section_images'] ?? []);
 
-        return response()->json(['data' => $this->loadCase($case)], 201);
+        return response()->json(['data' => $this->loadProject($project)], 201);
     }
 
-    public function show(CaseStudy $caseStudy): JsonResponse
+    public function show(Project $project): JsonResponse
     {
-        return response()->json(['data' => $this->loadCase($caseStudy)]);
+        return response()->json(['data' => $this->loadProject($project)]);
     }
 
-    public function update(Request $request, CaseStudy $caseStudy): JsonResponse
+    public function update(Request $request, Project $project): JsonResponse
     {
         $data = $this->validated($request);
         $this->ensureCanSetStatus($data['status']);
 
-        $caseStudy->update([
+        $project->update([
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
-            'published_at' => $data['published_at'] ?? $caseStudy->published_at,
+            'published_at' => $data['published_at'] ?? $project->published_at,
         ]);
 
-        $this->syncTranslations($caseStudy, $data['translations']);
-        $this->syncMetrics($caseStudy, $data['metrics'] ?? []);
+        $this->syncTranslations($project, $data['translations']);
+        $this->syncMetrics($project, $data['metrics'] ?? []);
+        $this->syncSectionImages($project, $data['section_images'] ?? []);
 
-        return response()->json(['data' => $this->loadCase($caseStudy->fresh())]);
+        return response()->json(['data' => $this->loadProject($project->fresh())]);
     }
 
-    public function destroy(CaseStudy $caseStudy): JsonResponse
+    public function destroy(Project $project): JsonResponse
     {
-        $caseStudy->delete();
+        $project->delete();
 
         return response()->json(null, 204);
     }
@@ -86,17 +88,20 @@ class CaseStudyController extends Controller
             'metrics' => ['array'],
             'metrics.*.value' => ['required_with:metrics', 'string', 'max:255'],
             'metrics.*.translations' => ['array'],
+            'section_images' => ['array'],
+            'section_images.*.section' => ['required_with:section_images', 'in:problem,solution,result'],
+            'section_images.*.image_url' => ['required_with:section_images', 'string', 'max:2048'],
         ]);
     }
 
-    private function syncTranslations(CaseStudy $case, array $translations): void
+    private function syncTranslations(Project $project, array $translations): void
     {
         foreach ($translations as $locale => $payload) {
             if (empty($payload['title'])) {
                 continue;
             }
 
-            $case->translations()->updateOrCreate(
+            $project->translations()->updateOrCreate(
                 ['locale' => $locale],
                 [
                     'title' => $payload['title'],
@@ -112,16 +117,16 @@ class CaseStudyController extends Controller
         }
     }
 
-    private function syncMetrics(CaseStudy $case, array $metrics): void
+    private function syncMetrics(Project $project, array $metrics): void
     {
-        $case->metrics()->delete();
+        $project->metrics()->delete();
 
         foreach ($metrics as $index => $metric) {
             if (empty($metric['value'])) {
                 continue;
             }
 
-            $model = $case->metrics()->create(['value' => $metric['value'], 'sort_order' => $index]);
+            $model = $project->metrics()->create(['value' => $metric['value'], 'sort_order' => $index]);
 
             foreach ($metric['translations'] ?? [] as $locale => $payload) {
                 if (empty($payload['label'])) {
@@ -133,8 +138,30 @@ class CaseStudyController extends Controller
         }
     }
 
-    private function loadCase(CaseStudy $case): CaseStudy
+    private function syncSectionImages(Project $project, array $images): void
     {
-        return $case->load(['translations', 'metrics.translations']);
+        $project->sectionImages()->delete();
+
+        $sortOrders = [];
+
+        foreach ($images as $image) {
+            if (empty($image['section']) || empty($image['image_url'])) {
+                continue;
+            }
+
+            $section = $image['section'];
+            $sortOrders[$section] = ($sortOrders[$section] ?? -1) + 1;
+
+            $project->sectionImages()->create([
+                'section' => $section,
+                'image_url' => $image['image_url'],
+                'sort_order' => $sortOrders[$section],
+            ]);
+        }
+    }
+
+    private function loadProject(Project $project): Project
+    {
+        return $project->load(['translations', 'metrics.translations', 'sectionImages']);
     }
 }

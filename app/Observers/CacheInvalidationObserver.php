@@ -2,11 +2,12 @@
 
 namespace App\Observers;
 
-use App\Models\CaseStudy;
+use App\Models\Audience;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\ResearchPost;
 use App\Models\Solution;
 use App\Models\Tag;
@@ -21,7 +22,8 @@ class CacheInvalidationObserver
         Tag::class => ['posts', 'tags'],
         Solution::class => ['solutions'],
         Product::class => ['products'],
-        CaseStudy::class => ['case-studies'],
+        Project::class => ['projects'],
+        Audience::class => ['audiences'],
         ResearchPost::class => ['research'],
         Page::class => ['pages'],
     ];

@@ -1,25 +1,27 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AudienceController as AdminAudienceController;
 use App\Http\Controllers\Api\Admin\AuditLogController as AdminAuditLogController;
 use App\Http\Controllers\Api\Admin\AuthController;
-use App\Http\Controllers\Api\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Api\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Api\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Api\Admin\ResearchController as AdminResearchController;
 use App\Http\Controllers\Api\Admin\ResearchTopicController as AdminResearchTopicController;
 use App\Http\Controllers\Api\Admin\SolutionController as AdminSolutionController;
 use App\Http\Controllers\Api\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Api\Admin\TagController as AdminTagController;
-use App\Http\Controllers\Api\CaseStudyController;
+use App\Http\Controllers\Api\AudienceController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\LocaleController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ResearchController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SolutionController;
@@ -45,8 +47,10 @@ Route::middleware('cache.public:300')->group(function () {
     Route::get('/solutions/{slug}', [SolutionController::class, 'show']);
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{slug}', [ProductController::class, 'show']);
-    Route::get('/case-studies', [CaseStudyController::class, 'index']);
-    Route::get('/case-studies/{slug}', [CaseStudyController::class, 'show']);
+    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/{slug}', [ProjectController::class, 'show']);
+    Route::get('/audiences', [AudienceController::class, 'index']);
+    Route::get('/audiences/{slug}', [AudienceController::class, 'show']);
 
     Route::get('/research', [ResearchController::class, 'index']);
     Route::get('/research/{slug}', [ResearchController::class, 'show']);
@@ -74,7 +78,9 @@ Route::prefix('admin')->group(function () {
             ->middlewareFor('destroy', 'permission:content.delete');
         Route::apiResource('products', AdminProductController::class)
             ->middlewareFor('destroy', 'permission:content.delete');
-        Route::apiResource('case-studies', AdminCaseStudyController::class)
+        Route::apiResource('projects', AdminProjectController::class)
+            ->middlewareFor('destroy', 'permission:content.delete');
+        Route::apiResource('audiences', AdminAudienceController::class)
             ->middlewareFor('destroy', 'permission:content.delete');
         Route::apiResource('research', AdminResearchController::class)
             ->middlewareFor('destroy', 'permission:content.delete');

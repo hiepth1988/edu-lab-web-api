@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CaseMetric extends Model
+class ProjectMetric extends Model
 {
-    protected $fillable = ['case_study_id', 'value', 'sort_order'];
+    protected $fillable = ['project_id', 'value', 'sort_order'];
 
     public function translations(): HasMany
     {
-        return $this->hasMany(CaseMetricTranslation::class);
+        return $this->hasMany(ProjectMetricTranslation::class);
     }
 
-    public function caseStudy(): BelongsTo
+    public function project(): BelongsTo
     {
-        return $this->belongsTo(CaseStudy::class);
+        return $this->belongsTo(Project::class);
     }
 
-    public function translation(string $locale): ?CaseMetricTranslation
+    public function translation(string $locale): ?ProjectMetricTranslation
     {
         return $this->translations->firstWhere('locale', $locale);
     }

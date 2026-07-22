@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Scout\Searchable;
 
-class CaseStudyTranslation extends Model
+class ProjectTranslation extends Model
 {
     use Searchable;
 
     protected $fillable = [
-        'case_study_id',
+        'project_id',
         'locale',
         'slug',
         'title',
@@ -24,19 +24,19 @@ class CaseStudyTranslation extends Model
         'og_image',
     ];
 
-    public function caseStudy(): BelongsTo
+    public function project(): BelongsTo
     {
-        return $this->belongsTo(CaseStudy::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function shouldBeSearchable(): bool
     {
-        return $this->caseStudy?->status === 'published';
+        return $this->project?->status === 'published';
     }
 
     public function searchableAs(): string
     {
-        return 'case_study_translations';
+        return 'project_translations';
     }
 
     public function toSearchableArray(): array

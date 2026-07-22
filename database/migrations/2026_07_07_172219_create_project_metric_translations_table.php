@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_metric_translations', function (Blueprint $table) {
+        Schema::create('project_metric_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('case_metric_id')->constrained('case_metrics')->cascadeOnDelete();
+            $table->foreignId('project_metric_id')->constrained('project_metrics')->cascadeOnDelete();
             $table->string('locale', 5);
             $table->string('label');
             $table->timestamps();
 
-            $table->unique(['case_metric_id', 'locale']);
+            $table->unique(['project_metric_id', 'locale']);
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_metric_translations');
+        Schema::dropIfExists('project_metric_translations');
     }
 };

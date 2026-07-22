@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             SolutionsSeeder::class,
             ProductsSeeder::class,
-            CaseStudiesSeeder::class,
+            ProjectsSeeder::class,
+            AudiencesSeeder::class,
             ResearchSeeder::class,
         ]);
     }

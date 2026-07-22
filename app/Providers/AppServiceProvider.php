@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\CaseStudy;
+use App\Models\Audience;
 use App\Models\Category;
 use App\Models\Lead;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\ResearchPost;
 use App\Models\Solution;
 use App\Models\Tag;
@@ -32,11 +33,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, CaseStudy::class, ResearchPost::class, Lead::class] as $model) {
+        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, Project::class, Audience::class, ResearchPost::class, Lead::class] as $model) {
             $model::observe(AuditLogObserver::class);
         }
 
-        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, CaseStudy::class, ResearchPost::class, Page::class] as $model) {
+        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, Project::class, Audience::class, ResearchPost::class, Page::class] as $model) {
             $model::observe(CacheInvalidationObserver::class);
         }
 

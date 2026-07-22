@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CaseStudy extends Model
+class Project extends Model
 {
     protected $fillable = ['status', 'featured_image', 'published_at'];
 
@@ -16,15 +16,20 @@ class CaseStudy extends Model
 
     public function translations(): HasMany
     {
-        return $this->hasMany(CaseStudyTranslation::class);
+        return $this->hasMany(ProjectTranslation::class);
     }
 
     public function metrics(): HasMany
     {
-        return $this->hasMany(CaseMetric::class)->orderBy('sort_order');
+        return $this->hasMany(ProjectMetric::class)->orderBy('sort_order');
     }
 
-    public function translation(string $locale): ?CaseStudyTranslation
+    public function sectionImages(): HasMany
+    {
+        return $this->hasMany(ProjectSectionImage::class)->orderBy('sort_order');
+    }
+
+    public function translation(string $locale): ?ProjectTranslation
     {
         return $this->translations->firstWhere('locale', $locale);
     }

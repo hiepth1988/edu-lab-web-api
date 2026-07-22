@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CaseStudyTranslation;
 use App\Models\PostTranslation;
+use App\Models\ProjectTranslation;
 use App\Models\ResearchPostTranslation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class SearchController extends Controller
     private const SOURCES = [
         ['model' => PostTranslation::class, 'type' => 'post', 'relation' => 'post'],
         ['model' => ResearchPostTranslation::class, 'type' => 'research', 'relation' => 'researchPost'],
-        ['model' => CaseStudyTranslation::class, 'type' => 'case-study', 'relation' => 'caseStudy'],
+        ['model' => ProjectTranslation::class, 'type' => 'project', 'relation' => 'project'],
     ];
 
     public function index(Request $request): JsonResponse
