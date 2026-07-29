@@ -82,6 +82,8 @@ class AudienceController extends Controller
             'translations.*.how_we_help' => ['nullable', 'string'],
             'translations.*.meta_title' => ['nullable', 'string', 'max:255'],
             'translations.*.meta_description' => ['nullable', 'string'],
+            'translations.*.og_image' => ['nullable', 'string', 'max:2048'],
+            'translations.*.canonical_url' => ['nullable', 'string', 'max:2048'],
             'solution_ids' => ['array'],
             'solution_ids.*' => ['integer', 'exists:solutions,id'],
         ]);
@@ -104,6 +106,8 @@ class AudienceController extends Controller
                     'how_we_help' => $payload['how_we_help'] ?? null,
                     'meta_title' => $payload['meta_title'] ?? null,
                     'meta_description' => $payload['meta_description'] ?? null,
+                    'og_image' => $payload['og_image'] ?? null,
+                    'canonical_url' => $payload['canonical_url'] ?? null,
                 ]
             );
         }

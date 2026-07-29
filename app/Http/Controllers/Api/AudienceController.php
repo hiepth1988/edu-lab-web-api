@@ -64,6 +64,8 @@ class AudienceController extends Controller
                 'hero_image' => $audience->hero_image,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
+                'og_image' => $t?->og_image,
+                'canonical_url' => $t?->canonical_url,
                 'solutions' => $audience->solutions->map(function ($solution) use ($locale) {
                     $st = $solution->translation($locale);
 

@@ -17,6 +17,7 @@ class ProductTranslation extends Model
         'meta_title',
         'meta_description',
         'og_image',
+        'canonical_url',
     ];
 
     public function product(): BelongsTo

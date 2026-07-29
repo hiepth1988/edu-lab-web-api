@@ -66,6 +66,8 @@ class ProjectController extends Controller
                 'featured_image' => $project->featured_image,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
+                'og_image' => $t?->og_image,
+                'canonical_url' => $t?->canonical_url,
                 'metrics' => $project->metrics->map(function ($m) use ($locale) {
                     $mt = $m->translation($locale);
 

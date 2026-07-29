@@ -67,6 +67,8 @@ class ResearchController extends Controller
                 'content' => $t?->content,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
+                'og_image' => $t?->og_image,
+                'canonical_url' => $t?->canonical_url,
                 'topic' => $topic ? ['slug' => $topic->slug, 'name' => $topic->name] : null,
             ];
         });

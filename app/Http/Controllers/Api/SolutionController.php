@@ -65,6 +65,8 @@ class SolutionController extends Controller
                 'use_cases' => $t?->use_cases,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
+                'og_image' => $t?->og_image,
+                'canonical_url' => $t?->canonical_url,
                 'features' => $solution->features->map(function ($f) use ($locale) {
                     $ft = $f->translation($locale);
 

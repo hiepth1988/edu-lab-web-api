@@ -63,6 +63,8 @@ class ProductController extends Controller
                 'stage' => $product->stage,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
+                'og_image' => $t?->og_image,
+                'canonical_url' => $t?->canonical_url,
                 'features' => $product->features->map(function ($f) use ($locale) {
                     $ft = $f->translation($locale);
 
