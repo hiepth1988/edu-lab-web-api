@@ -15,7 +15,7 @@ class ProjectController extends Controller
 
     public function index(): JsonResponse
     {
-        $projects = Project::with(['translations', 'metrics.translations'])
+        $projects = Project::with(['translations', 'category.translations', 'metrics.translations'])
             ->latest()
             ->get();
 
@@ -28,8 +28,10 @@ class ProjectController extends Controller
         $this->ensureCanSetStatus($data['status']);
 
         $project = Project::create([
+            'category_id' => $data['category_id'] ?? null,
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
+            'is_featured' => $data['is_featured'] ?? false,
             'published_at' => $data['published_at'] ?? ($data['status'] === 'published' ? now() : null),
         ]);
 
@@ -51,8 +53,10 @@ class ProjectController extends Controller
         $this->ensureCanSetStatus($data['status']);
 
         $project->update([
+            'category_id' => $data['category_id'] ?? null,
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
+            'is_featured' => $data['is_featured'] ?? false,
             'published_at' => $data['published_at'] ?? $project->published_at,
         ]);
 
@@ -73,8 +77,10 @@ class ProjectController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
+            'category_id' => ['nullable', 'exists:categories,id'],
             'status' => ['required', 'in:draft,published'],
             'featured_image' => ['nullable', 'string', 'max:2048'],
+            'is_featured' => ['boolean'],
             'published_at' => ['nullable', 'date'],
             'translations' => ['required', 'array'],
             'translations.*.title' => ['required', 'string', 'max:255'],
@@ -166,6 +172,6 @@ class ProjectController extends Controller
 
     private function loadProject(Project $project): Project
     {
-        return $project->load(['translations', 'metrics.translations', 'sectionImages']);
+        return $project->load(['translations', 'category.translations', 'metrics.translations', 'sectionImages']);
     }
 }

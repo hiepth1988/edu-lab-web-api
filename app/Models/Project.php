@@ -3,20 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-    protected $fillable = ['status', 'featured_image', 'published_at'];
+    protected $fillable = ['category_id', 'status', 'featured_image', 'is_featured', 'published_at'];
 
     protected function casts(): array
     {
-        return ['published_at' => 'datetime'];
+        return [
+            'is_featured' => 'boolean',
+            'published_at' => 'datetime',
+        ];
     }
 
     public function translations(): HasMany
     {
         return $this->hasMany(ProjectTranslation::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function metrics(): HasMany
