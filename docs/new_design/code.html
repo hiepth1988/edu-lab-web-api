@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>XO Edu Lab | Space to Become</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#0f0800",
+                        "inverse-on-surface": "#ecf0ff",
+                        "secondary": "#116c46",
+                        "on-tertiary-container": "#a78237",
+                        "primary-fixed": "#d9e2fc",
+                        "error-container": "#ffdad6",
+                        "on-background": "#111c2d",
+                        "primary-container": "#172033",
+                        "surface-dim": "#d0daf2",
+                        "surface-variant": "#d9e3fb",
+                        "on-surface": "#111c2d",
+                        "surface-tint": "#555e74",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#85d7a9",
+                        "surface-container-low": "#f0f3ff",
+                        "inverse-surface": "#273143",
+                        "outline": "#76777d",
+                        "primary-fixed-dim": "#bdc6e0",
+                        "outline-variant": "#c6c6cd",
+                        "secondary-container": "#9ef1c1",
+                        "tertiary-fixed": "#ffdea6",
+                        "on-secondary-container": "#18704a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dfe8ff",
+                        "on-surface-variant": "#45474c",
+                        "inverse-primary": "#bdc6e0",
+                        "on-primary-container": "#7f879f",
+                        "primary": "#01081a",
+                        "background": "#f9f9ff",
+                        "on-error-container": "#93000a",
+                        "surface": "#f9f9ff",
+                        "secondary-fixed": "#a1f4c4",
+                        "on-primary-fixed": "#121b2e",
+                        "surface-container-highest": "#d9e3fb",
+                        "on-secondary-fixed": "#002112",
+                        "surface-container": "#e8eeff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ecc06e",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005233",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#271900",
+                        "tertiary-container": "#2d1e00",
+                        "on-primary-fixed-variant": "#3e475b",
+                        "surface-bright": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#5d4200"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "max-width": "1280px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "lg": "48px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "md": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Newsreader"],
+                        "display-lg": ["Newsreader"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Newsreader"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Newsreader"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["40px", {"lineHeight": "48px", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #F7F7F2;
+            color: #111c2d;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .canvas-bg {
+            background-color: #F7F7F2;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 10px 30px rgba(23, 32, 51, 0.04);
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, #E5E7EB 0%, #116c46 50%, #E5E7EB 100%);
+        }
+
+        .premium-border {
+            border: 1px solid #E5E7EB;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Mega Menu Styles */
+        .mega-menu-trigger:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="canvas-bg">
+<!-- Header Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md transition-all duration-300 shadow-sm border-b border-outline-variant/30">
+<nav class="flex justify-between items-center px-margin-desktop py-sm max-w-max-width mx-auto">
+<div class="flex items-center gap-xs">
+<img alt="XO Edu Lab Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4czTto4nMhruIKKlj08i4MFCmn27uoxRMM8QUSG-gdprO0igQ4GhPizchrR7dnkhL5pUryt8moFjISD8yO8hVpOOIw9a3wQrZRL5ISfo__d_S2J6t8yz3Xypd3z1LtASnAYkDvI19vH0beLy6Hg4aAa-LKKIT7wDFXhKdpk2mAdpYs5kaotSbkrdKnmS-ajLGvfQ0elrrORjSR8zOWRFG_AHHpnnY8Xj0hGegk5gwvzv-JP2uSIwQAA"/>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">XO Edu Lab</span>
+</div>
+<!-- Updated Navigation Links -->
+<div class="hidden xl:flex gap-md items-center h-full">
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md whitespace-nowrap" href="#">Why XO</a>
+<!-- Solutions Mega Menu -->
+<div class="relative mega-menu-trigger h-full flex items-center group">
+<button class="flex items-center gap-1 text-on-surface-variant group-hover:text-secondary transition-colors font-body-md whitespace-nowrap">
+                    Solutions <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+<div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 mt-0 w-[640px] glass-card rounded-xl p-md shadow-xl grid grid-cols-3 gap-md">
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Build</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">LMS Platform</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Online Exam Platform</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Custom EdTech Products</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Improve</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">AI for Education</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Learning Analytics</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Adaptive Learning</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Operate</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">School &amp; Training Management</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">EdTech Consulting</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Products Mega Menu -->
+<div class="relative mega-menu-trigger h-full flex items-center group">
+<button class="flex items-center gap-1 text-on-surface-variant group-hover:text-secondary transition-colors font-body-md whitespace-nowrap">
+                    Products <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+<div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 mt-0 w-[640px] glass-card rounded-xl p-md shadow-xl grid grid-cols-3 gap-md">
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Live Products</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">TopThi</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Core Engines</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Exam Engine</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Question Bank Engine</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Learning Analytics Platform</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-secondary font-label-md uppercase tracking-wider mb-2">Research &amp; Dev</h5>
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">AI Learning Engine</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block py-1" href="#">Knowledge Graph Engine</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Who We Help Dropdown -->
+<div class="relative mega-menu-trigger h-full flex items-center group">
+<button class="flex items-center gap-1 text-on-surface-variant group-hover:text-secondary transition-colors font-body-md whitespace-nowrap">
+                    Who We Help <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+<div class="mega-menu absolute top-full left-0 mt-0 w-64 glass-card rounded-xl p-sm shadow-xl">
+<ul class="space-y-1">
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block px-md py-2 hover:bg-surface-container-low rounded-lg" href="#">Independent Educators</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block px-md py-2 hover:bg-surface-container-low rounded-lg" href="#">Training Centers</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block px-md py-2 hover:bg-surface-container-low rounded-lg" href="#">Schools</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block px-md py-2 hover:bg-surface-container-low rounded-lg" href="#">EdTech Startups</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary text-sm block px-md py-2 hover:bg-surface-container-low rounded-lg" href="#">Enterprise Learning Teams</a></li>
+</ul>
+</div>
+</div>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md whitespace-nowrap" href="#">Research</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md whitespace-nowrap" href="#">Our Work</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md whitespace-nowrap" href="#">Insights</a>
+</div>
+<div class="flex items-center">
+<button class="bg-secondary text-white px-md py-sm rounded-full font-label-md hover:opacity-90 transition-opacity whitespace-nowrap">Build with XO</button>
+</div>
+</nav>
+</header>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-xl overflow-hidden">
+
+<div class="relative z-10 max-w-max-width mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+<div class="space-y-md">
+<span class="inline-block py-1 px-4 rounded-full border border-secondary/20 text-secondary bg-secondary/5 font-label-md">Space to Become</span>
+<h1 class="font-display-lg text-display-lg text-primary leading-tight">
+                    Turn your education idea into an experience worth learning from.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    XO Edu Lab helps educators, experts, and EdTech teams design, build, and scale complete digital learning products—from strategy and content to technology and learner experience.
+                </p>
+<div class="flex flex-wrap gap-md pt-sm">
+<button class="bg-secondary text-white px-xl py-md rounded-xl font-label-md hover:opacity-90 transition-all text-lg">Build with XO</button>
+<button class="bg-white premium-border text-primary px-xl py-md rounded-xl font-label-md hover:bg-surface-container-low transition-all text-lg">Explore how we work</button>
+</div>
+<div class="pt-lg flex items-center gap-sm">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" data-alt="A professional headshot of a female education director with soft studio lighting, high-key background, minimalist aesthetic, neutral tones, premium professional photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmU1lx6biXvkrYcoBHodqyYuVm0rR4pbadrW4A3YYpCkEekXKRweFSXd-O5dJhFRLFg919qnGpG06TAbLPWKduEgMOmihPX4tlMpQkKqLcUEpOq7rbwUg7vF25noE4trcww4r0s4x8tpK69-jKE9NouN_bU1s6cKiRhD5Ljvbprl_Ay0V1d3UgO9r0XHOOEsSAcatkQCRA-9J0y4VrvOMBsTQWPTXNQ1fjp2tZdmyG5iyA9mEp8IAM-g')"></div>
+<div class="w-10 h-10 rounded-full border-2 border-white bg-slate-300" data-alt="A professional headshot of a male EdTech founder in a clean modern office, natural lighting, soft focus background, minimalist aesthetic, premium brand photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdNKS-9q6_eLFv5lESW1pdcaEkT0IT1CUAng3P5WQ2PjRQywBht5Z1DWxzo7zVbUHl6Wf0m9pFNRKHinIaE7OnlSksJZXCmH2ZzX5hxAHuLlpfcK_5fzBOpZcvbk5YLt20Iif5evJCGHx3MA04dUTnAlvHOM9PDYbitH-HTOsDBExYdgMvO0RkeUb0UoQpN-8BhieXJElgTyBlMghx9JOv-hdnHqdrFdYzLnwC4qbDazGkcLBjLrKcdA')"></div>
+<div class="w-10 h-10 rounded-full border-2 border-white bg-slate-400" data-alt="A portrait of a diverse group of expert educators in a brightly lit collaborative studio space, minimalist modern setting, organic textures, premium professional atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYsYex-unCLYGpynhFoXXeQCV3NDMUhNy_cql2v8Vr7d3xqpj_D8F0IjetDLP1tvgLhsbtolpwtcntCdRF1rZKeT3GKJtcIbPXnsM-MfbpY6iZ-FlCwJjeb3VWwvYTzAkiA3qrFQfQ74pn3j9JHkF6Zjx7GeYSKE50AlXeaK94BUq_rVY1gWgs2RXpqTgBWzuID1wzLir7N6zik1d2wSWdW3k08QcFNd1bzVVTE-RkxeaHNJUZ91ROsw')"></div>
+</div>
+<p class="font-label-md text-on-surface-variant italic">"For educators, training teams, and EdTech founders who want to build education properly."</p>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<div class="aspect-square glass-card rounded-full flex items-center justify-center p-md border-2 border-dashed border-secondary/30 relative">
+<div class="absolute inset-0 animate-[spin_20s_linear_infinite] opacity-30">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-secondary rounded-full"></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full"></div>
+</div>
+<div class="w-full h-full rounded-xl bg-cover bg-center overflow-hidden" data-alt="An abstract, high-end 3D digital render of glowing geometric nodes connected by ethereal fine lines, representing an evolving intellectual idea transitioning into a structured modular system. Soft emerald and deep navy color palette, minimalist studio lighting, high-contrast and sharp focus." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB36WJneRTfZDzKke5E37HrdS4x9J7KWVOR6cnfMAq_cmZoGXLowjsMfhMox17kBfDaqxgDbOP6NVh-E_6FnpcXpoFGPgumDIPwrl0aEjwPHVyhWt4HdOIkEg6M3iKx5JRVMjLc1fi-RaURINqAJO2K60O63Fe22jq4PQQn3Bt51JE73lKmAoHgWoJf6rCoRXBdjAYMzyQERI8HkFYFpuiafis2MU7qHtkXzaaFcvYqJ9suVX6wbD-A4A')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">Knowledge alone does not create a great learning product.</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto">Most digital learning fails because it's built on content alone, missing the structural pillars that drive real transformation.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- 9 Missing Capabilities simplified into 3 core groups for UI flow -->
+<div class="glass-card p-md rounded-xl space-y-md border-t-4 border-t-error/30">
+<span class="material-symbols-outlined text-error text-4xl">architecture</span>
+<h3 class="font-headline-sm text-primary">Strategic Foundation</h3>
+<p class="font-body-md text-on-surface-variant">Without market fit, clear outcomes, and a sustainable model, even the best content remains a hobby, not a product.</p>
+</div>
+<div class="glass-card p-md rounded-xl space-y-md border-t-4 border-t-error/30">
+<span class="material-symbols-outlined text-error text-4xl">neurology</span>
+<h3 class="font-headline-sm text-primary">Learning Architecture</h3>
+<p class="font-body-md text-on-surface-variant">Passive consumption is the enemy of learning. We bridge the gap with curriculum design and behavioral science.</p>
+</div>
+<div class="glass-card p-md rounded-xl space-y-md border-t-4 border-t-error/30">
+<span class="material-symbols-outlined text-error text-4xl">terminal</span>
+<h3 class="font-headline-sm text-primary">Technical Ecosystem</h3>
+<p class="font-body-md text-on-surface-variant">Fragmented tools create friction. We build cohesive platforms where technology serves the learner, not the other way around.</p>
+</div>
+</div>
+</section>
+<!-- Who We Help Section (Duplicate content of "Who We Help" from structure request is already represented here) -->
+<section class="py-xl bg-surface-container-low">
+<div class="max-w-max-width mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-md">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg text-primary">Tailored for those leading the future of education.</h2>
+</div>
+<button class="text-secondary font-label-md flex items-center gap-xs hover:underline">See our impact stories <span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md">
+<div class="bg-white p-md rounded-xl hover-lift">
+<div class="h-40 bg-slate-100 rounded-lg mb-md overflow-hidden" data-alt="A minimalist overhead shot of an independent educator's workspace, premium stationery, an open notebook with diagrams, soft natural side lighting, warm organic textures, high-end editorial feel." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2tYpXXzmJ1oOMei7h2s0XzfOuu2nnvjRTIQOsMJaSFzPqv2DCNhYNvOo__v2UnbVhMZnXZGevpYHi99m6zKDjwhKV6gAYcF_U4As3q3u1fQnIZ6ARMIgkzB5aAkM1YieX0XuNRpHd1OvVUt3X8Lb62JoK1euzqSplFALHeqRJIS506Zbp8paehnkmAW7VJ1xXeZf_0U-LnTYQApEUWUmTUdct5EJWGGvYL-jcOLdvlsq10L6kKmZKMw')"></div>
+<h4 class="font-headline-sm text-primary mb-xs">Independent Educators</h4>
+<p class="font-body-md text-on-surface-variant">Experts ready to productize their knowledge into a scalable asset.</p>
+</div>
+<div class="bg-white p-md rounded-xl hover-lift">
+<div class="h-40 bg-slate-100 rounded-lg mb-md overflow-hidden" data-alt="A modern, high-tech corporate training center environment, glass walls, minimalist furniture, soft emerald accents, premium technology integration, professional and sophisticated atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNy_Q2-5uH8iUF0u4uG0lXdw7i_Bn-28IPw_6E_WOBmsvvUGb6n7xhhzCXEFwqnBiOSkmue1D6_AjuCrQhnahGTP9TahDLFy7e7G5nrg6f9Ko-FL_gNesJWOjLlpSL_74jSlmiSbGhV56jYu4mZwCMKaseRNipE2nYn4iVn8rC3C2WNMI1fBKrDJ-x2Qlm0Hlxcb3c7AfLghWW9VVuZie3RErN6ZxHheELvZspMuu_FDQXajd4a2ZfMw')"></div>
+<h4 class="font-headline-sm text-primary mb-xs">Training Centers</h4>
+<p class="font-body-md text-on-surface-variant">Traditional centers transitioning to a hybrid or digital-first model.</p>
+</div>
+<div class="bg-white p-md rounded-xl hover-lift">
+<div class="h-40 bg-slate-100 rounded-lg mb-md overflow-hidden" data-alt="A dynamic EdTech startup office scene, collaborative glass boards filled with UI sketches, high-energy lighting, modern minimalist furniture, premium digital-first studio aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqVoQGGDDEGJtWyaVg_MKZoj1ZeoXjPFZOyb0EbLq3Vgi9n6Ox0EgnvZoK1akYJln4-4HYVPo1dhdOVaPx9zucfHQxZ3DDYBrFMHU3RF3TwisnlNMWEhsLM0x6TOzgcHosj5YHKFCh7lK9a0C3steToZ99u-Dm_TwcToc8LStMvovE7ZxycB0v_sueFaZSlG6PWcGpm6rekG4mihSyw2lZRTmVqeFxTxhA8vGLMYH134Wbq4-5jYLbPw')"></div>
+<h4 class="font-headline-sm text-primary mb-xs">EdTech Startups</h4>
+<p class="font-body-md text-on-surface-variant">Founders looking for an external product team to build and launch fast.</p>
+</div>
+<div class="bg-white p-md rounded-xl hover-lift">
+<div class="h-40 bg-slate-100 rounded-lg mb-md overflow-hidden" data-alt="A spacious, high-ceilinged modern education organization lobby, large-scale minimalist art, soft architectural lighting, premium materials, clean and prestigious atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFMpQ5LwRBRP-L0hF-VZAasZl5DvhN9zcL5EBYPaByOa39j06wT2UnFJYjWEzkhfs8EVPlqrZ3Cz79Ih8NmpPWasWNR1BglcL-otV5wn_gK10XrS2rz7JQ9EiWqUdj4D0eMAFLqF0-10VpNlco-_pTrrZu3OzvDRSZdoqd1DsKOKk-dyEUZABAm7cM1L5pHCCSkDHKbeESp4-NVj9erq25CF7MhKJN1W1Y3qVJ4hwUXg9lb0pKWkB16w')"></div>
+<h4 class="font-headline-sm text-primary mb-xs">Education Orgs</h4>
+<p class="font-body-md text-on-surface-variant">Large-scale institutions modernizing their digital learning infrastructure.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Brand Core: Transformation Journey -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary">A space for education creators to become more capable.</h2>
+</div>
+<div class="flex flex-wrap justify-center gap-md items-center">
+<!-- Step-based journey visualization -->
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">01</div>
+<span class="font-label-md text-on-surface-variant">Discover</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">02</div>
+<span class="font-label-md text-on-surface-variant">Design</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">03</div>
+<span class="font-label-md text-on-surface-variant">Experiment</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">04</div>
+<span class="font-label-md text-on-surface-variant">Build</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">05</div>
+<span class="font-label-md text-on-surface-variant">Measure</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold group-hover:bg-secondary group-hover:text-white transition-all">06</div>
+<span class="font-label-md text-on-surface-variant">Improve</span>
+</div>
+<div class="w-12 h-px bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs w-32 text-center group">
+<div class="w-16 h-16 rounded-full bg-secondary text-white flex items-center justify-center font-bold ring-4 ring-secondary/20 transition-all">07</div>
+<span class="font-label-md text-secondary font-bold">Scale</span>
+</div>
+</div>
+</section>
+<!-- Ecosystem -->
+<section class="py-xl bg-primary text-white overflow-hidden relative">
+<div class="max-w-max-width mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-xl items-center relative z-10">
+<div>
+<h2 class="font-display-lg text-display-lg text-white mb-md">Everything needed to build a complete education product.</h2>
+<p class="font-body-lg text-on-primary-container mb-lg">A modular ecosystem of capabilities that ensures your vision doesn't just launch, but thrives and grows.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<h4 class="font-headline-sm text-secondary-fixed">Strategy</h4>
+<p class="text-on-primary-container font-body-md">Commercial model and product-market fit.</p>
+</div>
+<div class="space-y-xs">
+<h4 class="font-headline-sm text-secondary-fixed">Learning Design</h4>
+<p class="text-on-primary-container font-body-md">Curriculum architecture and pedagogical flow.</p>
+</div>
+<div class="space-y-xs">
+<h4 class="font-headline-sm text-secondary-fixed">Experience Design</h4>
+<p class="text-on-primary-container font-body-md">UI/UX that respects the learner's attention.</p>
+</div>
+<div class="space-y-xs">
+<h4 class="font-headline-sm text-secondary-fixed">Tech &amp; Data</h4>
+<p class="text-on-primary-container font-body-md">Custom platforms and learning analytics.</p>
+</div>
+</div>
+</div>
+<div class="relative h-[500px]">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-64 h-64 border border-secondary-fixed/30 rounded-full animate-pulse"></div>
+<div class="absolute w-80 h-80 border border-secondary-fixed/20 rounded-full animate-[spin_30s_linear_infinite]"></div>
+<div class="absolute w-48 h-48 bg-secondary-fixed/10 blur-3xl rounded-full"></div>
+<img class="relative w-full h-full object-contain mix-blend-screen opacity-80" data-alt="A futuristic, high-end digital visualization of an interconnected learning system. Central orb glowing in emerald surrounded by floating data points and thin geometric rings in navy and white. Professional, sleek, minimalist tech studio aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVHgbTHP9qJdhnKS9MBwdGk503rmn5AGrrBAAupnUkN7wmAG1wzXOlMNNDRCDjGoE4p8Yabt2ly6zLpAdkkZzPO4OJNlfpERxd-vYitfoVhB4z9kbRj_298UzlJTFoNmxBT0wxma1b8ovNNAIRrPJ45I41LdasozfUXVlr7uXJsD8lb2HClu-oP0NSEg0Q0c6gY3lx68ChF_RV36vogJ00SZqnPN2FS1CRSfsxNpV131ppKfkMAbVBNg"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Process -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto">
+<div class="flex flex-col md:flex-row items-center gap-xl">
+<div class="w-full md:w-1/3">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-sm">The XO Process</h2>
+<p class="font-body-md text-on-surface-variant">We don't just build; we partner with you through a structured methodology designed for education excellence.</p>
+</div>
+<div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-5 gap-xs">
+<!-- Timeline items -->
+<div class="relative group p-4 hover:bg-surface-container-low rounded-xl transition-colors">
+<span class="text-label-sm uppercase tracking-widest text-outline mb-2 block">Phase 01</span>
+<h5 class="font-headline-sm text-primary mb-2">Understand</h5>
+<p class="text-xs text-on-surface-variant">Deep dive into your expertise and market potential.</p>
+</div>
+<div class="relative group p-4 hover:bg-surface-container-low rounded-xl transition-colors">
+<span class="text-label-sm uppercase tracking-widest text-outline mb-2 block">Phase 02</span>
+<h5 class="font-headline-sm text-primary mb-2">Define</h5>
+<p class="text-xs text-on-surface-variant">Blueprint the learner journey and tech stack.</p>
+</div>
+<div class="relative group p-4 hover:bg-surface-container-low rounded-xl transition-colors">
+<span class="text-label-sm uppercase tracking-widest text-outline mb-2 block">Phase 03</span>
+<h5 class="font-headline-sm text-primary mb-2">Design</h5>
+<p class="text-xs text-on-surface-variant">Iterative prototyping of the experience.</p>
+</div>
+<div class="relative group p-4 hover:bg-surface-container-low rounded-xl transition-colors">
+<span class="text-label-sm uppercase tracking-widest text-outline mb-2 block">Phase 04</span>
+<h5 class="font-headline-sm text-primary mb-2">Build</h5>
+<p class="text-xs text-on-surface-variant">Production of content and development of the app.</p>
+</div>
+<div class="relative group p-4 hover:bg-surface-container-low rounded-xl transition-colors">
+<span class="text-label-sm uppercase tracking-widest text-outline mb-2 block">Phase 05</span>
+<h5 class="font-headline-sm text-primary mb-2">Improve</h5>
+<p class="text-xs text-on-surface-variant">Post-launch growth and technical optimization.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Scale -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-xl text-center">From one course to an entire learning ecosystem.</h2>
+<div class="grid grid-cols-12 gap-md">
+<!-- Bento style modular layout -->
+<div class="col-span-12 md:col-span-8 h-[400px] bg-white rounded-xl premium-border overflow-hidden group">
+<div class="h-full w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700" data-alt="A clean UI showcase of a professional academy platform, featuring a minimalist sidebar, high-quality video content player, and progress tracking dashboard. Soft greens and whites, premium editorial design, sleek typography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAcRM8w2eVBE36H_hEpvvG5woZSDudQPoaRytGZFGedC935KFQS9JPhub58grIRQybmrjkJkkF4CoK6qI4L4jFHCxg-KUwBODdRe7fa-NZJ9g-lm3pFy3taXEStdNMXDTmjlDR4wMZ3p6VAOMk3OqhgqAC0zKTqcy4lDSrLFucZsFnmGMzUG2DzgmiCHuPfZNnP4Oy_ZRN3dke29QKBHuWtGmHZtZ6VbvRH7yIL_JilpHcMMiZQ3ZrXpg')"></div>
+<div class="absolute bottom-0 left-0 p-md bg-gradient-to-t from-black/60 to-transparent w-full text-white">
+<h4 class="font-headline-sm">Custom Academic Platforms</h4>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 h-[400px] bg-secondary-container rounded-xl flex flex-col justify-end p-md overflow-hidden relative">
+<div class="absolute top-0 right-0 p-md opacity-20">
+<span class="material-symbols-outlined text-8xl">school</span>
+</div>
+<h4 class="font-headline-sm text-primary relative z-10">Scalable Micro-learning Apps</h4>
+<p class="font-body-md text-on-secondary-container mt-2 relative z-10">Bite-sized mobile experiences for rapid skill acquisition.</p>
+</div>
+<div class="col-span-12 md:col-span-4 h-[300px] bg-white rounded-xl premium-border p-md flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary text-4xl">database</span>
+<div>
+<h4 class="font-headline-sm text-primary">Content Engines</h4>
+<p class="font-body-md text-on-surface-variant mt-2">Automated workflows for education content production.</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-8 h-[300px] bg-surface-container rounded-xl p-md flex items-center gap-md">
+<div class="w-1/3 h-full rounded-lg overflow-hidden" data-alt="Close up of a premium tablet displaying complex data visualizations and learning analytics. Emerald and white color scheme, high contrast, minimalist professional interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA37xOscl8ZoKIvzZiwauklcQQf7ghAFho5-af0-O82nzziM55cqs2Mz4XWlsBuTaaOtf6iWjEUGZblK4Xq_PeG1fAqXVH8YUxCA8LrGFk5_ZCEfP8FVBrY5YEpSX9jqItdG3Kp9isFA-4wkcL8aglw_1Mp0M1insh_WQNnYxImDmXDGt0CL3lhCEWnjUp9_ay1MHP1UZH8PaE4waYw8BoAFeuiXbCuobsuFVnxZs3s45TDFRKm4NcN9g')"></div>
+<div class="w-2/3">
+<h4 class="font-headline-sm text-primary">AI-Powered Tutoring</h4>
+<p class="font-body-md text-on-surface-variant mt-2">Personalized learning paths driven by modern LLM integration.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Partnership Models -->
+<section class="py-xl bg-surface-container-high">
+<div class="max-w-max-width mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-xl text-center">How we partner</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="bg-white p-lg rounded-xl flex flex-col items-center text-center space-y-md border border-outline-variant/30">
+<h3 class="font-headline-sm text-primary">Product Discovery</h3>
+<p class="font-body-md text-on-surface-variant">4-week sprint to define your product vision, commercial model, and roadmap.</p>
+<button class="text-secondary font-bold underline">Explore discovery</button>
+</div>
+<div class="bg-white p-lg rounded-xl flex flex-col items-center text-center space-y-md ring-4 ring-secondary/10 border border-secondary/50">
+<div class="bg-secondary text-white px-3 py-1 rounded-full text-xs font-bold -mt-12 mb-4">Most Common</div>
+<h3 class="font-headline-sm text-primary">Build &amp; Launch</h3>
+<p class="font-body-md text-on-surface-variant">Full-service design and development of your education product from zero to one.</p>
+<button class="bg-secondary text-white px-md py-sm rounded-full w-full">Start building</button>
+</div>
+<div class="bg-white p-lg rounded-xl flex flex-col items-center text-center space-y-md border border-outline-variant/30">
+<h3 class="font-headline-sm text-primary">Long-term Partnership</h3>
+<p class="font-body-md text-on-surface-variant">Ongoing product management, technical maintenance, and growth experimentation.</p>
+<button class="text-secondary font-bold underline">Partner with us</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Philosophy -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto text-center">
+<div class="max-w-3xl mx-auto py-xl italic">
+<span class="text-6xl font-display-lg text-secondary/30">"</span>
+<p class="font-display-lg text-headline-lg text-primary -mt-8 mb-4">
+                Education should not standardize people. It should help them discover what they can become.
+            </p>
+<cite class="font-label-md text-on-surface-variant not-italic uppercase tracking-widest">— The XO Manifesto</cite>
+</div>
+</section>
+<!-- Insights Section -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto">
+<div class="flex justify-between items-end mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary">Insights for education creators.</h2>
+<button class="text-secondary font-label-md">Read all insights</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="group cursor-pointer">
+<div class="h-64 rounded-xl mb-md overflow-hidden" data-alt="A clean, minimalist magazine cover layout about education technology. High-quality editorial photography, sharp typography, spacious design, emerald and navy theme." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXSx8_0MtMQHsHCYf8t-Frwv9WeedyIONNwaf9k8qAfT7v7NyiJwqgpx7A7_cXWP8kBCM3geBomyaUHKoONPWK1wVwdaNZmUICw8POiuxQn8KsVmTjwYRPpwFPBZ_eXnUm3wcyD4_O40lJu5i1SG4VK2m6VbNNmJMmpYXx49sMrvtYi3UF2mWJoH2g0OPGJMo8mMycoJ0te_CHWWhPgG0MWGkKYENx0awwbi_Fyp_kGVkwo3vbaMxaXg')"></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest">Product Strategy</span>
+<h4 class="font-headline-sm text-primary mt-2 group-hover:text-secondary transition-colors">The Curriculum First approach to EdTech scaling.</h4>
+</div>
+<div class="group cursor-pointer">
+<div class="h-64 rounded-xl mb-md overflow-hidden" data-alt="A macro photograph of high-quality paper texture with elegant typography and clean white space, suggesting premium publishing and intellectual clarity. Warm lighting, minimalist aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrnoDappPQqWnS1ZVackIFwAJ9GFEIhj40DEPRO7KcPj0ZV1DINJiZqfu-QxzOV8CUpC1oe206x98vXpCZN8NDf_koFnbkX0i68GE5kLtOCIbzxz7YHa5ZcPllvzK0bwF7Om7745ipPUm_-FGlLNFqWoXYvL5Zzud8Rueli_-O3yolsJcE-WVkee6BSBC1G7PuOa-v0l5oN6Wjq5mLRWCZGIrjOChQ5mFJUZV4B5FnQISCzZ1FFkgSEg')"></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest">Learning Experience</span>
+<h4 class="font-headline-sm text-primary mt-2 group-hover:text-secondary transition-colors">Why "Content is King" is a lie in digital education.</h4>
+</div>
+<div class="group cursor-pointer">
+<div class="h-64 rounded-xl mb-md overflow-hidden" data-alt="An abstract visualization of digital neural networks merging with organic leaf patterns, symbolizing the intersection of AI and human learning. Sophisticated lighting, premium tech studio look." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0Mjyd_8p9eBCPDRTo8FT40HSPnlZoAQ0kD-H_-RAT5rvlcEFrFyqv-HCjnVj-C8UOQjZF1pHxMYjZuvVBbWm-vryuwRMc-_cgjK6z1HNgnx-0PoePSkO0-AD_cwFZr9hkf3YbDejFy69tyIurFvXyjpUDTEsMK1itEfUtUd1yqTBpVynQsj9BCC_vfy1_8Xs6DWZ-sRRLmt9l6ifAuGB6Rtb-otopjgYzAEsMAl8YGInXJmialduCwQ')"></div>
+<span class="text-secondary text-xs font-bold uppercase tracking-widest">Future of Learning</span>
+<h4 class="font-headline-sm text-primary mt-2 group-hover:text-secondary transition-colors">Implementing AI without losing the human educator.</h4>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-xl px-margin-desktop max-w-max-width mx-auto mb-xl">
+<div class="bg-primary text-white rounded-[48px] p-xl text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+
+</div>
+<div class="relative z-10 max-w-2xl mx-auto space-y-md">
+<h2 class="font-display-lg text-headline-lg">You bring the education vision. We help you build what it can become.</h2>
+<p class="font-body-lg text-on-primary-container">Let's talk about your next learning experience.</p>
+<div class="pt-md">
+<button class="bg-secondary text-white px-xl py-md rounded-xl font-label-md hover:bg-secondary-fixed transition-all text-lg shadow-xl shadow-secondary/20">Book a discovery call</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full rounded-t-xl bg-surface-container-low border-t border-outline-variant/20 pt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-xl px-margin-desktop pb-xl max-w-max-width mx-auto">
+<div class="space-y-md">
+<div class="flex items-center gap-xs">
+<img alt="XO Edu Lab Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4czTto4nMhruIKKlj08i4MFCmn27uoxRMM8QUSG-gdprO0igQ4GhPizchrR7dnkhL5pUryt8moFjISD8yO8hVpOOIw9a3wQrZRL5ISfo__d_S2J6t8yz3Xypd3z1LtASnAYkDvI19vH0beLy6Hg4aAa-LKKIT7wDFXhKdpk2mAdpYs5kaotSbkrdKnmS-ajLGvfQ0elrrORjSR8zOWRFG_AHHpnnY8Xj0hGegk5gwvzv-JP2uSIwQAA"/>
+<span class="font-headline-md text-headline-md font-bold text-primary">XO Edu Lab</span>
+</div>
+<p class="font-body-md text-on-surface-variant">Building better education, one meaningful product at a time.</p>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:opacity-70">share</span>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:opacity-70">language</span>
+<span class="material-symbols-outlined text-secondary cursor-pointer hover:opacity-70">mail</span>
+</div>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md uppercase tracking-widest">Solutions</h5>
+<ul class="space-y-sm">
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Why XO</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Solutions</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Our Process</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md uppercase tracking-widest">For Creators</h5>
+<ul class="space-y-sm">
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">For Educators</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">For EdTech Teams</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Insights</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md uppercase tracking-widest">Company</h5>
+<ul class="space-y-sm">
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Terms of Service</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline transition-all font-body-md" href="#">Contact Us</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-outline-variant/10 py-md px-margin-desktop text-center">
+<p class="font-body-md text-on-surface-variant text-sm">© 2024 XO Edu Lab. Space to Become.</p>
+</div>
+</footer>
+<script>
+        // Minimal scroll interaction for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('py-2');
+                header.classList.remove('py-sm');
+            } else {
+                header.classList.add('py-sm');
+                header.classList.remove('py-2');
+            }
+        });
+    </script>
+</body></html>

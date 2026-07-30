@@ -12,6 +12,7 @@ class ProjectsSeeder extends Seeder
     {
         $this->seedTopThi();
         $this->seedMsd();
+        $this->seedHanQuocNori();
     }
 
     private function seedTopThi(): void
@@ -171,6 +172,105 @@ class ProjectsSeeder extends Seeder
 <p><em>Specific figures (learner counts, completion rate, certificates issued) will be added once confirmed with real data from MSD.</em></p>',
             'meta_title' => 'MSD Learning Platform — An Online Learning Platform for Sustainable Development',
             'meta_description' => 'MSD Learning Platform case study: a community-training LMS protecting copyrighted video content and measuring social impact among disadvantaged learners.',
+        ]);
+    }
+
+    // HanQuocNori — theo docs/hanquocnori/*.md (project/business/technical overview).
+    // status = published: dự án đã vận hành nhiều năm (migrations 2020–2022), không có
+    // dữ liệu nhạy cảm kiểu MSD. Không seed metrics vì tài liệu nguồn không có số liệu
+    // vận hành thật (users, doanh thu, tỷ lệ hoàn thành...) — đừng bịa số, điền qua CMS
+    // khi có số liệu thật từ chủ dự án. featured_image/og_image để trống, cần ảnh chụp
+    // màn hình thật.
+    private function seedHanQuocNori(): void
+    {
+        if (ProjectTranslation::where('slug', 'hanquocnori')->exists()) {
+            return;
+        }
+
+        $project = Project::create(['status' => 'published', 'published_at' => now()]);
+
+        $project->translations()->create([
+            'locale' => 'vi',
+            'slug' => 'hanquocnori',
+            'title' => 'HanQuocNori — Nền tảng học tiếng Hàn trực tuyến toàn diện',
+            'excerpt' => 'Xây dựng nền tảng EdTech học tiếng Hàn trọn gói: LMS, thi trực tuyến, thương mại điện tử và lớp học 1-1 với giáo viên qua video call.',
+            'problem' => '<p>HanQuocNori cần một nền tảng học tiếng Hàn trực tuyến vận hành như một hệ sinh thái hoàn chỉnh thay vì chỉ là một website khóa học đơn thuần. Bài toán đặt ra gồm:</p>
+<ul>
+<li>Quản lý nội dung học tập đa dạng (video DASH streaming, audio, tài liệu) theo cấu trúc khóa học → bài học → bài tập, với 6 loại bài tập khác nhau (trắc nghiệm, điền từ, nghe hiểu, đọc hiểu, dịch thuật, hội thoại) và flashcard từ vựng.</li>
+<li>Vận hành một hệ thống thi trực tuyến độc lập (ExamMeta → Exam → ExamConfig → ExamSchedule → TakeExam) với chấm điểm tự động cho trắc nghiệm và quy trình chấm tay cho phần tự luận.</li>
+<li>Triển khai thương mại điện tử đầy đủ: giỏ hàng, 3 phương thức thanh toán (online, COD, MoMo), mã giảm giá, và một chương trình affiliate cho phép người dùng giới thiệu và nhận hoa hồng.</li>
+<li>Tổ chức lớp học 1-1 với giáo viên: đặt lịch theo slot khả dụng, quản lý số buổi học còn lại của từng học viên, gọi video trực tiếp, và ràng buộc thời gian hủy lịch.</li>
+<li>Quản trị nội dung và người dùng ở quy mô lớn, hỗ trợ đa ngôn ngữ (Việt, Anh, Hàn) và thông báo real-time giữa giáo viên và học viên.</li>
+</ul>',
+            'solution_text' => '<h3>Kiến trúc hệ thống</h3>
+<p>Hệ thống được xây dựng theo mô hình 3 lớp: <strong>api-hanquocnori</strong> (Laravel 7) là API trung tâm xử lý toàn bộ nghiệp vụ, <strong>front-hanquocnori</strong> (Nuxt.js 2, SSR) là website công khai phục vụ người học, và <strong>admin-hanquocnori</strong> (Vue.js 2 + Vuetify) là khu vực quản trị nội bộ với hơn 300 màn hình và 100+ route quản lý.</p>
+<p>Phía backend áp dụng Repository Pattern kết hợp Service Layer (Controller → Service → Repository → Eloquent Model), với 76 model, 47+ repository và 186 migration — tách bạch rõ ràng giữa xử lý nghiệp vụ và truy xuất dữ liệu để dễ mở rộng qua nhiều năm vận hành.</p>
+<h3>LMS lõi: Khóa học – Bài học – Bài tập – Flashcard</h3>
+<p>Nội dung được tổ chức theo Khóa học → Bài học (video DASH streaming, audio, văn bản) → Bài tập (6 loại: trắc nghiệm, điền từ, nghe hiểu, đọc hiểu, dịch thuật, hội thoại). Tiến độ học tập được tính theo từng bài học rồi tổng hợp lên tiến độ khóa học, với cache Redis theo từng người dùng để tối ưu tốc độ tải menu bài học.</p>
+<h3>Hệ thống thi trực tuyến độc lập</h3>
+<p>Một phân hệ thi được thiết kế riêng với cấu trúc phân cấp ExamMeta (kỳ thi) → Exam (đề thi) → ExamConfig (cấu hình nghe/đọc/viết) → ExamSchedule (lịch thi) → TakeExam (lần thi của học viên). Bài trắc nghiệm được chấm điểm tự động ngay khi nộp bài; bài tự luận được đánh dấu chờ và có màn hình riêng cho giáo viên/admin chấm thủ công. Hệ thống cũng cung cấp bảng xếp hạng theo điểm thi.</p>
+<h3>Thương mại điện tử & Affiliate</h3>
+<p>Luồng mua hàng hỗ trợ khóa học, sách và combo, với 3 phương thức thanh toán (chuyển khoản, COD, MoMo qua webhook callback) và cơ chế áp mã giảm giá/affiliate được kiểm tra thời hạn, số lần sử dụng và ràng buộc không tự dùng mã của chính mình. Khi thanh toán MoMo thành công, hệ thống tự động cấp quyền truy cập khóa học (CourseManager) với ngày kích hoạt và ngày hết hạn.</p>
+<h3>Lớp học 1-1 & video call</h3>
+<p>Học viên mua gói buổi học (ComboCoursesOneOne), sau đó đặt lịch vào các slot giáo viên mở sẵn (BookLesson), với ràng buộc không trùng lịch và chỉ được hủy trước một khoảng thời gian cấu hình được. Video call 1-1 được tích hợp qua Stringee bằng JWT token sinh riêng cho từng phiên học, kèm cơ chế lưu lại conversation ID để tra cứu ghi hình, và học viên đánh giá buổi học/giáo viên sau khi kết thúc.</p>
+<h3>Real-time, cache & queue</h3>
+<p>Thông báo real-time (đặt lịch, hủy lịch, tin nhắn) được đẩy qua Pusher. Các tác vụ tốn thời gian — gửi email xác nhận mua hàng, gửi email hủy lịch học, xử lý/mã hóa video — chạy nền qua Laravel Queue với Redis, vận hành production bằng Supervisor.</p>
+<h3>Công nghệ sử dụng</h3>
+<ul>
+<li><strong>Backend:</strong> Laravel 7, PHP 7.2+, JWT (tymon/jwt-auth), Laravel Socialite (Facebook/Google OAuth), Redis, AWS S3, Pusher, Guzzle.</li>
+<li><strong>Admin:</strong> Vue.js 2, Vuetify 2, Vuex, CKEditor 5, Vee-validate, Chart.js.</li>
+<li><strong>Front:</strong> Nuxt.js 2 (SSR), Vuetify, Vuex (35 module), nuxt-i18n, Video.js + videojs-contrib-dash + dashjs, Pusher-js, Google Analytics/GTM, sitemap tự động.</li>
+<li><strong>Tích hợp:</strong> MoMo (thanh toán), Stringee (video call), Infusionsoft CRM, PayPal, Facebook/Google OAuth.</li>
+</ul>',
+            'result' => '<ul>
+<li>Một nền tảng EdTech vận hành liên tục nhiều năm, tích hợp trọn vẹn LMS, thi trực tuyến, thương mại điện tử và lớp học 1-1 trong cùng một hệ sinh thái thay vì các hệ thống rời rạc.</li>
+<li>Quy trình cấp quyền truy cập khóa học, chấm thi trắc nghiệm và thanh toán MoMo được tự động hóa hoàn toàn, giảm tải thao tác thủ công cho đội vận hành.</li>
+<li>Kiến trúc Repository + Service Layer rõ ràng giúp hệ thống mở rộng ổn định qua hàng trăm màn hình quản trị và hàng chục nghiệp vụ khác nhau trong suốt vòng đời dự án.</li>
+</ul>',
+            'meta_title' => 'HanQuocNori — Nền tảng học tiếng Hàn trực tuyến toàn diện',
+            'meta_description' => 'Case study HanQuocNori: nền tảng EdTech học tiếng Hàn với LMS, thi trực tuyến, thương mại điện tử và lớp học 1-1 qua video call.',
+        ]);
+
+        $project->translations()->create([
+            'locale' => 'en',
+            'slug' => 'hanquocnori',
+            'title' => 'HanQuocNori — A Comprehensive Online Korean Learning Platform',
+            'excerpt' => 'Building a full-stack Korean-learning EdTech platform: LMS, online exams, e-commerce, and 1-on-1 video classes with teachers.',
+            'problem' => '<p>HanQuocNori needed an online Korean-learning platform that runs as a complete ecosystem rather than a simple course website. The core problems to solve were:</p>
+<ul>
+<li>Managing diverse learning content (DASH-streamed video, audio, documents) structured as course → lesson → exercise, with 6 exercise types (multiple choice, fill-in-the-blank, listening, reading, translation, dialogue) plus vocabulary flashcards.</li>
+<li>Running a standalone online exam system (ExamMeta → Exam → ExamConfig → ExamSchedule → TakeExam) with automatic grading for multiple-choice sections and a manual grading workflow for essay sections.</li>
+<li>Delivering full e-commerce: shopping cart, three payment methods (online transfer, COD, MoMo), discount codes, and an affiliate program letting users refer others and earn commission.</li>
+<li>Running 1-on-1 teacher classes: booking against available time slots, tracking each learner\'s remaining lesson credits, live video calls, and cancellation-deadline rules.</li>
+<li>Administering content and users at scale, with multi-language support (Vietnamese, English, Korean) and real-time notifications between teachers and learners.</li>
+</ul>',
+            'solution_text' => '<h3>System architecture</h3>
+<p>The system follows a three-layer model: <strong>api-hanquocnori</strong> (Laravel 7) is the central API handling all business logic, <strong>front-hanquocnori</strong> (Nuxt.js 2, SSR) is the public learner-facing website, and <strong>admin-hanquocnori</strong> (Vue.js 2 + Vuetify) is the internal admin area with 300+ screens and 100+ management routes.</p>
+<p>The backend follows a Repository Pattern combined with a Service Layer (Controller → Service → Repository → Eloquent Model), with 76 models, 47+ repositories, and 186 migrations — a clear separation between business logic and data access that kept the system maintainable across years of operation.</p>
+<h3>Core LMS: courses, lessons, exercises, flashcards</h3>
+<p>Content is organized as Course → Lesson (DASH-streamed video, audio, text) → Exercise (6 types: multiple choice, fill-in-the-blank, listening, reading, translation, dialogue). Learning progress is computed per lesson and rolled up to course-level progress, with per-user Redis caching to keep the lesson menu fast.</p>
+<h3>Standalone online exam system</h3>
+<p>A dedicated exam module uses a hierarchical structure: ExamMeta (overall exam event) → Exam (specific test) → ExamConfig (listening/reading/writing configuration) → ExamSchedule → TakeExam (a learner\'s attempt). Multiple-choice answers are graded automatically on submission; essay answers are flagged as pending and routed to a dedicated screen for teachers/admins to grade manually. The system also provides a leaderboard ranked by exam score.</p>
+<h3>E-commerce & affiliate program</h3>
+<p>The purchase flow covers courses, books, and bundles, with three payment methods (bank transfer, COD, and MoMo via webhook callback) and a discount/affiliate-code engine that validates expiry, usage limits, and a rule preventing users from applying their own affiliate code. On a successful MoMo payment, the system automatically grants course access (CourseManager) with an activation date and expiration date.</p>
+<h3>1-on-1 classes & video calling</h3>
+<p>Learners purchase a lesson-credit package (ComboCoursesOneOne), then book into teacher-published time slots (BookLesson), with double-booking prevention and a configurable cancellation deadline. 1-on-1 video calling is integrated via Stringee using a JWT token generated per session, with the conversation ID stored for recording lookup, and learners rate the session/teacher afterward.</p>
+<h3>Real-time, caching & queues</h3>
+<p>Real-time notifications (bookings, cancellations, messages) are pushed via Pusher. Time-consuming tasks — purchase confirmation emails, cancellation emails, video processing — run in the background via Laravel Queue with Redis, operated in production through Supervisor.</p>
+<h3>Technology stack</h3>
+<ul>
+<li><strong>Backend:</strong> Laravel 7, PHP 7.2+, JWT (tymon/jwt-auth), Laravel Socialite (Facebook/Google OAuth), Redis, AWS S3, Pusher, Guzzle.</li>
+<li><strong>Admin:</strong> Vue.js 2, Vuetify 2, Vuex, CKEditor 5, Vee-validate, Chart.js.</li>
+<li><strong>Front:</strong> Nuxt.js 2 (SSR), Vuetify, Vuex (35 modules), nuxt-i18n, Video.js + videojs-contrib-dash + dashjs, Pusher-js, Google Analytics/GTM, automatic sitemap.</li>
+<li><strong>Integrations:</strong> MoMo (payment), Stringee (video calling), Infusionsoft CRM, PayPal, Facebook/Google OAuth.</li>
+</ul>',
+            'result' => '<ul>
+<li>An EdTech platform that has run continuously for years, integrating LMS, online exams, e-commerce, and 1-on-1 classes into a single ecosystem instead of disconnected systems.</li>
+<li>Course-access provisioning, multiple-choice grading, and MoMo payment confirmation are fully automated, reducing manual operational overhead.</li>
+<li>The Repository + Service Layer architecture scaled cleanly across hundreds of admin screens and dozens of distinct business flows over the project\'s lifetime.</li>
+</ul>',
+            'meta_title' => 'HanQuocNori — A Comprehensive Online Korean Learning Platform',
+            'meta_description' => 'HanQuocNori case study: a Korean-learning EdTech platform with LMS, online exams, e-commerce, and 1-on-1 video classes.',
         ]);
     }
 }
