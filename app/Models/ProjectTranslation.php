@@ -16,14 +16,53 @@ class ProjectTranslation extends Model
         'slug',
         'title',
         'excerpt',
-        'problem',
-        'solution_text',
-        'result',
+        'hero_eyebrow',
+        'hero_cta_label',
+        'hero_cta_url',
+        'hero_badges',
+        'hero_stats',
+        'snapshot_items',
+        'scale_heading',
+        'scale_description',
+        'scale_stats',
+        'challenges_heading',
+        'challenges_description',
+        'challenges',
+        'feature_map_heading',
+        'feature_groups',
+        'journey_heading',
+        'journey_steps',
+        'gallery_heading',
+        'gallery_categories',
+        'architecture_heading',
+        'architecture_layers',
+        'tech_stack_groups',
+        'results_heading',
+        'results',
+        'lessons_quote',
+        'lessons_citation',
         'meta_title',
         'meta_description',
         'og_image',
         'canonical_url',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'hero_badges' => 'array',
+            'hero_stats' => 'array',
+            'snapshot_items' => 'array',
+            'scale_stats' => 'array',
+            'challenges' => 'array',
+            'feature_groups' => 'array',
+            'journey_steps' => 'array',
+            'gallery_categories' => 'array',
+            'architecture_layers' => 'array',
+            'tech_stack_groups' => 'array',
+            'results' => 'array',
+        ];
+    }
 
     public function project(): BelongsTo
     {
@@ -47,9 +86,6 @@ class ProjectTranslation extends Model
             'slug' => $this->slug,
             'title' => $this->title,
             'excerpt' => $this->excerpt,
-            'problem' => $this->problem,
-            'solution_text' => $this->solution_text,
-            'result' => $this->result,
         ];
     }
 }

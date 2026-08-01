@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HanQuocNori Case Study - XO Edu Lab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#0053db",
+                        "surface-container-highest": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "background": "#f8f9ff",
+                        "tertiary-container": "#996100",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0b1c30",
+                        "primary-container": "#2563eb",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "surface": "#f8f9ff",
+                        "secondary": "#006c49",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container": "#e5eeff",
+                        "secondary-container": "#6cf8bb",
+                        "on-surface-variant": "#434655",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-bright": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#004ac6",
+                        "on-secondary-container": "#00714d",
+                        "tertiary": "#784b00",
+                        "on-tertiary-container": "#ffeedd",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-surface": "#0b1c30",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-primary-fixed": "#00174b",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "xl": "80px",
+                        "margin-mobile": "16px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "sm": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "caption": ["Be Vietnam Pro"],
+                        "display-lg-mobile": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .premium-shadow { box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04); }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0px 10px 30px rgba(37, 99, 235, 0.08); }
+        .timeline-connector { position: relative; }
+        .timeline-connector::after { content: ''; position: absolute; top: 1rem; left: 2rem; right: -2rem; height: 2px; border-top: 2px dashed #E2E8F0; z-index: 0; }
+        .timeline-item:last-child .timeline-connector::after { display: none; }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        body { background-color: #f8f9ff; }
+    </style>
+</head>
+<body class="font-body-md text-on-surface selection:bg-primary-container selection:text-white">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-7xl mx-auto left-0 right-0 bg-surface/80 backdrop-blur-md shadow-sm">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">XO Edu Lab</div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Portfolio</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Services</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Insights</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">About</a>
+</nav>
+<button class="bg-primary text-white px-md py-xs rounded-xl font-label-sm text-label-sm hover:bg-primary-container transition-all">Get in touch</button>
+</header>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop mb-xl">
+<div class="grid lg:grid-cols-2 gap-xl items-center">
+<div class="space-y-sm">
+<span class="text-primary font-bold tracking-widest uppercase font-label-sm text-label-sm">EdTech / Learning Platform</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight">HanQuocNori - Nền tảng học Tiếng Hàn tương tác</h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg max-w-xl">Giải pháp toàn diện tối ưu hóa hành trình chinh phục tiếng Hàn, kết hợp công nghệ LMS tiên tiến và trải nghiệm học tập game hóa.</p>
+<div class="flex flex-wrap gap-xs pt-base">
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">school</span> LMS
+                        </span>
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">quiz</span> Online Exam
+                        </span>
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">video_call</span> Video Call
+                        </span>
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">payments</span> Commerce
+                        </span>
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">monitoring</span> Analytics
+                        </span>
+<span class="bg-surface-container px-sm py-base rounded-full text-primary font-medium text-caption flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px]">shield</span> Security
+                        </span>
+</div>
+<div class="flex gap-md pt-md">
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-sm text-label-sm hover:shadow-lg transition-shadow">Dùng thử demo</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md pt-lg border-t border-outline-variant/30 mt-md">
+<div>
+<div class="font-headline-md text-headline-md text-primary">50,000+</div>
+<div class="font-caption text-caption text-on-surface-variant">Learners</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary">300+</div>
+<div class="font-caption text-caption text-on-surface-variant">Admin Screens</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary">98%</div>
+<div class="font-caption text-caption text-on-surface-variant">Satisfaction</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary">24/7</div>
+<div class="font-caption text-caption text-on-surface-variant">Uptime</div>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-0 bg-primary-container/10 rounded-[32px] blur-3xl transform -rotate-3 group-hover:rotate-0 transition-transform"></div>
+<div class="relative bg-white p-sm rounded-[32px] premium-shadow overflow-hidden">
+<img class="w-full aspect-[4/3] object-cover rounded-[24px]" data-alt="A premium, clean, and modern web application dashboard interface for a Korean language learning platform. The UI features a left sidebar, a progress tracker with circular charts, a calendar of upcoming live classes, and a vibrant list of interactive vocabulary cards. The color palette is dominated by soft blues and whites with subtle green accents. High-quality 3D minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmyq8diuHDpG7DZZDU-a4PbZ_Isfq6N0r3cTTOwvLBwNUSugRyxZ3X6Jo34ZpbnGjRdnj2kJD8vsTlpjZIMjcPCccEw28IbKNst-jkqAQOGtQV46ZbJRZOESu-tvqxX9U1PP9yP7oG2zCEtoeF9d4UScgPCbKVLrnFDiFD10z7RMxFjUIcM3_cFEUnUBixkUty4u0P5G8EhCzEK8TYk-yLNG4GSTCgm8yWm1lcV3KkbYOCnTDeGzBW"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Snapshot -->
+<section class="bg-surface-container-low py-xl">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-gutter">
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">category</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Industry</div>
+<div class="font-label-sm text-label-sm font-bold">EdTech</div>
+</div>
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">devices</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Type</div>
+<div class="font-label-sm text-label-sm font-bold">Platform</div>
+</div>
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">person_search</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Role</div>
+<div class="font-label-sm text-label-sm font-bold">Design, Dev</div>
+</div>
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Duration</div>
+<div class="font-label-sm text-label-sm font-bold">3 Years</div>
+</div>
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">code</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Tech</div>
+<div class="font-label-sm text-label-sm font-bold">Laravel, Nuxt</div>
+</div>
+<div class="bg-white p-md rounded-xl premium-shadow space-y-xs">
+<span class="material-symbols-outlined text-primary">translate</span>
+<div class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter">Languages</div>
+<div class="font-label-sm text-label-sm font-bold">VN, EN, KR</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Scale -->
+<section class="py-xl max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md mb-lg">Quy mô hệ thống</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">6</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Core Modules</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">42</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Advanced Features</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">300+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Admin Screens</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">12</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Integrations</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">2.4M</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">API Requests/Day</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">850+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Learning Assets</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">15</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Sub-platforms</div>
+</div>
+<div class="p-md rounded-2xl border border-outline-variant bg-white hover-lift">
+<div class="text-primary font-display-lg text-display-lg leading-none mb-xs">99.9%</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Service Availability</div>
+</div>
+</div>
+</section>
+<!-- The Challenge -->
+<section class="py-xl bg-surface-container">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="mb-lg max-w-2xl">
+<h2 class="font-headline-md text-headline-md mb-xs">Thách thức bài toán</h2>
+<p class="text-on-surface-variant">Chúng tôi đối mặt với những vấn đề cốt lõi khi xây dựng một hệ thống giáo dục quy mô lớn và đa người dùng.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<div class="bg-white p-lg rounded-2xl premium-shadow space-y-sm">
+<div class="w-12 h-12 rounded-full bg-error-container text-error flex items-center justify-center">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<h3 class="font-headline-md text-[20px]">Scaling Learning</h3>
+<p class="font-caption text-caption text-on-surface-variant">Duy trì tốc độ phản hồi dưới 200ms khi xử lý hàng ngàn lượt học tương tác đồng thời trên mobile và web.</p>
+</div>
+<div class="bg-white p-lg rounded-2xl premium-shadow space-y-sm">
+<div class="w-12 h-12 rounded-full bg-surface-tint/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<h3 class="font-headline-md text-[20px]">Complex Workflows</h3>
+<p class="font-caption text-caption text-on-surface-variant">Quản lý hơn 300 màn hình quản trị với logic phân quyền và xử lý dữ liệu phức tạp từ CRM đến LMS.</p>
+</div>
+<div class="bg-white p-lg rounded-2xl premium-shadow space-y-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined">security_update_good</span>
+</div>
+<h3 class="font-headline-md text-[20px]">Security &amp; Integrity</h3>
+<p class="font-caption text-caption text-on-surface-variant">Chống gian lận trong thi cử online và bảo vệ bản quyền nội dung video, tài liệu học tập của đối tác.</p>
+</div>
+<div class="bg-white p-lg rounded-2xl premium-shadow space-y-sm lg:col-span-2">
+<div class="flex flex-col md:flex-row gap-lg">
+<div class="flex-1 space-y-sm">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<h3 class="font-headline-md text-[20px]">Legacy Migration</h3>
+<p class="font-caption text-caption text-on-surface-variant">Chuyển đổi dữ liệu từ hệ thống cũ sang kiến trúc microservices mà không làm gián đoạn việc học của người dùng hiện hữu.</p>
+</div>
+<div class="flex-1 space-y-sm">
+<div class="w-12 h-12 rounded-full bg-primary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">language</span>
+</div>
+<h3 class="font-headline-md text-[20px]">Multilingual UX</h3>
+<p class="font-caption text-caption text-on-surface-variant">Đảm bảo trải nghiệm người dùng mượt mà trên 3 ngôn ngữ với các ký tự đặc biệt từ bảng chữ cái Hangeul.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Map -->
+<section class="py-xl max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md mb-lg text-center">Bản đồ chức năng</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-sm">
+<!-- Card 1 -->
+<div class="p-md rounded-2xl bg-white border border-outline-variant hover:border-primary transition-colors">
+<h4 class="font-label-sm text-label-sm font-bold text-primary mb-sm">Learning</h4>
+<ul class="space-y-xs text-caption text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Interactive Video</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Flashcards</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Gamified Progress</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> PDF Viewer</li>
+</ul>
+<div class="mt-md pt-sm border-t border-outline-variant text-[10px] font-bold text-outline">12 FEATURES</div>
+</div>
+<!-- Card 2 -->
+<div class="p-md rounded-2xl bg-white border border-outline-variant hover:border-primary transition-colors">
+<h4 class="font-label-sm text-label-sm font-bold text-primary mb-sm">Examination</h4>
+<ul class="space-y-xs text-caption text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Anti-cheat Engine</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Auto Grading</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Timer Controls</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Question Bank</li>
+</ul>
+<div class="mt-md pt-sm border-t border-outline-variant text-[10px] font-bold text-outline">8 FEATURES</div>
+</div>
+<!-- Card 3 -->
+<div class="p-md rounded-2xl bg-white border border-outline-variant hover:border-primary transition-colors">
+<h4 class="font-label-sm text-label-sm font-bold text-primary mb-sm">Commerce</h4>
+<ul class="space-y-xs text-caption text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> VNPay/Momo</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Coupon Engine</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Invoicing</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Subscriptions</li>
+</ul>
+<div class="mt-md pt-sm border-t border-outline-variant text-[10px] font-bold text-outline">6 FEATURES</div>
+</div>
+<!-- Card 4 -->
+<div class="p-md rounded-2xl bg-white border border-outline-variant hover:border-primary transition-colors">
+<h4 class="font-label-sm text-label-sm font-bold text-primary mb-sm">Teacher</h4>
+<ul class="space-y-xs text-caption text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Live Classroom</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Grading Tools</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Chat &amp; Forum</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Attendance</li>
+</ul>
+<div class="mt-md pt-sm border-t border-outline-variant text-[10px] font-bold text-outline">10 FEATURES</div>
+</div>
+<!-- Card 5 -->
+<div class="p-md rounded-2xl bg-white border border-outline-variant hover:border-primary transition-colors">
+<h4 class="font-label-sm text-label-sm font-bold text-primary mb-sm">Admin</h4>
+<ul class="space-y-xs text-caption text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> RBAC Permissions</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> BI Dashboards</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Content CMS</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span> Audit Logs</li>
+</ul>
+<div class="mt-md pt-sm border-t border-outline-variant text-[10px] font-bold text-outline">150+ MODULES</div>
+</div>
+</div>
+</section>
+<!-- Product Journey -->
+<section class="py-xl bg-background overflow-x-auto">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop min-w-[1000px]">
+<h2 class="font-headline-md text-headline-md mb-xl text-center">Hành trình người học</h2>
+<div class="flex justify-between relative">
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">1</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Khám phá</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Tìm kiếm khóa học &amp; Tư vấn lộ trình</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">2</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Đăng ký</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Thanh toán &amp; Kích hoạt khóa học</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">3</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Nhập môn</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Học lý thuyết qua Video &amp; Flashcard</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">4</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Thực hành</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Làm bài tập tương tác tức thì</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">5</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Kiểm tra</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Thi đánh giá năng lực định kỳ</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">6</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Báo cáo</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Phân tích tiến độ học tập</div>
+</div>
+</div>
+<div class="flex-1 timeline-item group">
+<div class="timeline-connector flex flex-col items-center text-center space-y-sm z-10 relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-caption">7</div>
+<div class="font-label-sm text-label-sm font-bold text-on-surface">Hoàn thành</div>
+<div class="text-[10px] text-on-surface-variant max-w-[120px]">Cấp chứng nhận &amp; Chinh phục mục tiêu</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Solution Modules -->
+<section class="py-xl space-y-xl max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Module 1 -->
+<div class="flex flex-col lg:flex-row gap-xl items-center">
+<div class="w-full lg:w-1/2 space-y-sm order-2 lg:order-1">
+<h3 class="font-headline-md text-headline-md text-primary">Interactive Video Player</h3>
+<p class="text-on-surface-variant">Hệ thống video tích hợp câu hỏi tương tác ngay giữa bài giảng, buộc người học phải tham gia chủ động thay vì xem thụ động.</p>
+<ul class="space-y-xs pt-base">
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">play_arrow</span> Nhúng câu hỏi tại bất kỳ thời điểm nào</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">speed</span> Tùy chỉnh tốc độ &amp; chất lượng video</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">subtitles</span> Hỗ trợ đa ngôn ngữ subtitle song song</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">sync_alt</span> Đồng bộ tiến trình trên tất cả thiết bị</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">report_problem</span> Tự động ghi lại điểm yếu của học viên</li>
+</ul>
+<details class="group border border-outline-variant rounded-xl p-md bg-surface-container-low transition-all">
+<summary class="list-none flex justify-between items-center cursor-pointer font-label-sm text-label-sm font-bold text-on-surface">
+<span>Technical Notes</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-sm text-caption text-on-surface-variant">
+                            Sử dụng HLS (HTTP Live Streaming) để tối ưu băng thông và bảo mật nội dung. Phối hợp với Socket.io để ghi nhận tương tác real-time từ học viên lên database.
+                        </div>
+</details>
+</div>
+<div class="w-full lg:w-1/2 order-1 lg:order-2">
+<img class="w-full rounded-2xl premium-shadow" data-alt="A high-resolution interface of an interactive video player for language learning. The video shows a teacher explaining Korean grammar, and the player is paused with a multiple-choice question overlay. The sidebar displays a list of lessons and a progress bar. The aesthetic is clean, professional, and uses soft blue and white tones consistent with the corporate modern educational style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_tIUriQOMxwhxqsPi3LF4rt0_38FUsDxJ-C5YZeCBY20fHGX-XxznNi_rrEF3PFMTa1UCBjux29Ufch52MluX2OrViQozDdjNn7cHRO0lXQjx0gX8PLY1USyak0MIJU3CI3ZRTneO32LxkuGbc9OxWXgrzVclihQdw-g6xM-1PVNMgjcnplKbCIBJuuWB4FkZNu-Fe4fBuSeX_gVJb_s4pPrQfD4Jb5Fwp8Gw8ktwBLxsPv2zRltg"/>
+</div>
+</div>
+<!-- Module 2 -->
+<div class="flex flex-col lg:flex-row gap-xl items-center">
+<div class="w-full lg:w-1/2">
+<img class="w-full rounded-2xl premium-shadow" data-alt="A sophisticated data visualization dashboard for educational administrators. The screen displays various KPI cards for student enrollment, revenue trends, and teacher performance metrics. Colorful charts and tables provide detailed insights into system usage and learning outcomes. Minimalist layout with plenty of whitespace and high-quality UI elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1Szxk_87U0gRjUB8dZYQgu5DwSdpvM8a3urNjfUNriAedLwksvhGpSAcCRmXiBPhTRRzd7muIvm-7B2r56DzYs-SRDll8hKmqGRidqkvhUOAtMeH10sON4AYIsMnJA0PCJXRg5Bp9TC8yr_ohRkEYaZNxP6DBa96BUCEIqXZMB_632bXa2XrKA9DOcAoS8fqfgYD1r3RAHRzuKtlyjoZprkB7vq3QiPmv3MerRN5H1fDcXw_3CpOp"/>
+</div>
+<div class="w-full lg:w-1/2 space-y-sm">
+<h3 class="font-headline-md text-headline-md text-primary">Comprehensive Admin Portal</h3>
+<p class="text-on-surface-variant">Hệ thống quản trị trung tâm cho phép vận hành toàn bộ doanh nghiệp giáo dục từ nhân sự, nội dung đến tài chính.</p>
+<ul class="space-y-xs pt-base">
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">analytics</span> Dashboard BI báo cáo thời gian thực</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">verified_user</span> Phân quyền Role-based Access Control (RBAC)</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">inventory_2</span> Quản lý kho nội dung khổng lồ (CMS)</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">receipt_long</span> Tự động xuất hóa đơn &amp; báo cáo thuế</li>
+<li class="flex items-center gap-sm font-body-md text-body-md"><span class="material-symbols-outlined text-primary">notifications_active</span> Hệ thống CRM thông báo nhắc học viên</li>
+</ul>
+<details class="group border border-outline-variant rounded-xl p-md bg-surface-container-low transition-all">
+<summary class="list-none flex justify-between items-center cursor-pointer font-label-sm text-label-sm font-bold text-on-surface">
+<span>Technical Notes</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-sm text-caption text-on-surface-variant">
+                            Xây dựng trên nền tảng kiến trúc Micro-frontend để tách biệt các module quản trị, cho phép nhiều team phát triển độc lập mà không gây ảnh hưởng lẫn nhau.
+                        </div>
+</details>
+</div>
+</div>
+</section>
+<!-- Product Gallery -->
+<section class="py-xl bg-surface-container-highest">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-lg">
+<h2 class="font-headline-md text-headline-md mb-xs">Giao diện sản phẩm</h2>
+<div class="flex justify-center gap-md mt-sm">
+<button class="bg-primary text-white px-md py-xs rounded-full text-caption font-bold">Learning</button>
+<button class="bg-white text-on-surface-variant px-md py-xs rounded-full text-caption font-bold border border-outline-variant">Examination</button>
+<button class="bg-white text-on-surface-variant px-md py-xs rounded-full text-caption font-bold border border-outline-variant">Administration</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<img class="rounded-xl premium-shadow w-full aspect-video object-cover" data-alt="A modern and interactive language learning mobile app interface showing a Korean vocabulary quiz with gamified elements like points, streaks, and progress bars. The background is a soft light blue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzlFYWhMk-a9Gxvp7Qwm5K8s2_QOb7plxVm7SHQxwdHtFwhkewhNnQvYeoOmSyMkzIvn1xkMD8PwZG_DTVFNElfVXZhcabyNFqwsB_fCGdRI7mdBEpoiRSPyNYUwBBqpNtLhif6jYFLiBq8BgGDJCu8UWNmmDeRDPv7_4gFOkjnFJNCscyFonmZblRFiGgANpl2Yu_Gqm0sa2WBQTlUYDg62sI2tVQMTh_0GczIIwJMSYOUmO2rKGz"/>
+<img class="rounded-xl premium-shadow w-full aspect-video object-cover" data-alt="A clean online examination interface with a countdown timer, a question navigation pane, and a rich-text input area for writing answers. Professional and focus-oriented design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqIAWCbCzAjhT1v4f2Nf3unZJ7tE_ESfMurgSoSNst6443laIBDhAlNmvs1mLYXguf2mgT8RoKFNv7MIJpVECGNHRz-2WEL7ITVHX5kvwojKdkpO1yrHhBm2yJxuUujLWZ2_dXBAluqtyxnpwoH6JRz4jr02zl0Xyr5l_fm-unGuumDOxQjqldYqNd3QxLh4wuM1pj8eUr2MeQPsKqo4_lS5jmvnUE20ZEMC_t3eKXrV9J9OxbRFH0"/>
+<img class="rounded-xl premium-shadow w-full aspect-video object-cover" data-alt="A student profile page showing detailed learning analytics, badges earned, and upcoming course recommendations in a visually appealing card-based layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO1963gWL4s1Ya2NVJP1TZBUBOjJ2MYuYxrpDi6S6N1BmzUy5ZYagCZwcGcIsdV9ak31q5lZN3sMj-38sZuqYfvsBbqE-AZ_ibDzeHOWlIT_udH55e_SDI_SMcwvM2-2dnQslTTVkEy2cMwaS8ac5uABBNaEaJUGqnX6rf-Q6mSYrTyKYSQE0zlNHO8_4vSkww34im3oFW-Ln_P9KJnBH0HFnJd_pZjlcn4CsFPye8o4jeDolKmiUX"/>
+</div>
+</div>
+</section>
+<!-- Technical Architecture -->
+<section class="py-xl max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md mb-lg text-center">Kiến trúc kỹ thuật</h2>
+<div class="bg-white p-lg rounded-[32px] premium-shadow border border-outline-variant overflow-x-auto">
+<div class="flex flex-col md:flex-row items-center justify-between min-w-[800px] gap-sm">
+<div class="flex flex-col items-center gap-xs p-md border border-outline-variant rounded-xl w-40 bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">smartphone</span>
+<div class="font-label-sm text-label-sm font-bold">Frontend</div>
+<div class="text-[10px] text-on-surface-variant">Nuxt.js / Vue</div>
+</div>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+<div class="flex flex-col items-center gap-xs p-md border border-outline-variant rounded-xl w-40 bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">api</span>
+<div class="font-label-sm text-label-sm font-bold">API Gateway</div>
+<div class="text-[10px] text-on-surface-variant">REST / GraphQL</div>
+</div>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+<div class="flex flex-col items-center gap-xs p-md border border-outline-variant rounded-xl w-40 bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">settings_applications</span>
+<div class="font-label-sm text-label-sm font-bold">Services</div>
+<div class="text-[10px] text-on-surface-variant">Laravel / Node.js</div>
+</div>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+<div class="flex flex-col items-center gap-xs p-md border border-outline-variant rounded-xl w-40 bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">database</span>
+<div class="font-label-sm text-label-sm font-bold">Database</div>
+<div class="text-[10px] text-on-surface-variant">MySQL / Redis</div>
+</div>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+<div class="flex flex-col items-center gap-xs p-md border border-outline-variant rounded-xl w-40 bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">cloud</span>
+<div class="font-label-sm text-label-sm font-bold">Infra</div>
+<div class="text-[10px] text-on-surface-variant">AWS / Docker</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technology Stack -->
+<section class="py-xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-xl">
+<div class="space-y-sm">
+<h4 class="font-label-sm text-label-sm font-bold text-primary border-b border-primary/20 pb-xs">Backend</h4>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Laravel 10</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">PHP 8.2</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">MySQL</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Redis</span>
+</div>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-sm text-label-sm font-bold text-primary border-b border-primary/20 pb-xs">Frontend</h4>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Nuxt.js</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Vue.js</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Tailwind CSS</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Vite</span>
+</div>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-sm text-label-sm font-bold text-primary border-b border-primary/20 pb-xs">Infra</h4>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">AWS (EC2, S3)</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Docker</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">GitHub Actions</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Nginx</span>
+</div>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-sm text-label-sm font-bold text-primary border-b border-primary/20 pb-xs">Integration</h4>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">VNPay / Momo</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Firebase</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">Twilio</span>
+<span class="bg-white px-sm py-base rounded-lg border border-outline-variant text-caption font-medium">AWS SQS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Results & Impact -->
+<section class="py-xl max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md mb-lg text-center">Kết quả &amp; Tác động</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-primary text-on-primary p-lg rounded-2xl premium-shadow flex flex-col justify-between h-48">
+<span class="material-symbols-outlined text-[40px]">bolt</span>
+<div>
+<div class="font-display-lg text-display-lg leading-none">100%</div>
+<div class="font-label-sm text-label-sm opacity-80">Automatic Grading</div>
+</div>
+</div>
+<div class="bg-secondary text-on-secondary p-lg rounded-2xl premium-shadow flex flex-col justify-between h-48">
+<span class="material-symbols-outlined text-[40px]">trending_down</span>
+<div>
+<div class="font-display-lg text-display-lg leading-none">-40%</div>
+<div class="font-label-sm text-label-sm opacity-80">Reduced Ops Costs</div>
+</div>
+</div>
+<div class="bg-white text-on-surface p-lg rounded-2xl premium-shadow border border-outline-variant flex flex-col justify-between h-48">
+<span class="material-symbols-outlined text-primary text-[40px]">architecture</span>
+<div>
+<div class="font-headline-md text-headline-md">Scalable</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Architecture Readiness</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Lessons Learned -->
+<section class="py-xl max-w-4xl mx-auto px-margin-mobile">
+<div class="bg-surface-container-high p-xl rounded-[40px] text-center relative overflow-hidden">
+<div class="absolute -top-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
+<span class="material-symbols-outlined text-primary text-[48px] mb-md">format_quote</span>
+<blockquote class="font-headline-md text-headline-md italic text-on-surface mb-lg">
+                    "Tại XO Edu Lab, chúng tôi học được rằng: Một kiến trúc hệ thống bền vững quan trọng hơn việc chạy theo danh sách tính năng. Tính năng mang lại khách hàng, nhưng kiến trúc mới là thứ giữ chân họ qua thời gian."
+                </blockquote>
+<cite class="font-label-sm text-label-sm font-bold text-primary">— Đội ngũ Thiết kế &amp; Kỹ thuật XO</cite>
+</div>
+</section>
+<!-- Related Projects -->
+<section class="py-xl bg-background">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md mb-lg">Các dự án liên quan</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-white rounded-2xl overflow-hidden premium-shadow group cursor-pointer">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Screenshot of an AI-powered education platform dashboard with personalized learning paths and recommendation engines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmfvkMzTAcpDShNkNYuWMjyg9f9J30vOhsF_NuBfD0tXoPgvVix4IvqLpHOfT3BVdE8-oV0A8FusptqBXafY6fsTkUD61VS2H7oHF-Gr2bdTPUcFExPa6183Vpx9jM5pES9d4BsRg224ljKC42dsJCft6AE_f6Gqm-F8NlCL59RKhrJIY0cQwU8LMl2rUB85Rc6LFBF_l6WnHgxADa7FtylEW74xKHx__DL8f56vQiVlfNjk6l3nOS"/>
+</div>
+<div class="p-md space-y-xs">
+<div class="text-primary font-bold text-caption uppercase">AI Learning</div>
+<h4 class="font-label-sm text-label-sm font-bold">EduAI - Cá nhân hóa học tập</h4>
+</div>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden premium-shadow group cursor-pointer">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean corporate portal interface for employee training and certification management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIS3CSGrlkbcieoipZYf2jgFtlQZJKKkwtUyNIvMHF9TGAuYtI3liw1dbdPU7QY-j4hVJLramVzX23l3Wbyd_GGzPvKd7Y1rWpID7jNa_w3v6cTt6QQlLm4jsk6OwRQW_ZzZIrrmF1fXpvIa672AjJusGEJO29XdRxqZIR707afOYU-0jy-YbB5o1Z7y3T-GGmu3Etn647wvf7yeaMgujAQBP45rniW4J67BLWUjed7PCRnu5vyrWB"/>
+</div>
+<div class="p-md space-y-xs">
+<div class="text-primary font-bold text-caption uppercase">Corporate Ed</div>
+<h4 class="font-label-sm text-label-sm font-bold">B2B Training Platform</h4>
+</div>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden premium-shadow group cursor-pointer">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A vibrant and colorful mobile app design for young children to learn basic math and reading through games." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2CGodeppZk3dU8SeZI_O7f6jNEg86qztIatIyNEW7qwpit-llza8jqUUZfQ2CuzM0LM8pTXOxhwRElxjZZEB_1c25IWy_gyYj-FZxW6iPdM0lmGKgMGFK_KwPfVDys3ako-KrFS9rOdHtiZVfjH3IL5t6tkBw2xaivjqvunTGTQqOPVFzhaHr6u7RcKfDfptFNJUfS4m3fCksIELQUkgF6pmiDE__Az_kwnUgrUuKq9zPrbQjABVT"/>
+</div>
+<div class="p-md space-y-xs">
+<div class="text-primary font-bold text-caption uppercase">K-12 Solution</div>
+<h4 class="font-label-sm text-label-sm font-bold">KiddieLearn Mobile App</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-xl mb-xl">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="bg-primary rounded-[48px] p-xl text-center space-y-md relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+
+</div>
+<div class="relative z-10">
+<h2 class="font-display-lg text-display-lg text-on-primary">Sẵn sàng xây dựng sản phẩm giáo dục của bạn?</h2>
+<p class="text-on-primary/80 font-body-lg text-body-lg max-w-2xl mx-auto">Hãy để chúng tôi đồng hành cùng bạn biến những ý tưởng giáo dục đột phá thành hiện thực số hóa.</p>
+<div class="pt-md">
+<button class="bg-white text-primary px-xl py-sm rounded-full font-label-sm text-label-sm font-bold hover:bg-surface-container-low transition-colors shadow-xl">Book a Consultation</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-xl flex flex-col md:flex-row justify-between items-start gap-gutter">
+<div class="space-y-sm">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">XO Edu Lab</div>
+<p class="font-caption text-caption text-on-surface-variant max-w-xs">© 2024 XO Edu Lab. Space to Become.</p>
+</div>
+<div class="grid grid-cols-2 gap-xl">
+<div class="space-y-xs">
+<h5 class="font-label-sm text-label-sm font-bold text-primary">Quick Links</h5>
+<ul class="space-y-base font-caption text-caption text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Case Studies</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Our Process</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div class="space-y-xs">
+<h5 class="font-label-sm text-label-sm font-bold text-primary">Connect</h5>
+<ul class="space-y-base font-caption text-caption text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">LinkedIn</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Behance</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Facebook</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.hover-lift').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProjectSectionImage extends Model
+class ProjectGalleryImage extends Model
 {
-    protected $fillable = ['project_id', 'section', 'image_url', 'sort_order'];
+    protected $fillable = ['project_id', 'category_key', 'image_url', 'sort_order'];
 
     public function project(): BelongsTo
     {
