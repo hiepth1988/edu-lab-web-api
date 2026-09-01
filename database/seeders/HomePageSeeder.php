@@ -109,7 +109,7 @@ class HomePageSeeder extends Seeder
                         'eyebrow' => 'Space to Become',
                         'secondary_cta_label' => 'Tìm hiểu cách XO làm việc',
                         'secondary_cta_url' => '/about',
-                        'quote' => 'Dành cho nhà giáo dục, đội ngũ đào tạo và nhà sáng lập EdTech muốn xây dựng giáo dục một cách bài bản.',
+                        'quote' => 'Giáo dục không nên chuẩn hóa con người. Nó nên giúp con người khám phá điều họ có thể trở thành.',
                     ],
                 ],
                 'en' => [
@@ -121,7 +121,7 @@ class HomePageSeeder extends Seeder
                         'eyebrow' => 'Space to Become',
                         'secondary_cta_label' => 'Explore how we work',
                         'secondary_cta_url' => '/about',
-                        'quote' => 'For educators, training teams, and EdTech founders who want to build education properly.',
+                        'quote' => 'Education should not standardize people. It should help them discover what they can become.',
                     ],
                 ],
             ],
@@ -183,6 +183,7 @@ class HomePageSeeder extends Seeder
             ],
             'solutions' => [
                 'sort_order' => 4,
+                'is_active' => false,
                 'vi' => [
                     'heading' => 'Giải pháp',
                     'body' => 'LMS, Online Exam, School Management, AI Education, Learning Analytics, Adaptive Learning',
@@ -196,8 +197,11 @@ class HomePageSeeder extends Seeder
                     'cta_url' => '/solutions',
                 ],
             ],
+            // Superseded by 'process' (single unified lifecycle) — kept inactive instead of
+            // deleted so the historical copy isn't lost.
             'journey' => [
                 'sort_order' => 5,
+                'is_active' => false,
                 'vi' => [
                     'heading' => 'Không gian để người kiến tạo giáo dục trở nên tốt hơn.',
                     'extra' => [
@@ -228,7 +232,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'tech_capability' => [
-                'sort_order' => 6,
+                'sort_order' => 4,
                 'vi' => [
                     'heading' => 'Mọi thứ cần thiết để xây một sản phẩm giáo dục hoàn chỉnh.',
                     'body' => 'Một hệ sinh thái năng lực theo module, đảm bảo tầm nhìn của bạn không chỉ ra mắt mà còn phát triển bền vững.',
@@ -255,9 +259,9 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'process' => [
-                'sort_order' => 7,
+                'sort_order' => 5,
                 'vi' => [
-                    'heading' => 'Quy trình XO',
+                    'heading' => 'Một quy trình duy nhất, từ ý tưởng đến mở rộng quy mô.',
                     'body' => 'XO không chỉ xây dựng; chúng tôi đồng hành cùng bạn qua một phương pháp có cấu trúc, hướng tới sự xuất sắc trong giáo dục.',
                     'extra' => [
                         'phases' => [
@@ -265,12 +269,14 @@ class HomePageSeeder extends Seeder
                             ['n' => '02', 'title' => 'Định hình', 'body' => 'Phác thảo hành trình người học và tech stack.'],
                             ['n' => '03', 'title' => 'Thiết kế', 'body' => 'Tạo mẫu và lặp lại trải nghiệm.'],
                             ['n' => '04', 'title' => 'Xây dựng', 'body' => 'Sản xuất nội dung và phát triển ứng dụng.'],
-                            ['n' => '05', 'title' => 'Cải tiến', 'body' => 'Tăng trưởng sau ra mắt và tối ưu kỹ thuật.'],
+                            ['n' => '05', 'title' => 'Đo lường', 'body' => 'Theo dõi hành vi học tập và hiệu quả sau ra mắt.'],
+                            ['n' => '06', 'title' => 'Cải tiến', 'body' => 'Tối ưu kỹ thuật và trải nghiệm dựa trên dữ liệu thật.'],
+                            ['n' => '07', 'title' => 'Mở rộng', 'body' => 'Nhân rộng sản phẩm cho nhiều đối tượng và quy mô hơn.'],
                         ],
                     ],
                 ],
                 'en' => [
-                    'heading' => 'The XO Process',
+                    'heading' => 'One process, from idea to scale.',
                     'body' => "We don't just build; we partner with you through a structured methodology designed for education excellence.",
                     'extra' => [
                         'phases' => [
@@ -278,13 +284,15 @@ class HomePageSeeder extends Seeder
                             ['n' => '02', 'title' => 'Define', 'body' => 'Blueprint the learner journey and tech stack.'],
                             ['n' => '03', 'title' => 'Design', 'body' => 'Iterative prototyping of the experience.'],
                             ['n' => '04', 'title' => 'Build', 'body' => 'Production of content and development of the app.'],
-                            ['n' => '05', 'title' => 'Improve', 'body' => 'Post-launch growth and technical optimization.'],
+                            ['n' => '05', 'title' => 'Measure', 'body' => 'Track learning behavior and post-launch performance.'],
+                            ['n' => '06', 'title' => 'Improve', 'body' => 'Refine the tech and experience based on real data.'],
+                            ['n' => '07', 'title' => 'Scale', 'body' => 'Extend the product to more audiences and volume.'],
                         ],
                     ],
                 ],
             ],
             'scale' => [
-                'sort_order' => 8,
+                'sort_order' => 7,
                 'vi' => [
                     'heading' => 'Từ một khóa học đến cả một hệ sinh thái học tập.',
                     'extra' => [
@@ -309,7 +317,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'partnership' => [
-                'sort_order' => 9,
+                'sort_order' => 10,
                 'vi' => [
                     'heading' => 'Cách chúng tôi hợp tác',
                     'extra' => [
@@ -331,8 +339,10 @@ class HomePageSeeder extends Seeder
                     ],
                 ],
             ],
+            // Content merged into hero.extra.quote — kept inactive instead of deleted.
             'philosophy' => [
-                'sort_order' => 10,
+                'sort_order' => 99,
+                'is_active' => false,
                 'vi' => [
                     'body' => 'Giáo dục không nên chuẩn hóa con người. Nó nên giúp con người khám phá điều họ có thể trở thành.',
                     'extra' => ['cite' => 'Tuyên ngôn XO'],
@@ -343,7 +353,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'research_lab' => [
-                'sort_order' => 11,
+                'sort_order' => 8,
                 'vi' => [
                     'heading' => 'Research Lab',
                     'body' => 'Knowledge Graph, Brain-based Learning, Student Behavior, Human Potential',
@@ -358,7 +368,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'our_work' => [
-                'sort_order' => 12,
+                'sort_order' => 6,
                 'vi' => [
                     'heading' => 'Dự án của chúng tôi',
                     'body' => 'TopThi và các dự án có thể công khai/ẩn danh — chứng minh năng lực thực chiến.',
@@ -373,7 +383,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'latest_insights' => [
-                'sort_order' => 13,
+                'sort_order' => 9,
                 'vi' => [
                     'heading' => 'Bài viết mới nhất',
                     'body' => '',
@@ -388,7 +398,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'final_cta' => [
-                'sort_order' => 14,
+                'sort_order' => 11,
                 'vi' => [
                     'heading' => 'Bạn mang tầm nhìn giáo dục đến. XO giúp bạn xây dựng điều nó có thể trở thành.',
                     'body' => 'Cùng trao đổi về trải nghiệm học tập tiếp theo của bạn.',
@@ -407,7 +417,7 @@ class HomePageSeeder extends Seeder
         foreach ($sections as $key => $section) {
             $model = $page->sections()->updateOrCreate(
                 ['section_key' => $key],
-                ['sort_order' => $section['sort_order'], 'is_active' => true]
+                ['sort_order' => $section['sort_order'], 'is_active' => $section['is_active'] ?? true]
             );
 
             foreach (['vi', 'en'] as $locale) {
