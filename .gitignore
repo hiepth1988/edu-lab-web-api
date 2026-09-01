@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Raw casestudy screenshots contain unredacted PII (learner emails/phones,
+# staff contact info) — never commit. Redacted copies live in the frontend
+# repo under public/images/casestudy/.
+/docs/casestudy/images

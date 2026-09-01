@@ -85,6 +85,22 @@ class ProjectsSeeder extends Seeder
         }
     }
 
+    /**
+     * Creates gallery_images rows (screenshots) for a project.
+     *
+     * @param  array<int, array{category_key: string, image: string}>  $images
+     */
+    private function seedGalleryImages(Project $project, array $images): void
+    {
+        foreach ($images as $index => $image) {
+            $project->galleryImages()->create([
+                'category_key' => $image['category_key'],
+                'image_url' => $image['image'],
+                'sort_order' => $index,
+            ]);
+        }
+    }
+
     // TopThi — theo docs/casestudy/topthi/overview.md + overview_updated.md (2026-08-04).
     // TopThi là "living lab" nội bộ của XO Edu (docs/plans/00-tong-quan-dinh-vi-sitemap.md),
     // không phải dự án cho khách hàng ngoài — nên không cần xin phép public tên/logo như một
@@ -341,6 +357,7 @@ class ProjectsSeeder extends Seeder
         $msd = Project::create([
             'category_id' => $category->id,
             'status' => 'draft',
+            'featured_image' => '/images/casestudy/msd/homepage.png',
             'published_at' => null,
         ]);
 
@@ -390,6 +407,12 @@ class ProjectsSeeder extends Seeder
                 ['title' => 'Làm bài tập', 'description' => 'Quiz, flashcard, tự luận'],
                 ['title' => 'Nhận nhắc nhở', 'description' => 'Thông báo đúng lúc nếu tạm ngưng học'],
                 ['title' => 'Hoàn thành', 'description' => 'Nhận chứng chỉ tự động'],
+            ],
+
+            'gallery_heading' => 'Giao diện nền tảng',
+            'gallery_categories' => [
+                ['key' => 'public', 'label' => 'Cổng học viên'],
+                ['key' => 'admin', 'label' => 'Quản trị nội dung'],
             ],
 
             'lessons_quote' => 'Bảo vệ nội dung và đo lường tác động xã hội có thể cùng tồn tại trong một kiến trúc LMS duy nhất nếu mô hình dữ liệu được thiết kế đúng ngay từ đầu.',
@@ -447,6 +470,12 @@ class ProjectsSeeder extends Seeder
                 ['title' => 'Complete', 'description' => 'Receive an automatic certificate'],
             ],
 
+            'gallery_heading' => 'Platform Screens',
+            'gallery_categories' => [
+                ['key' => 'public', 'label' => 'Learner Portal'],
+                ['key' => 'admin', 'label' => 'Content Admin'],
+            ],
+
             'lessons_quote' => 'Content protection and social-impact measurement can coexist in a single LMS architecture if the data model is designed correctly from day one.',
             'lessons_citation' => '— The XO Engineering Team',
 
@@ -456,6 +485,7 @@ class ProjectsSeeder extends Seeder
 
         $this->seedSolutionModules($msd, [
             [
+                'image' => '/images/casestudy/msd/course-detail-4.png',
                 'vi' => [
                     'title' => 'Bảo vệ nội dung video & phụ đề song ngữ AI',
                     'description' => 'Pipeline xử lý nền: tách phụ đề bằng OpenAI Whisper, dịch song ngữ, gắn watermark, mã hóa HLS.',
@@ -470,6 +500,7 @@ class ProjectsSeeder extends Seeder
                 ],
             ],
             [
+                'image' => '/images/casestudy/msd/admin-certificate-template.png',
                 'vi' => [
                     'title' => 'Chứng chỉ tự động & Đo lường tác động',
                     'description' => 'Chứng chỉ sinh tự động ngay khi hoàn tất khóa học; dữ liệu học viên ghi nhận thêm dân tộc, khuyết tật, trình độ học vấn.',
@@ -483,6 +514,21 @@ class ProjectsSeeder extends Seeder
                     'technical_note' => 'DomPDF + Intervention Image generate certificates; Maatwebsite Excel powers reporting.',
                 ],
             ],
+        ]);
+
+        $this->seedGalleryImages($msd, [
+            ['category_key' => 'public', 'image' => '/images/casestudy/msd/homepage.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/msd/course-catalog.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/msd/course-detail-1.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/msd/course-detail-4.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/msd/faq-page.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-dashboard.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-course-list.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-course-edit-form.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-lesson-detail.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-certificate-template.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-program-management.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/msd/admin-faq-management.png'],
         ]);
     }
 
@@ -502,6 +548,7 @@ class ProjectsSeeder extends Seeder
         $project = Project::create([
             'category_id' => $category->id,
             'status' => 'published',
+            'featured_image' => '/images/casestudy/hanquocnori/homepage.png',
             'published_at' => now(),
         ]);
 
@@ -590,6 +637,12 @@ class ProjectsSeeder extends Seeder
                 ['icon' => 'integration_instructions', 'color' => 'primary', 'value' => 'All-in-one', 'label' => 'LMS + Thi + Thương mại + Lớp 1-1 trong một hệ sinh thái'],
                 ['icon' => 'bolt', 'color' => 'secondary', 'value' => 'Tự động hoá', 'label' => 'Cấp quyền khoá học & thanh toán MoMo'],
                 ['icon' => 'architecture', 'color' => 'gold', 'value' => 'Scalable', 'label' => 'Kiến trúc Repository + Service Layer'],
+            ],
+
+            'gallery_heading' => 'Giao diện nền tảng',
+            'gallery_categories' => [
+                ['key' => 'public', 'label' => 'Website học viên'],
+                ['key' => 'admin', 'label' => 'Quản trị nội dung'],
             ],
 
             'lessons_quote' => 'Kiến trúc Repository kết hợp Service Layer rõ ràng giúp hệ thống mở rộng ổn định qua hàng trăm màn hình quản trị và hàng chục nghiệp vụ khác nhau trong suốt vòng đời dự án.',
@@ -686,6 +739,12 @@ class ProjectsSeeder extends Seeder
                 ['icon' => 'architecture', 'color' => 'gold', 'value' => 'Scalable', 'label' => 'Repository + Service Layer architecture'],
             ],
 
+            'gallery_heading' => 'Platform Screens',
+            'gallery_categories' => [
+                ['key' => 'public', 'label' => 'Learner Website'],
+                ['key' => 'admin', 'label' => 'Content Admin'],
+            ],
+
             'lessons_quote' => 'The Repository + Service Layer architecture scaled cleanly across hundreds of admin screens and dozens of distinct business flows over the project\'s lifetime.',
             'lessons_citation' => '— The XO Engineering Team',
 
@@ -695,6 +754,7 @@ class ProjectsSeeder extends Seeder
 
         $this->seedSolutionModules($project, [
             [
+                'image' => '/images/casestudy/hanquocnori/course-detail.png',
                 'vi' => [
                     'title' => 'LMS lõi & Ngân hàng bài tập',
                     'description' => 'Nội dung tổ chức theo Khóa học → Bài học → Bài tập với 6 loại bài tập khác nhau, cache Redis theo người dùng để tối ưu tốc độ tải.',
@@ -709,6 +769,7 @@ class ProjectsSeeder extends Seeder
                 ],
             ],
             [
+                'image' => '/images/casestudy/hanquocnori/lesson-video-player.png',
                 'vi' => [
                     'title' => 'Thi trực tuyến & Lớp học 1-1',
                     'description' => 'Phân hệ thi độc lập kết hợp lớp học 1-1 qua video call Stringee.',
@@ -723,6 +784,14 @@ class ProjectsSeeder extends Seeder
                 ],
             ],
         ]);
+
+        $this->seedGalleryImages($project, [
+            ['category_key' => 'public', 'image' => '/images/casestudy/hanquocnori/homepage.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/hanquocnori/course-detail.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/hanquocnori/lesson-video-player.png'],
+            ['category_key' => 'public', 'image' => '/images/casestudy/hanquocnori/student-account-payment-history.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/hanquocnori/admin-curriculum.png'],
+        ]);
     }
 
     // Seiko LMS — theo docs/casestudy/seiko/*.md (project/business/technical overview).
@@ -730,8 +799,9 @@ class ProjectsSeeder extends Seeder
     // chung "trung tâm đào tạo ngoại ngữ") và không có dữ liệu nhạy cảm cần xin xác nhận.
     // scale_stats/feature counts dùng các con số kiến trúc đã có sẵn trong tài liệu, không
     // phải số liệu vận hành thật (số học sinh, số lớp, tỷ lệ điểm danh...) — đừng bịa số,
-    // điền qua CMS khi có số liệu thật. featured_image/og_image để trống, cần ảnh chụp
-    // màn hình thật.
+    // điền qua CMS khi có số liệu thật. Ảnh chụp màn hình thật (tên nội bộ "EMS") đã có,
+    // dùng làm featured_image/gallery — các avatar/tên tài khoản admin trong ảnh gốc đã
+    // được che trước khi đưa vào public/.
     private function seedSeiko(Category $category): void
     {
         if (ProjectTranslation::where('slug', 'seiko-lms')->exists()) {
@@ -741,6 +811,7 @@ class ProjectsSeeder extends Seeder
         $project = Project::create([
             'category_id' => $category->id,
             'status' => 'published',
+            'featured_image' => '/images/casestudy/seiko/admin-dashboard.png',
             'published_at' => now(),
         ]);
 
@@ -827,6 +898,11 @@ class ProjectsSeeder extends Seeder
                 ['icon' => 'sync_alt', 'color' => 'primary', 'value' => 'End-to-end', 'label' => 'Số hóa từ tuyển sinh đến báo cáo'],
                 ['icon' => 'bolt', 'color' => 'secondary', 'value' => 'Tự động hoá', 'label' => 'Trạng thái bài tập, điểm danh, nghỉ phép'],
                 ['icon' => 'table_view', 'color' => 'gold', 'value' => 'Không nhập tay', 'label' => 'Import/Export Excel quy mô lớn'],
+            ],
+
+            'gallery_heading' => 'Giao diện quản trị',
+            'gallery_categories' => [
+                ['key' => 'admin', 'label' => 'Quản trị vận hành'],
             ],
 
             'lessons_quote' => 'Số hóa trọn vẹn quy trình vận hành một trung tâm đào tạo ngoại ngữ giúp thay thế các thao tác thủ công rời rạc trước đó bằng một hệ thống nhất quán.',
@@ -921,6 +997,11 @@ class ProjectsSeeder extends Seeder
                 ['icon' => 'table_view', 'color' => 'gold', 'value' => 'No manual entry', 'label' => 'Large-scale Excel import/export'],
             ],
 
+            'gallery_heading' => 'Admin Screens',
+            'gallery_categories' => [
+                ['key' => 'admin', 'label' => 'Operations Admin'],
+            ],
+
             'lessons_quote' => 'Fully digitizing a language training center\'s operations replaced previously disconnected manual processes with one consistent system.',
             'lessons_citation' => '— The XO Engineering Team',
 
@@ -930,6 +1011,7 @@ class ProjectsSeeder extends Seeder
 
         $this->seedSolutionModules($project, [
             [
+                'image' => '/images/casestudy/seiko/admin-student-assessment.png',
                 'vi' => [
                     'title' => 'Học vụ phân cấp & Bài tập/Bài thi',
                     'description' => 'Kỳ học → Khóa học → Lớp học → Buổi học, nơi gắn kết tài liệu, bài tập, bài thi và điểm danh.',
@@ -944,6 +1026,7 @@ class ProjectsSeeder extends Seeder
                 ],
             ],
             [
+                'image' => '/images/casestudy/seiko/admin-leave-approval.png',
                 'vi' => [
                     'title' => 'Điểm danh, nghỉ phép & Import/Export',
                     'description' => 'Điểm danh 5 trạng thái gắn với quy trình xin nghỉ có minh chứng và phê duyệt.',
@@ -957,6 +1040,14 @@ class ProjectsSeeder extends Seeder
                     'technical_note' => 'Import runs as a background Queue Job, verifying email via DNS MX lookup before account creation.',
                 ],
             ],
+        ]);
+
+        $this->seedGalleryImages($project, [
+            ['category_key' => 'admin', 'image' => '/images/casestudy/seiko/admin-dashboard.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/seiko/admin-class-detail.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/seiko/admin-student-assessment.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/seiko/admin-leave-approval.png'],
+            ['category_key' => 'admin', 'image' => '/images/casestudy/seiko/admin-notifications.png'],
         ]);
     }
 
