@@ -129,23 +129,23 @@ class HomePageSeeder extends Seeder
                 'sort_order' => 2,
                 'vi' => [
                     'heading' => 'Kiến thức thôi chưa đủ để tạo ra một sản phẩm học tập tốt.',
-                    'body' => 'Phần lớn sản phẩm học tập số thất bại vì chỉ được xây trên nội dung, thiếu đi những trụ cột cấu trúc tạo ra chuyển đổi thực sự.',
+                    'body' => 'Phần lớn sản phẩm học tập số thất bại không phải vì thiếu nội dung hay, mà vì vướng vào những vấn đề rất cụ thể khi bắt tay xây dựng.',
                     'extra' => [
                         'cards' => [
-                            ['icon' => 'architecture', 'title' => 'Nền tảng chiến lược', 'body' => 'Thiếu product-market fit, mục tiêu rõ ràng và mô hình bền vững, nội dung tốt nhất cũng chỉ dừng ở sở thích cá nhân, không phải sản phẩm.'],
-                            ['icon' => 'neurology', 'title' => 'Kiến trúc học tập', 'body' => 'Học thụ động là kẻ thù của việc học. XO thu hẹp khoảng cách bằng thiết kế chương trình học và khoa học hành vi.'],
-                            ['icon' => 'terminal', 'title' => 'Hệ sinh thái công nghệ', 'body' => 'Công cụ rời rạc tạo ra ma sát. XO xây nền tảng gắn kết, nơi công nghệ phục vụ người học chứ không phải ngược lại.'],
+                            ['icon' => 'trending_down', 'title' => 'Chưa rõ ai sẽ trả tiền để học', 'body' => 'Có chuyên môn tốt nhưng chưa kiểm chứng được mô hình kinh doanh, nội dung dừng lại ở việc chia sẻ miễn phí thay vì trở thành sản phẩm bán được.'],
+                            ['icon' => 'trending_flat', 'title' => 'Học viên bỏ học giữa chừng', 'body' => 'Video hay tài liệu chất lượng không đủ để giữ người học đi hết khóa — thiếu thiết kế chương trình và cơ chế tương tác đúng.'],
+                            ['icon' => 'link_off', 'title' => 'Công cụ rời rạc, vận hành thủ công', 'body' => 'Ghép nhiều phần mềm có sẵn khiến dữ liệu học viên phân mảnh, đội ngũ vận hành mất thời gian làm tay thay vì tập trung vào chất lượng dạy học.'],
                         ],
                     ],
                 ],
                 'en' => [
                     'heading' => 'Knowledge alone does not create a great learning product.',
-                    'body' => "Most digital learning fails because it's built on content alone, missing the structural pillars that drive real transformation.",
+                    'body' => "Most digital learning products fail not from a lack of good content, but from very specific problems that show up once you start building.",
                     'extra' => [
                         'cards' => [
-                            ['icon' => 'architecture', 'title' => 'Strategic Foundation', 'body' => 'Without market fit, clear outcomes, and a sustainable model, even the best content remains a hobby, not a product.'],
-                            ['icon' => 'neurology', 'title' => 'Learning Architecture', 'body' => 'Passive consumption is the enemy of learning. We bridge the gap with curriculum design and behavioral science.'],
-                            ['icon' => 'terminal', 'title' => 'Technical Ecosystem', 'body' => 'Fragmented tools create friction. We build cohesive platforms where technology serves the learner, not the other way around.'],
+                            ['icon' => 'trending_down', 'title' => "Unclear who will pay to learn", 'body' => 'Strong expertise but an unproven business model — content stays a free giveaway instead of becoming a sellable product.'],
+                            ['icon' => 'trending_flat', 'title' => 'Learners drop off midway', 'body' => "Good videos or materials aren't enough to keep learners going — it takes real curriculum design and the right engagement mechanics."],
+                            ['icon' => 'link_off', 'title' => 'Fragmented tools, manual operations', 'body' => 'Stitching together off-the-shelf tools fragments learner data and forces the team to do by hand what should run itself.'],
                         ],
                     ],
                 ],

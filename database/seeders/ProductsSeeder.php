@@ -23,32 +23,32 @@ class ProductsSeeder extends Seeder
             [
                 'slug' => 'exam-engine',
                 'stage' => 'mvp-3-6-months',
-                'vi' => ['name' => 'Exam Engine', 'role_summary' => 'Module tạo đề, làm bài, chấm điểm, phân tích kết quả', 'description' => 'Exam Engine cung cấp toàn bộ vòng đời của một kỳ thi: tạo đề, làm bài, chấm điểm tự động và phân tích kết quả.'],
-                'en' => ['name' => 'Exam Engine', 'role_summary' => 'Module for exam creation, taking, grading and result analysis', 'description' => 'Exam Engine covers the full exam lifecycle: creating exams, taking exams, automatic grading and result analysis.'],
+                'vi' => ['name' => 'Exam Engine', 'role_summary' => 'Tổ chức một kỳ thi trực tuyến hoàn chỉnh, từ ra đề tới có kết quả — không cần đội ngũ kỹ thuật riêng.', 'description' => 'Exam Engine cung cấp toàn bộ vòng đời của một kỳ thi: tạo đề, làm bài, chấm điểm tự động (module tạo đề, làm bài, chấm điểm, phân tích kết quả) và phân tích kết quả.'],
+                'en' => ['name' => 'Exam Engine', 'role_summary' => 'Run a complete online exam, from setting questions to seeing results — with no in-house technical team.', 'description' => 'Exam Engine covers the full exam lifecycle: creating exams, taking exams, automatic grading (question creation, exam taking, grading and result-analysis modules) and result analysis.'],
             ],
             [
                 'slug' => 'question-bank-engine',
                 'stage' => 'mvp-3-6-months',
-                'vi' => ['name' => 'Question Bank Engine', 'role_summary' => 'Quản lý câu hỏi, tag, difficulty, skill, import/export', 'description' => 'Question Bank Engine giúp quản lý ngân hàng câu hỏi ở quy mô lớn với gắn tag độ khó, kỹ năng và import/export hàng loạt.'],
-                'en' => ['name' => 'Question Bank Engine', 'role_summary' => 'Manage questions, tags, difficulty, skill, import/export', 'description' => 'Question Bank Engine manages large-scale question banks with difficulty/skill tagging and bulk import/export.'],
+                'vi' => ['name' => 'Question Bank Engine', 'role_summary' => 'Giữ ngân hàng đề của bạn có tổ chức và tái sử dụng được, dù có hàng chục nghìn câu hỏi.', 'description' => 'Question Bank Engine giúp quản lý ngân hàng câu hỏi ở quy mô lớn với gắn tag độ khó, kỹ năng và import/export hàng loạt.'],
+                'en' => ['name' => 'Question Bank Engine', 'role_summary' => 'Keep your question bank organized and reusable, even at tens of thousands of questions.', 'description' => 'Question Bank Engine manages large-scale question banks with difficulty/skill tagging and bulk import/export.'],
             ],
             [
                 'slug' => 'learning-analytics-platform',
                 'stage' => '6-12-months',
-                'vi' => ['name' => 'Learning Analytics Platform', 'role_summary' => 'Dashboard hành vi học tập, tiến độ, rủi ro bỏ học', 'description' => 'Nền tảng phân tích hành vi học tập, theo dõi tiến độ và cảnh báo sớm rủi ro bỏ học.'],
-                'en' => ['name' => 'Learning Analytics Platform', 'role_summary' => 'Dashboards for learning behavior, progress, dropout risk', 'description' => 'A platform to analyze learning behavior, track progress, and give early warnings for dropout risk.'],
+                'vi' => ['name' => 'Learning Analytics Platform', 'role_summary' => 'Biết học viên nào sắp bỏ học trước khi họ thực sự bỏ học.', 'description' => 'Nền tảng phân tích hành vi học tập, theo dõi tiến độ và cảnh báo sớm rủi ro bỏ học (dashboard hành vi học tập, tiến độ, rủi ro bỏ học).'],
+                'en' => ['name' => 'Learning Analytics Platform', 'role_summary' => 'Know which learners are about to drop off before they actually do.', 'description' => 'A platform to analyze learning behavior, track progress, and give early warnings for dropout risk (dashboards for learning behavior, progress, dropout risk).'],
             ],
             [
                 'slug' => 'ai-learning-engine',
                 'stage' => '9-18-months',
-                'vi' => ['name' => 'AI Learning Engine', 'role_summary' => 'Gợi ý học, phát hiện điểm yếu, cá nhân hóa lộ trình', 'description' => 'AI Learning Engine gợi ý nội dung học tiếp theo, phát hiện điểm yếu và cá nhân hóa lộ trình học tập.'],
-                'en' => ['name' => 'AI Learning Engine', 'role_summary' => 'Recommends content, detects weaknesses, personalizes paths', 'description' => 'AI Learning Engine recommends what to learn next, detects weaknesses, and personalizes learning paths.'],
+                'vi' => ['name' => 'AI Learning Engine', 'role_summary' => 'Mỗi học viên có một lộ trình học khác nhau, tự động điều chỉnh theo năng lực của họ.', 'description' => 'AI Learning Engine gợi ý nội dung học tiếp theo, phát hiện điểm yếu và cá nhân hóa lộ trình học tập.'],
+                'en' => ['name' => 'AI Learning Engine', 'role_summary' => 'Every learner gets a different path, automatically adjusted to their ability.', 'description' => 'AI Learning Engine recommends what to learn next, detects weaknesses, and personalizes learning paths.'],
             ],
             [
                 'slug' => 'knowledge-graph-engine',
                 'stage' => '12-18-months',
-                'vi' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Mapping kiến thức, prerequisite, skill dependency', 'description' => 'Knowledge Graph Engine mô hình hóa mối quan hệ giữa các đơn vị kiến thức, điều kiện tiên quyết và phụ thuộc kỹ năng.'],
-                'en' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Maps knowledge, prerequisites, skill dependencies', 'description' => 'Knowledge Graph Engine models relationships between knowledge units, prerequisites and skill dependencies.'],
+                'vi' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Biết chính xác học viên cần học gì tiếp theo dựa trên những gì họ đã thành thạo.', 'description' => 'Knowledge Graph Engine mô hình hóa mối quan hệ giữa các đơn vị kiến thức, điều kiện tiên quyết và phụ thuộc kỹ năng (knowledge mapping, prerequisite, skill dependency).'],
+                'en' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Know exactly what a learner should study next, based on what they have already mastered.', 'description' => 'Knowledge Graph Engine models relationships between knowledge units, prerequisites and skill dependencies (knowledge mapping, prerequisites, skill dependency).'],
             ],
         ];
 

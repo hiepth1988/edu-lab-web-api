@@ -38,6 +38,7 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'Nền tảng thi trực tuyến cho trường học, trung tâm luyện thi và EdTech startup.',
                     'problem' => 'Thi trực tuyến dễ bị gian lận nếu không có ngân hàng câu hỏi, random đề và giám sát phù hợp.',
                     'solution_overview' => 'Question bank, random exam, random answer, auto grading, chấm tự luận và phân tích kết quả.',
+                    'architecture_note' => 'Chúng tôi xây Online Exam Platform bằng cách kết hợp Exam Engine + Question Bank Engine (hai năng lực lõi trong mục Sản phẩm & Công nghệ) với giao diện tùy chỉnh theo yêu cầu của bạn.',
                     'features' => ['Question bank', 'Random exam', 'Random answer', 'Auto grading', 'Chấm tự luận', 'Analytics', 'Proctoring integration'],
                 ],
                 'en' => [
@@ -45,6 +46,7 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'An online exam platform for schools, test-prep centers and EdTech startups.',
                     'problem' => 'Online exams are prone to cheating without a proper question bank, randomization and proctoring.',
                     'solution_overview' => 'Question bank, randomized exams, randomized answers, auto grading, essay grading and analytics.',
+                    'architecture_note' => 'We build Online Exam Platform by combining Exam Engine + Question Bank Engine (two core capabilities under Products & Technology) with an interface customized to your requirements.',
                     'features' => ['Question bank', 'Random exam', 'Random answer', 'Auto grading', 'Essay grading', 'Analytics', 'Proctoring integration'],
                 ],
             ],
@@ -146,6 +148,7 @@ class SolutionsSeeder extends Seeder
                     'subheading' => $data[$locale]['subheading'],
                     'problem' => $data[$locale]['problem'],
                     'solution_overview' => $data[$locale]['solution_overview'],
+                    'architecture_note' => $data[$locale]['architecture_note'] ?? null,
                     'meta_title' => $data[$locale]['title'],
                     'meta_description' => $data[$locale]['subheading'],
                 ]);
