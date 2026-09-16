@@ -144,6 +144,7 @@ class SolutionController extends Controller
                     'locale' => $locale,
                     'title' => $payload['title'],
                     'description' => $payload['description'] ?? null,
+                    'highlights' => $payload['highlights'] ?? [],
                 ]);
             }
         }

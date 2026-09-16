@@ -91,11 +91,50 @@ class SolutionsSeeder extends Seeder
                         ['question' => 'Con người có vai trò gì trong quy trình?', 'answer' => 'Với các quyết định quan trọng — chấm điểm kỳ thi chính thức, ra đề thi chính thức — XO khuyến nghị và thiết kế hệ thống theo hướng AI hỗ trợ, giáo viên duyệt cuối, không để AI tự động quyết định một mình.'],
                     ],
                     'features' => [
-                        ['title' => 'AI Tutor', 'description' => 'Trợ lý học tập có trạng thái — không chỉ trả lời câu hỏi rời rạc mà theo dõi mức độ thành thạo (mastery) của từng học viên theo từng chủ đề, rồi chọn cách phản hồi phù hợp: gợi mở kiểu Socratic cho học viên khá, giảng trực tiếp cho người mới, hoặc lùi dần ví dụ mẫu cho kỹ năng cần luyện tập. AI Tutor được xây trên cùng lớp dữ liệu cá nhân hoá với Adaptive Learning.'],
-                        ['title' => 'AI Chatbot', 'description' => 'Trợ lý hỏi-đáp cho học viên, phụ huynh hoặc giáo viên — tra cứu nội dung khoá học, chính sách, lịch học, giải đáp thắc mắc thường gặp. Nhẹ hơn AI Tutor: không theo dõi tiến độ học tập, phù hợp làm điểm chạm đầu tiên trước khi đầu tư vào một trợ lý học tập đầy đủ.'],
-                        ['title' => 'AI tạo đề', 'description' => 'Sinh câu hỏi trắc nghiệm/tự luận từ chính tài liệu môn học của bạn (giáo trình, bài tập, đề cũ), có vòng tự kiểm định chất lượng trước khi đưa ra bộ đề cuối. Cách làm này đã được kiểm chứng ở quy mô lớn trong các nghiên cứu thực địa về độ tin cậy của đề thi do AI sinh.'],
-                        ['title' => 'AI chấm luận', 'description' => 'Chấm bài tự luận bằng cách kết hợp nhiều tín hiệu — không chỉ để AI "đọc và cho điểm" một mình. Cách làm cho kết quả gần với người chấm nhất là kết hợp đặc trưng ngôn ngữ (độ khó đọc, ngữ pháp, đa dạng từ vựng) với khả năng hiểu ngữ nghĩa của AI. Với các kỳ thi có tính quyết định, XO khuyến nghị dùng AI để chấm sơ bộ/chấm bài tập thường xuyên, giữ giáo viên làm lớp duyệt cuối.'],
-                        ['title' => 'RAG cho tài liệu học tập', 'description' => 'Nền tảng đứng sau các tính năng AI khác ở trên: thay vì để AI trả lời theo những gì nó "nhớ" chung chung, XO xây hệ thống truy xuất đúng đoạn tài liệu liên quan (sách giáo khoa, bài giảng, ngân hàng câu hỏi của bạn) trước khi để AI trả lời, kèm trích dẫn nguồn để giáo viên/học viên kiểm chứng lại được. Đây là lý do XO không chỉ là "một chatbot đơn giản": chatbot đơn thuần trả lời theo huấn luyện chung, còn hệ thống của XO trả lời theo đúng giáo trình của bạn.'],
+                        [
+                            'title' => 'AI Tutor',
+                            'description' => 'Trợ lý học tập có trạng thái — theo dõi mức độ thành thạo của từng học viên, không chỉ trả lời câu hỏi rời rạc.',
+                            'highlights' => [
+                                'Theo dõi mastery của từng học viên theo từng chủ đề',
+                                'Chọn cách phản hồi phù hợp: gợi mở Socratic cho học viên khá, giảng trực tiếp cho người mới, lùi dần ví dụ mẫu cho kỹ năng cần luyện',
+                                'Dùng chung lớp dữ liệu cá nhân hoá với Adaptive Learning',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI Chatbot',
+                            'description' => 'Trợ lý hỏi-đáp nhẹ cho học viên, phụ huynh hoặc giáo viên — điểm chạm đầu tiên trước khi đầu tư vào AI Tutor đầy đủ.',
+                            'highlights' => [
+                                'Tra cứu nội dung khoá học, chính sách, lịch học, giải đáp thắc mắc thường gặp',
+                                'Không theo dõi tiến độ học tập — nhẹ hơn AI Tutor',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI tạo đề',
+                            'description' => 'Sinh câu hỏi trắc nghiệm/tự luận từ chính tài liệu môn học của bạn, có vòng tự kiểm định chất lượng.',
+                            'highlights' => [
+                                'Bám sát giáo trình, bài tập, đề cũ của bạn — không sinh câu hỏi ngoài phạm vi',
+                                'Tự kiểm định chất lượng trước khi đưa ra bộ đề cuối',
+                                'Cách làm đã được kiểm chứng ở quy mô lớn trong nghiên cứu thực địa về độ tin cậy của đề thi do AI sinh',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI chấm luận',
+                            'description' => 'Chấm bài tự luận bằng cách kết hợp nhiều tín hiệu — không để AI "đọc và cho điểm" một mình.',
+                            'highlights' => [
+                                'Kết hợp đặc trưng ngôn ngữ (độ khó đọc, ngữ pháp, đa dạng từ vựng) với khả năng hiểu ngữ nghĩa của AI',
+                                'Cho kết quả gần với người chấm nhất so với chỉ dùng một tín hiệu',
+                                'Với kỳ thi có tính quyết định: AI chấm sơ bộ/bài tập thường xuyên, giáo viên duyệt cuối',
+                            ],
+                        ],
+                        [
+                            'title' => 'RAG cho tài liệu học tập',
+                            'description' => 'Nền tảng đứng sau mọi tính năng AI ở trên — lý do XO không chỉ là "một chatbot đơn giản".',
+                            'highlights' => [
+                                'Truy xuất đúng đoạn tài liệu liên quan (sách giáo khoa, bài giảng, ngân hàng câu hỏi của bạn) trước khi AI trả lời',
+                                'Luôn kèm trích dẫn nguồn để giáo viên/học viên kiểm chứng lại',
+                                'Chatbot đơn thuần trả lời theo huấn luyện chung — hệ thống của XO trả lời theo đúng giáo trình của bạn',
+                            ],
+                        ],
                     ],
                 ],
                 'en' => [
@@ -120,11 +159,50 @@ class SolutionsSeeder extends Seeder
                         ['question' => "What is the human's role in the process?", 'answer' => 'For high-stakes decisions — grading an official exam, generating an official exam — XO recommends and designs the system so AI assists while a teacher gives final approval; AI never decides alone.'],
                     ],
                     'features' => [
-                        ['title' => 'AI Tutor', 'description' => "A stateful learning assistant — not just answering isolated questions, but tracking each learner's mastery per topic and choosing the right response style: Socratic prompting for stronger learners, direct instruction for beginners, or gradually fading worked examples for a skill in progress. AI Tutor is built on the same personalization data layer as Adaptive Learning."],
-                        ['title' => 'AI Chatbot', 'description' => 'A Q&A assistant for learners, parents or teachers — looking up course content, policies, schedules, and answering common questions. Lighter than AI Tutor: no progress tracking, a good first touchpoint before investing in a full learning assistant.'],
-                        ['title' => 'AI Question Generation', 'description' => "Generates multiple-choice/essay questions from your own subject material (curriculum, exercises, past exams), with a self-verification pass before the final question set ships. This approach has been validated at scale in field studies on AI-generated exam reliability."],
-                        ['title' => 'AI Essay Grading', 'description' => 'Grades essays by combining multiple signals — not just having the AI "read and score" alone. The approach closest to a human grader combines linguistic features (readability, grammar, vocabulary diversity) with the AI\'s semantic understanding. For high-stakes exams, XO recommends using AI for preliminary/routine grading while keeping a teacher as final reviewer.'],
-                        ['title' => 'RAG for Learning Materials', 'description' => 'The foundation behind the other AI features above: instead of letting the AI answer from whatever it generically "remembers," XO builds a retrieval system that surfaces the exact relevant material (textbooks, lectures, your question bank) before the AI answers, with citations so teachers/learners can verify. This is why XO is not "just another simple chatbot": a plain chatbot answers from general training, XO\'s system answers from your actual curriculum.'],
+                        [
+                            'title' => 'AI Tutor',
+                            'description' => 'A stateful learning assistant — tracks each learner\'s mastery instead of just answering isolated questions.',
+                            'highlights' => [
+                                "Tracks each learner's mastery per topic",
+                                'Chooses the right response style: Socratic prompting for stronger learners, direct instruction for beginners, gradually fading worked examples for a skill in progress',
+                                'Built on the same personalization data layer as Adaptive Learning',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI Chatbot',
+                            'description' => 'A lightweight Q&A assistant for learners, parents or teachers — a good first touchpoint before investing in a full AI Tutor.',
+                            'highlights' => [
+                                'Looks up course content, policies, schedules, and answers common questions',
+                                'No progress tracking — lighter than AI Tutor',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI Question Generation',
+                            'description' => 'Generates multiple-choice/essay questions from your own subject material, with a self-verification pass.',
+                            'highlights' => [
+                                'Grounded in your curriculum, exercises and past exams — never generates outside that scope',
+                                'Self-verifies quality before the final question set ships',
+                                'Validated at scale in field studies on AI-generated exam reliability',
+                            ],
+                        ],
+                        [
+                            'title' => 'AI Essay Grading',
+                            'description' => 'Grades essays by combining multiple signals — not just having the AI "read and score" alone.',
+                            'highlights' => [
+                                "Combines linguistic features (readability, grammar, vocabulary diversity) with the AI's semantic understanding",
+                                'Produces results closest to a human grader compared to using a single signal',
+                                'For high-stakes exams: AI handles preliminary/routine grading, a teacher gives final review',
+                            ],
+                        ],
+                        [
+                            'title' => 'RAG for Learning Materials',
+                            'description' => 'The foundation behind every AI feature above — why XO is not "just another simple chatbot".',
+                            'highlights' => [
+                                'Retrieves the exact relevant material (textbooks, lectures, your question bank) before the AI answers',
+                                'Always includes source citations so teachers/learners can verify',
+                                'A plain chatbot answers from general training — XO\'s system answers from your actual curriculum',
+                            ],
+                        ],
                     ],
                 ],
                 'faqs' => [
@@ -252,10 +330,12 @@ class SolutionsSeeder extends Seeder
                 $enTitle = is_array($enFeature) ? $enFeature['title'] : $enFeature;
                 $viDescription = is_array($viFeature) ? ($viFeature['description'] ?? null) : null;
                 $enDescription = is_array($enFeature) ? ($enFeature['description'] ?? null) : null;
+                $viHighlights = is_array($viFeature) ? ($viFeature['highlights'] ?? []) : [];
+                $enHighlights = is_array($enFeature) ? ($enFeature['highlights'] ?? []) : [];
 
                 $feature = $solution->features()->create(['sort_order' => $i]);
-                $feature->translations()->create(['locale' => 'vi', 'title' => $viTitle, 'description' => $viDescription]);
-                $feature->translations()->create(['locale' => 'en', 'title' => $enTitle, 'description' => $enDescription]);
+                $feature->translations()->create(['locale' => 'vi', 'title' => $viTitle, 'description' => $viDescription, 'highlights' => $viHighlights]);
+                $feature->translations()->create(['locale' => 'en', 'title' => $enTitle, 'description' => $enDescription, 'highlights' => $enHighlights]);
             }
 
             // Default FAQ pair used when a solution has no page-specific FAQs of its own

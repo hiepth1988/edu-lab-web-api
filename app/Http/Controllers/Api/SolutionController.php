@@ -72,7 +72,7 @@ class SolutionController extends Controller
                 'features' => $solution->features->map(function ($f) use ($locale) {
                     $ft = $f->translation($locale);
 
-                    return ['title' => $ft?->title, 'description' => $ft?->description];
+                    return ['title' => $ft?->title, 'description' => $ft?->description, 'highlights' => $ft?->highlights ?? []];
                 })->values()->all(),
                 'faqs' => $solution->faqs->map(function ($f) use ($locale) {
                     $ft = $f->translation($locale);

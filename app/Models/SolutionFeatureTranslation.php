@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SolutionFeatureTranslation extends Model
 {
-    protected $fillable = ['solution_feature_id', 'locale', 'title', 'description'];
+    protected $fillable = ['solution_feature_id', 'locale', 'title', 'description', 'highlights'];
+
+    protected function casts(): array
+    {
+        return [
+            'highlights' => 'array',
+        ];
+    }
 
     public function feature(): BelongsTo
     {
