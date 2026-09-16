@@ -28,6 +28,8 @@ class SolutionTranslation extends Model
     protected function casts(): array
     {
         return [
+            'architecture_approach' => 'array',
+            'use_cases' => 'array',
             'trust_safety' => 'array',
         ];
     }
