@@ -16,12 +16,21 @@ class SolutionTranslation extends Model
         'problem',
         'solution_overview',
         'architecture_note',
+        'architecture_approach',
         'use_cases',
+        'trust_safety',
         'meta_title',
         'meta_description',
         'og_image',
         'canonical_url',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'trust_safety' => 'array',
+        ];
+    }
 
     public function solution(): BelongsTo
     {
