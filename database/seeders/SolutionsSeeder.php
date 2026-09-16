@@ -73,15 +73,31 @@ class SolutionsSeeder extends Seeder
                     'title' => 'AI Solutions for Education',
                     'subheading' => 'Đưa AI vào giáo dục cho EdTech startup, trung tâm và trường học.',
                     'problem' => 'Nhiều đơn vị muốn thử AI nhưng chưa biết bắt đầu từ đâu ngoài một chatbot đơn giản.',
-                    'solution_overview' => 'AI tutor, AI chatbot, AI tạo đề, AI chấm luận, AI recommendation và RAG cho tài liệu học tập.',
-                    'features' => ['AI tutor', 'AI chatbot', 'AI tạo đề', 'AI chấm luận', 'AI recommendation', 'RAG tài liệu học tập'],
+                    'solution_overview' => 'AI tutor, AI chatbot, AI tạo đề, AI chấm luận và RAG cho tài liệu học tập.',
+                    'architecture_note' => 'AI tutor là lớp giao diện hội thoại — để cá nhân hóa đúng theo năng lực từng học viên, nó cần dữ liệu mức độ thành thạo và lộ trình học từ Adaptive Learning. Nên triển khai cùng hoặc sau Adaptive Learning và Learning Analytics, không phải trước.',
+                    'features' => ['AI tutor', 'AI chatbot', 'AI tạo đề', 'AI chấm luận', 'RAG tài liệu học tập'],
                 ],
                 'en' => [
                     'title' => 'AI Solutions for Education',
                     'subheading' => 'Bringing AI into education for EdTech startups, centers and schools.',
                     'problem' => 'Many organizations want to try AI but do not know where to start beyond a simple chatbot.',
-                    'solution_overview' => 'AI tutor, AI chatbot, AI question generation, AI essay grading, AI recommendation and RAG for learning materials.',
-                    'features' => ['AI tutor', 'AI chatbot', 'AI question generation', 'AI essay grading', 'AI recommendation', 'RAG for learning materials'],
+                    'solution_overview' => 'AI tutor, AI chatbot, AI question generation, AI essay grading and RAG for learning materials.',
+                    'architecture_note' => 'The AI tutor is a conversational interface layer — to personalize correctly for each learner, it needs mastery and learning-path data from Adaptive Learning. It should be deployed alongside or after Adaptive Learning and Learning Analytics, not before.',
+                    'features' => ['AI tutor', 'AI chatbot', 'AI question generation', 'AI essay grading', 'RAG for learning materials'],
+                ],
+                'faqs' => [
+                    [
+                        'vi' => ['question' => 'AI chấm luận/chấm đề có chính xác đến mức nào?', 'answer' => 'AI đưa ra điểm và nhận xét đề xuất, nhưng giáo viên luôn có quyền xem lại và chỉnh sửa trước khi công bố cho học viên — không có luồng nào chấm điểm hoàn toàn tự động mà con người không kiểm soát được.'],
+                        'en' => ['question' => 'How accurate is AI grading?', 'answer' => 'AI produces a suggested score and feedback, but teachers can always review and adjust it before it reaches learners — no flow grades fully automatically without human oversight.'],
+                    ],
+                    [
+                        'vi' => ['question' => 'Dữ liệu học sinh được xử lý và lưu trữ ra sao?', 'answer' => 'Dữ liệu bài làm và tương tác của học sinh chỉ dùng để tạo phản hồi cho chính học sinh đó và cải thiện chất lượng gợi ý, không chia sẻ cho bên thứ ba; chi tiết lưu trữ/xử lý được thống nhất theo yêu cầu bảo mật cụ thể của từng dự án.'],
+                        'en' => ['question' => 'How is student data processed and stored?', 'answer' => 'Student submissions and interaction data are used only to generate feedback for that student and improve recommendation quality — never shared with third parties; exact storage/processing details are agreed per project based on your security requirements.'],
+                    ],
+                    [
+                        'vi' => ['question' => 'Vai trò của giáo viên/con người trong vòng lặp AI là gì?', 'answer' => 'Giáo viên là người duyệt cuối cùng cho mọi kết quả AI tạo ra (đề thi, điểm chấm luận, gợi ý học tập) — AI hỗ trợ giảm khối lượng công việc lặp lại, không thay thế vai trò ra quyết định của giáo viên.'],
+                        'en' => ['question' => 'What is the human/teacher role in the AI loop?', 'answer' => 'Teachers are the final reviewer for anything AI produces (generated questions, essay scores, learning suggestions) — AI reduces repetitive workload, it does not replace the teacher\'s decision-making role.'],
+                    ],
                 ],
             ],
             [
@@ -91,6 +107,7 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'Dữ liệu học tập cho đơn vị đã có LMS/exam nhưng thiếu dữ liệu ra quyết định.',
                     'problem' => 'Có LMS và exam nhưng không biết học viên nào có nguy cơ bỏ học cho tới khi đã quá muộn.',
                     'solution_overview' => 'Dashboard theo dõi tiến độ, hành vi học tập, retention, completion rate và dashboard cho giáo viên.',
+                    'architecture_note' => 'Dữ liệu hành vi học tập ở đây là nền tảng đầu vào cho AI Education (gợi ý cá nhân hóa) và Adaptive Learning (lộ trình theo năng lực) — nên triển khai Learning Analytics trước hai giải pháp đó để có dữ liệu sẵn sàng.',
                     'features' => ['Student progress', 'Learning behavior', 'Retention', 'Completion rate', 'Teacher dashboard'],
                 ],
                 'en' => [
@@ -98,7 +115,18 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'Learning data for organizations that have LMS/exam but lack decision-ready data.',
                     'problem' => 'You have an LMS and exams but do not know which learners are at risk until it is too late.',
                     'solution_overview' => 'Dashboards for progress, learning behavior, retention, completion rate and teacher dashboards.',
+                    'architecture_note' => 'The learning-behavior data captured here is the foundational input for AI Education (personalized recommendations) and Adaptive Learning (ability-based paths) — deploy Learning Analytics first so that data is ready.',
                     'features' => ['Student progress', 'Learning behavior', 'Retention', 'Completion rate', 'Teacher dashboard'],
+                ],
+                'faqs' => [
+                    [
+                        'vi' => ['question' => 'Cần bao nhiêu dữ liệu học viên trước khi dashboard có ý nghĩa?', 'answer' => 'Dashboard hiển thị được ngay từ những lượt học đầu tiên, nhưng các chỉ báo rủi ro bỏ học (retention) cần tối thiểu vài tuần dữ liệu hành vi để đạt độ tin cậy tốt.'],
+                        'en' => ['question' => 'How much learner data is needed before the dashboard is meaningful?', 'answer' => 'The dashboard shows data from the first learning sessions, but dropout-risk signals need at least a few weeks of behavior data to become reliable.'],
+                    ],
+                    [
+                        'vi' => ['question' => 'Learning Analytics có bắt buộc trước khi làm AI Education/Adaptive Learning không?', 'answer' => 'Không bắt buộc phải tách thành 2 dự án riêng biệt — hoàn toàn có thể triển khai đồng thời — nhưng phần thu thập dữ liệu hành vi cần đi vào vận hành trước để các mô-đun AI phía sau có dữ liệu để học và gợi ý.'],
+                        'en' => ['question' => 'Is Learning Analytics required before building AI Education/Adaptive Learning?', 'answer' => 'You do not need two separate sequential projects — they can be delivered together — but the behavior-data collection piece needs to go live first so the AI modules downstream have data to learn from and recommend on.'],
+                    ],
                 ],
             ],
             [
@@ -108,6 +136,7 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'Cá nhân hóa học tập cho nền tảng muốn tối ưu lộ trình theo từng học viên.',
                     'problem' => 'Lộ trình học "một cỡ cho tất cả" không phù hợp với năng lực khác nhau của từng học viên.',
                     'solution_overview' => 'Knowledge graph, skill mapping, phát hiện điểm yếu, cá nhân hóa lộ trình và recommendation.',
+                    'architecture_note' => 'Đây là hạ tầng cá nhân hóa đứng sau AI tutor và mọi trải nghiệm học tập cần gợi ý theo năng lực — AI Education dùng lại dữ liệu và mô hình từ đây thay vì xây riêng một lớp recommendation khác.',
                     'features' => ['Knowledge graph', 'Skill mapping', 'Weakness detection', 'Personalized learning path', 'Recommendation'],
                 ],
                 'en' => [
@@ -115,7 +144,18 @@ class SolutionsSeeder extends Seeder
                     'subheading' => 'Personalized learning for platforms that want to tailor paths per learner.',
                     'problem' => 'A one-size-fits-all learning path does not match learners with different ability levels.',
                     'solution_overview' => 'Knowledge graph, skill mapping, weakness detection, personalized learning paths and recommendations.',
+                    'architecture_note' => 'This is the personalization infrastructure behind the AI tutor and any learning experience that needs ability-based suggestions — AI Education reuses this data and model instead of building a separate recommendation layer.',
                     'features' => ['Knowledge graph', 'Skill mapping', 'Weakness detection', 'Personalized learning path', 'Recommendation'],
+                ],
+                'faqs' => [
+                    [
+                        'vi' => ['question' => 'Cần bao nhiêu dữ liệu để knowledge graph hoạt động tốt?', 'answer' => 'Knowledge graph khởi tạo được ngay từ khung chương trình có sẵn (không cần dữ liệu học viên), nhưng phần phát hiện điểm yếu và gợi ý cá nhân hóa cần dữ liệu hành vi thực tế — nên triển khai cùng Learning Analytics.'],
+                        'en' => ['question' => 'How much data does the knowledge graph need to work well?', 'answer' => 'The knowledge graph can be seeded from your existing curriculum structure with no learner data, but weakness detection and personalized suggestions need real behavior data — best deployed alongside Learning Analytics.'],
+                    ],
+                    [
+                        'vi' => ['question' => 'Adaptive Learning khác gì với AI tutor của AI Education?', 'answer' => 'Adaptive Learning là hạ tầng dữ liệu và mô hình quyết định "học viên nên học gì tiếp theo"; AI Education dùng lại chính hạ tầng đó để tạo ra trải nghiệm hội thoại (chatbot/tutor) cho học viên — không phải hai hệ thống recommendation tách biệt.'],
+                        'en' => ['question' => 'How is Adaptive Learning different from the AI tutor in AI Education?', 'answer' => 'Adaptive Learning is the data and model layer that decides "what should this learner study next"; AI Education reuses that same layer to power a conversational experience (chatbot/tutor) for learners — not two separate recommendation systems.'],
+                    ],
                 ],
             ],
             [
@@ -160,7 +200,10 @@ class SolutionsSeeder extends Seeder
                 $feature->translations()->create(['locale' => 'en', 'title' => $data['en']['features'][$i] ?? $viFeature]);
             }
 
-            $faqs = [
+            // Default FAQ pair used when a solution has no page-specific FAQs of its own
+            // (checklist #12: AI Education / Learning Analytics / Adaptive Learning each
+            // have risk-specific FAQs defined above instead of this generic pair).
+            $defaultFaqs = [
                 [
                     'vi' => ['question' => 'Thời gian triển khai mất bao lâu?', 'answer' => 'Tùy phạm vi, MVP đầu tiên thường mất 6-12 tuần.'],
                     'en' => ['question' => 'How long does implementation take?', 'answer' => 'Depending on scope, the first MVP typically takes 6-12 weeks.'],
@@ -170,6 +213,8 @@ class SolutionsSeeder extends Seeder
                     'en' => ['question' => 'Can this integrate with our existing systems?', 'answer' => 'Yes, we design APIs to integrate smoothly with your existing systems.'],
                 ],
             ];
+
+            $faqs = $data['faqs'] ?? $defaultFaqs;
 
             foreach ($faqs as $i => $faq) {
                 $faqModel = $solution->faqs()->create(['sort_order' => $i]);
