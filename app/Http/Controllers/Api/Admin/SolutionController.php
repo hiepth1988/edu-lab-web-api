@@ -15,7 +15,7 @@ class SolutionController extends Controller
 
     public function index(): JsonResponse
     {
-        $solutions = Solution::with(['translations', 'features.translations', 'faqs.translations'])
+        $solutions = Solution::with(['translations', 'features.translations', 'faqs.translations', 'relatedProducts.translations', 'relatedInsights.translations'])
             ->orderBy('sort_order')
             ->get();
 
@@ -35,6 +35,8 @@ class SolutionController extends Controller
         $this->syncTranslations($solution, $data['translations']);
         $this->syncFeatures($solution, $data['features'] ?? []);
         $this->syncFaqs($solution, $data['faqs'] ?? []);
+        $this->syncRelatedProducts($solution, $data['related_product_ids'] ?? []);
+        $this->syncRelatedInsights($solution, $data['related_post_ids'] ?? []);
 
         return response()->json(['data' => $this->loadSolution($solution)], 201);
     }
@@ -57,6 +59,8 @@ class SolutionController extends Controller
         $this->syncTranslations($solution, $data['translations']);
         $this->syncFeatures($solution, $data['features'] ?? []);
         $this->syncFaqs($solution, $data['faqs'] ?? []);
+        $this->syncRelatedProducts($solution, $data['related_product_ids'] ?? []);
+        $this->syncRelatedInsights($solution, $data['related_post_ids'] ?? []);
 
         return response()->json(['data' => $this->loadSolution($solution->fresh())]);
     }
@@ -97,6 +101,10 @@ class SolutionController extends Controller
             'features.*.translations' => ['array'],
             'faqs' => ['array'],
             'faqs.*.translations' => ['array'],
+            'related_product_ids' => ['array'],
+            'related_product_ids.*' => ['integer', 'exists:products,id'],
+            'related_post_ids' => ['array'],
+            'related_post_ids.*' => ['integer', 'exists:posts,id'],
         ]);
     }
 
@@ -171,8 +179,34 @@ class SolutionController extends Controller
         }
     }
 
+    private function syncRelatedProducts(Solution $solution, array $productIds): void
+    {
+        $syncPayload = [];
+        foreach (array_values($productIds) as $order => $productId) {
+            $syncPayload[$productId] = ['sort_order' => $order];
+        }
+
+        $solution->relatedProducts()->sync($syncPayload);
+    }
+
+    private function syncRelatedInsights(Solution $solution, array $postIds): void
+    {
+        $syncPayload = [];
+        foreach (array_values($postIds) as $order => $postId) {
+            $syncPayload[$postId] = ['sort_order' => $order];
+        }
+
+        $solution->relatedInsights()->sync($syncPayload);
+    }
+
     private function loadSolution(Solution $solution): Solution
     {
-        return $solution->load(['translations', 'features.translations', 'faqs.translations']);
+        return $solution->load([
+            'translations',
+            'features.translations',
+            'faqs.translations',
+            'relatedProducts.translations',
+            'relatedInsights.translations',
+        ]);
     }
 }

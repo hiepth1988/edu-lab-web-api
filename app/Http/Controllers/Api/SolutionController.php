@@ -49,6 +49,8 @@ class SolutionController extends Controller
                     'translations' => fn ($q) => $q->where('locale', $locale),
                     'features.translations' => fn ($q) => $q->where('locale', $locale),
                     'faqs.translations' => fn ($q) => $q->where('locale', $locale),
+                    'relatedProducts.translations' => fn ($q) => $q->where('locale', $locale),
+                    'relatedInsights.translations' => fn ($q) => $q->where('locale', $locale),
                 ])
                 ->firstOrFail();
 
@@ -78,6 +80,16 @@ class SolutionController extends Controller
                     $ft = $f->translation($locale);
 
                     return ['question' => $ft?->question, 'answer' => $ft?->answer];
+                })->values()->all(),
+                'related_products' => $solution->relatedProducts->map(function ($p) use ($locale) {
+                    $pt = $p->translation($locale);
+
+                    return ['slug' => $pt?->slug, 'name' => $pt?->name, 'role_summary' => $pt?->role_summary];
+                })->values()->all(),
+                'related_insights' => $solution->relatedInsights->map(function ($p) use ($locale) {
+                    $pt = $p->translation($locale);
+
+                    return ['slug' => $pt?->slug, 'title' => $pt?->title, 'excerpt' => $pt?->excerpt];
                 })->values()->all(),
             ];
         });

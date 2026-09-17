@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\Solution;
 use Illuminate\Database\Seeder;
 
 class ProductsSeeder extends Seeder
@@ -10,6 +11,10 @@ class ProductsSeeder extends Seeder
     public function run(): void
     {
         if (Product::exists()) {
+            // Products already seeded (e.g. re-running on an existing DB) — the
+            // cross-links below are idempotent (uses sync()), so still apply them.
+            $this->syncRelatedProducts();
+
             return;
         }
 
@@ -66,6 +71,41 @@ class ProductsSeeder extends Seeder
                     'meta_description' => $data[$locale]['role_summary'],
                 ]);
             }
+        }
+
+        $this->syncRelatedProducts();
+    }
+
+    // Cross-links solutions to the core-engine products they are built on
+    // (checklist item #1: "Learning Analytics" solution vs "Learning Analytics
+    // Platform" product; item #6: Related Products for AI Education), so the
+    // relationship is visible on the solution page, not just described in text.
+    private function syncRelatedProducts(): void
+    {
+        $links = [
+            'ai-education' => ['ai-learning-engine', 'knowledge-graph-engine'],
+            'learning-analytics' => ['learning-analytics-platform'],
+        ];
+
+        foreach ($links as $solutionSlug => $productSlugs) {
+            $solution = Solution::whereHas('translations', fn ($q) => $q->where('slug', $solutionSlug))->first();
+
+            if (! $solution) {
+                continue;
+            }
+
+            $productIds = Product::whereHas('translations', fn ($q) => $q->whereIn('slug', $productSlugs))
+                ->get()
+                ->sortBy(fn ($product) => array_search($product->translation('vi')?->slug, $productSlugs))
+                ->pluck('id')
+                ->values();
+
+            $syncPayload = [];
+            foreach ($productIds as $order => $productId) {
+                $syncPayload[$productId] = ['sort_order' => $order];
+            }
+
+            $solution->relatedProducts()->sync($syncPayload);
         }
     }
 }
