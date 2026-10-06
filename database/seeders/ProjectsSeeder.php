@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\Project;
 use App\Models\ProjectTranslation;
+use App\Support\Content\TopThiContent;
 use Illuminate\Database\Seeder;
 
 class ProjectsSeeder extends Seeder
@@ -101,20 +102,11 @@ class ProjectsSeeder extends Seeder
         }
     }
 
-    // TopThi — theo docs/casestudy/topthi/overview.md + overview_updated.md (2026-08-04).
-    // TopThi là "living lab" nội bộ của XO Edu (docs/plans/00-tong-quan-dinh-vi-sitemap.md),
-    // không phải dự án cho khách hàng ngoài — nên không cần xin phép public tên/logo như một
-    // case khách hàng thật, dù overview_updated.md (viết theo _TEMPLATE.md chung) có đề xuất
-    // trạng thái draft vì lý do đó.
-    // 2026-08-01: gỡ hero_stats/results/results_heading + project_metrics dạng số cụ thể (40%
-    // giảm thời gian chấm bài, 10,000+ lượt làm bài/tháng, 99.9% uptime) — là placeholder viết
-    // sớm nhất trong file này, KHÔNG có tài liệu nguồn xác nhận. Không bịa số — vẫn để trống.
-    // 2026-08-04: bổ sung scale_stats/architecture_layers/tech_stack_groups/feature_groups/
-    // solution modules chi tiết từ overview_updated.md — các con số quy mô kỹ thuật (models,
-    // migrations, API routes, controllers, services, jobs) đếm trực tiếp từ code nên an toàn để
-    // seed (không phải số liệu vận hành/kinh doanh). hero_stats/results vẫn để trống vì chưa có
-    // số liệu vận hành thật. featured_image/og_image/gallery/solution module images vẫn chờ ảnh
-    // chụp màn hình thật.
+    // TopThi — nội dung theo docs/edulab_topthi_page_update.md (2026-10-06), đặt trong
+    // App\Support\Content\TopThiContent để dùng chung với lệnh app:sync-topthi-content
+    // (DB đã seed sẵn). TopThi là "living lab" nội bộ của XO Edu, không phải dự án khách
+    // hàng ngoài. hero_stats/results/project_metrics cố ý để trống cho tới khi chủ dự án
+    // xác nhận số liệu (mục 4 của tài liệu) — không bịa số. Ảnh vẫn chờ (mục 5).
     private function seedTopThi(Category $category): void
     {
         if (ProjectTranslation::where('slug', 'topthi')->exists()) {
@@ -128,218 +120,11 @@ class ProjectsSeeder extends Seeder
             'published_at' => now(),
         ]);
 
-        $project->translations()->create([
-            'locale' => 'vi',
-            'slug' => 'topthi',
-            'title' => 'TopThi — Nền tảng luyện thi trực tuyến tích hợp AI phân tích năng lực',
-            'excerpt' => 'Nền tảng thi thử trực tuyến cho học sinh phổ thông: chấm điểm tự động, chống gian lận server-side, và module AI Insight phân tích năng lực theo từng kỹ năng, gợi ý lộ trình ôn tập cá nhân hóa.',
+        foreach (TopThiContent::translations() as $locale => $fields) {
+            $project->translations()->create(['locale' => $locale, 'slug' => 'topthi'] + $fields);
+        }
 
-            'hero_eyebrow' => 'EdTech / Online Exam & Adaptive Learning Platform',
-            'hero_badges' => [
-                ['icon' => 'quiz', 'label' => 'Exam Engine'],
-                ['icon' => 'psychology', 'label' => 'AI Insight'],
-                ['icon' => 'schedule', 'label' => 'Spaced Repetition'],
-                ['icon' => 'shield', 'label' => 'Chống gian lận'],
-            ],
-
-            'snapshot_items' => [
-                ['icon' => 'category', 'label' => 'Industry', 'value' => 'EdTech — Luyện thi trắc nghiệm online'],
-                ['icon' => 'devices', 'label' => 'Type', 'value' => 'Multi-repo: API + Admin + Student Front'],
-                ['icon' => 'person_search', 'label' => 'Role', 'value' => 'Full lifecycle: kiến trúc, backend, admin, frontend'],
-                ['icon' => 'code', 'label' => 'Tech', 'value' => 'Laravel 9, Vue 3, Nuxt 3, MySQL, Redis, Elasticsearch'],
-                ['icon' => 'translate', 'label' => 'Languages', 'value' => 'PHP, TypeScript'],
-            ],
-
-            'scale_heading' => 'Quy mô kỹ thuật',
-            'scale_description' => 'Số liệu đếm trực tiếp từ source code tại thời điểm khảo sát.',
-            'scale_stats' => [
-                ['value' => '76', 'label' => 'Database models'],
-                ['value' => '171', 'label' => 'Migrations'],
-                ['value' => '206', 'label' => 'API endpoints (user + admin)'],
-                ['value' => '87', 'label' => 'Controllers'],
-                ['value' => '65', 'label' => 'Service classes'],
-                ['value' => '26', 'label' => 'Queue jobs'],
-            ],
-
-            'challenges_heading' => 'Bài toán đặt ra',
-            'challenges_description' => 'Từ một nền tảng thi thử chấm điểm đơn thuần, cần tiến hóa thành hệ thống hiểu được năng lực thực tế của từng học sinh mà không phá vỡ dữ liệu và trải nghiệm đang vận hành.',
-            'challenges' => [
-                ['icon' => 'psychology', 'color' => 'primary', 'title' => 'Từ điểm số sang năng lực', 'description' => 'Hệ thống cũ chỉ chấm đúng/sai theo đề; cần bóc tách được học sinh yếu ở kỹ năng cụ thể nào, không chỉ ở môn học chung chung.', 'wide' => false],
-                ['icon' => 'bolt', 'color' => 'secondary', 'title' => 'Không chặn trải nghiệm nộp bài', 'description' => 'Xử lý phân tích AI phải chạy nền, không được làm chậm phản hồi khi học sinh nộp bài thi.', 'wide' => false],
-                ['icon' => 'shield', 'color' => 'gold', 'title' => 'Chống gian lận thời gian làm bài', 'description' => 'Thời gian bắt đầu/kết thúc phải được xác thực phía server, tránh học sinh chỉnh sửa thời gian client để gian lận.', 'wide' => false],
-                ['icon' => 'trending_up', 'color' => 'primary', 'title' => 'Thiết kế có đường lùi nâng cấp', 'description' => 'Mô hình chấm điểm năng lực ban đầu cần đơn giản (rule-based) nhưng schema dữ liệu phải sẵn sàng cho mô hình AI phức tạp hơn (Knowledge Tracing) mà không phải migrate lại từ đầu.', 'wide' => true],
-            ],
-
-            'feature_map_heading' => 'Bản đồ tính năng',
-            'feature_groups' => [
-                ['title' => 'Đề thi & Câu hỏi', 'badge_label' => 'CORE', 'features' => ['Trộn đề tự động', 'Xuất đề ra file Word', 'Đề thi thương mại (bán riêng)', 'Quản lý ngân hàng câu hỏi', 'Gán nhãn kỹ năng cho câu hỏi (AI hỗ trợ)']],
-                ['title' => 'Làm bài thi', 'badge_label' => 'CORE', 'features' => ['Chống gian lận thời gian server-side', 'Snapshot đáp án tại thời điểm thi', 'Làm bài theo nhóm/lớp', 'Chấm điểm tự động']],
-                ['title' => 'AI Insight Stack', 'badge_label' => 'ĐANG PHÁT TRIỂN', 'features' => ['Skill taxonomy & đồ thị tiên quyết', 'Event log học tập (append-only)', 'Chấm điểm mức độ thành thạo theo kỹ năng', 'Báo cáo phân tích năng lực sau mỗi lần thi', 'So sánh xu hướng giữa các lần thi', 'Gợi ý đề luyện theo kỹ năng yếu', 'Lịch ôn tập tự sinh (spaced repetition)', 'Streak & milestone học tập']],
-                ['title' => 'Thanh toán & Gói cước', 'badge_label' => 'CORE', 'features' => ['Tích hợp PayOS', 'Quản lý đơn hàng', 'Hệ thống credit mở khóa báo cáo insight', 'Gói cước insight']],
-                ['title' => 'Quản trị & Vận hành', 'badge_label' => 'ADMIN', 'features' => ['Phân quyền theo vai trò (RBAC multi-tenant)', 'Quản lý người dùng & lịch sử làm bài', 'Thống kê theo đề/câu hỏi/người dùng', 'Quản lý nội dung (blog, quảng cáo, lộ trình học)', 'Bảng điều khiển gán nhãn AI cho câu hỏi']],
-            ],
-
-            'journey_heading' => 'Hành trình sử dụng của học sinh',
-            'journey_steps' => [
-                ['title' => 'Chọn đề & làm bài', 'description' => 'Học sinh chọn đề thi theo môn/chuyên đề, hệ thống ghi nhận thời điểm bắt đầu phía server để chống gian lận.'],
-                ['title' => 'Nộp bài & chấm điểm', 'description' => 'Bài thi được chấm tự động ngay lập tức, kết quả hiển thị tức thì.'],
-                ['title' => 'Phân tích năng lực nền', 'description' => 'Hệ thống xử lý nền: ghi nhận từng câu trả lời, cập nhật mức độ thành thạo theo từng kỹ năng.'],
-                ['title' => 'Nhận báo cáo Insight', 'description' => 'Học sinh nhận báo cáo kỹ năng yếu/mạnh, so sánh với lần thi trước, gợi ý đề luyện tiếp theo.'],
-                ['title' => 'Ôn tập theo lịch cá nhân hóa', 'description' => 'Hệ thống tự sinh lịch ôn tập giãn cách cho các kỹ năng yếu, theo dõi streak và cột mốc học tập.'],
-            ],
-
-            'architecture_heading' => 'Kiến trúc hệ thống',
-            'architecture_layers' => [
-                ['icon' => 'api', 'title' => 'Backend API', 'subtitle' => 'Laravel 9 / PHP 8 — REST API cho Admin & Student Front'],
-                ['icon' => 'admin_panel_settings', 'title' => 'Admin Panel', 'subtitle' => 'Vue 3 Composition API + TypeScript'],
-                ['icon' => 'smartphone', 'title' => 'Student Frontend', 'subtitle' => 'Nuxt 3 SSR + Pinia'],
-                ['icon' => 'storage', 'title' => 'Data Layer', 'subtitle' => 'MySQL + Redis cache + Elasticsearch search'],
-                ['icon' => 'psychology', 'title' => 'AI Processing', 'subtitle' => 'Async queue jobs + OpenAI API cho gán nhãn kỹ năng'],
-            ],
-
-            'tech_stack_groups' => [
-                ['title' => 'Backend', 'items' => ['Laravel 9', 'PHP 8.0+', 'Laravel Sanctum', 'Spatie Permission (RBAC)']],
-                ['title' => 'Frontend học viên', 'items' => ['Nuxt 3 (SSR)', 'Vue 3', 'Pinia', 'TailwindCSS']],
-                ['title' => 'Admin Panel', 'items' => ['Vue 3 Composition API', 'TypeScript', 'Vuex 4', 'TailwindCSS']],
-                ['title' => 'Dữ liệu & Hạ tầng', 'items' => ['MySQL', 'Redis', 'Elasticsearch', 'Laravel Queue', 'Docker']],
-                ['title' => 'Tích hợp bên thứ 3', 'items' => ['PayOS (thanh toán)', 'OpenAI API (gán nhãn AI)', 'Google Socialite (đăng nhập)']],
-            ],
-
-            'lessons_quote' => 'Nền tảng trở thành living lab để thử nghiệm Exam Engine, AI Insight (skill mastery, spaced repetition) và Learning Analytics trước khi đóng gói thành sản phẩm riêng cho thị trường EdTech.',
-            'lessons_citation' => '— Đội ngũ XO Edu Lab',
-
-            'meta_title' => 'Topthi — Case Study nền tảng luyện thi online tích hợp AI phân tích năng lực',
-            'meta_description' => 'Cách xây dựng một nền tảng thi thử trắc nghiệm với module AI phân tích năng lực học sinh theo từng kỹ năng, gợi ý ôn tập cá nhân hóa và kiến trúc sẵn sàng mở rộng lên Knowledge Tracing.',
-        ]);
-
-        $project->translations()->create([
-            'locale' => 'en',
-            'slug' => 'topthi',
-            'title' => 'TopThi — Online Exam Practice Platform with AI-driven Skill Insight',
-            'excerpt' => 'An online exam practice platform for high-school students: automated grading, server-side cheat resistance, and an AI Insight module that analyzes ability per skill and generates personalized review plans.',
-
-            'hero_eyebrow' => 'EdTech / Online Exam & Adaptive Learning Platform',
-            'hero_badges' => [
-                ['icon' => 'quiz', 'label' => 'Exam Engine'],
-                ['icon' => 'psychology', 'label' => 'AI Insight'],
-                ['icon' => 'schedule', 'label' => 'Spaced Repetition'],
-                ['icon' => 'shield', 'label' => 'Anti-cheat'],
-            ],
-
-            'snapshot_items' => [
-                ['icon' => 'category', 'label' => 'Industry', 'value' => 'EdTech — Online Exam & Test Prep'],
-                ['icon' => 'devices', 'label' => 'Type', 'value' => 'Multi-repo web platform (API + Admin + Student Front)'],
-                ['icon' => 'person_search', 'label' => 'Role', 'value' => 'Full lifecycle: architecture, backend, admin panel, frontend'],
-                ['icon' => 'code', 'label' => 'Tech', 'value' => 'Laravel 9, Vue 3, Nuxt 3, MySQL, Redis, Elasticsearch'],
-                ['icon' => 'translate', 'label' => 'Languages', 'value' => 'PHP, TypeScript'],
-            ],
-
-            'scale_heading' => 'Technical Scale',
-            'scale_description' => 'Figures counted directly from the source code at the time of the survey.',
-            'scale_stats' => [
-                ['value' => '76', 'label' => 'Database models'],
-                ['value' => '171', 'label' => 'Migrations'],
-                ['value' => '206', 'label' => 'API endpoints (user + admin)'],
-                ['value' => '87', 'label' => 'Controllers'],
-                ['value' => '65', 'label' => 'Service classes'],
-                ['value' => '26', 'label' => 'Queue jobs'],
-            ],
-
-            'challenges_heading' => 'The Challenge',
-            'challenges_description' => 'Evolving from a simple pass/fail exam platform into a system that understands each student\'s real ability — without breaking the data and experience already in production.',
-            'challenges' => [
-                ['icon' => 'psychology', 'color' => 'primary', 'title' => 'From scores to ability', 'description' => 'The old system only graded right/wrong per exam; needed to pinpoint which specific skill a student is weak in, not just the subject as a whole.', 'wide' => false],
-                ['icon' => 'bolt', 'color' => 'secondary', 'title' => 'Never blocking submission', 'description' => 'AI analysis must run in the background and never slow down the response when a student submits an exam.', 'wide' => false],
-                ['icon' => 'shield', 'color' => 'gold', 'title' => 'Cheat-resistant exam timing', 'description' => 'Start/end times must be verified server-side to prevent students from tampering with client-side time to cheat.', 'wide' => false],
-                ['icon' => 'trending_up', 'color' => 'primary', 'title' => 'Designed for a future upgrade path', 'description' => 'The initial ability-scoring model had to stay simple (rule-based), but the data schema had to be ready for a more advanced AI model (Knowledge Tracing) without re-migrating from scratch.', 'wide' => true],
-            ],
-
-            'feature_map_heading' => 'Feature Map',
-            'feature_groups' => [
-                ['title' => 'Exams & Questions', 'badge_label' => 'CORE', 'features' => ['Automatic exam mixing', 'Export exam to Word', 'Commercial exams (sold separately)', 'Question bank management', 'AI-assisted skill tagging for questions']],
-                ['title' => 'Taking Exams', 'badge_label' => 'CORE', 'features' => ['Server-side cheat-resistant timing', 'Answer snapshot at exam time', 'Group/class exam sessions', 'Automatic grading']],
-                ['title' => 'AI Insight Stack', 'badge_label' => 'IN PROGRESS', 'features' => ['Skill taxonomy & prerequisite graph', 'Append-only learning event log', 'Per-skill mastery scoring', 'Post-exam ability report', 'Trend comparison across attempts', 'Practice exam suggestions by weak skill', 'Auto-generated review schedule (spaced repetition)', 'Streaks & learning milestones']],
-                ['title' => 'Payments & Plans', 'badge_label' => 'CORE', 'features' => ['PayOS integration', 'Order management', 'Credit system to unlock insight reports', 'Insight subscription plans']],
-                ['title' => 'Administration', 'badge_label' => 'ADMIN', 'features' => ['Multi-tenant role-based access control', 'User & exam-history management', 'Stats by exam/question/user', 'Content management (blog, ads, learning paths)', 'AI question-tagging control panel']],
-            ],
-
-            'journey_heading' => 'Student Journey',
-            'journey_steps' => [
-                ['title' => 'Pick an exam & start', 'description' => 'Student picks an exam by subject/topic; the server records the start time to prevent cheating.'],
-                ['title' => 'Submit & get graded', 'description' => 'The exam is graded automatically and instantly, with results shown right away.'],
-                ['title' => 'Background ability analysis', 'description' => 'The system processes in the background: logging each answer and updating mastery per skill.'],
-                ['title' => 'Receive an Insight report', 'description' => 'The student gets a report of weak/strong skills, a comparison with the previous attempt, and a suggested next exam.'],
-                ['title' => 'Review on a personalized schedule', 'description' => 'The system auto-generates a spaced review schedule for weak skills, tracking streaks and learning milestones.'],
-            ],
-
-            'architecture_heading' => 'Technical Architecture',
-            'architecture_layers' => [
-                ['icon' => 'api', 'title' => 'Backend API', 'subtitle' => 'Laravel 9 / PHP 8 — REST API for Admin & Student Front'],
-                ['icon' => 'admin_panel_settings', 'title' => 'Admin Panel', 'subtitle' => 'Vue 3 Composition API + TypeScript'],
-                ['icon' => 'smartphone', 'title' => 'Student Frontend', 'subtitle' => 'Nuxt 3 SSR + Pinia'],
-                ['icon' => 'storage', 'title' => 'Data Layer', 'subtitle' => 'MySQL + Redis cache + Elasticsearch search'],
-                ['icon' => 'psychology', 'title' => 'AI Processing', 'subtitle' => 'Async queue jobs + OpenAI API for skill tagging'],
-            ],
-
-            'tech_stack_groups' => [
-                ['title' => 'Backend', 'items' => ['Laravel 9', 'PHP 8.0+', 'Laravel Sanctum', 'Spatie Permission (RBAC)']],
-                ['title' => 'Student Frontend', 'items' => ['Nuxt 3 (SSR)', 'Vue 3', 'Pinia', 'TailwindCSS']],
-                ['title' => 'Admin Panel', 'items' => ['Vue 3 Composition API', 'TypeScript', 'Vuex 4', 'TailwindCSS']],
-                ['title' => 'Data & Infrastructure', 'items' => ['MySQL', 'Redis', 'Elasticsearch', 'Laravel Queue', 'Docker']],
-                ['title' => 'Third-party Integrations', 'items' => ['PayOS (payments)', 'OpenAI API (AI tagging)', 'Google Socialite (login)']],
-            ],
-
-            'lessons_quote' => 'The platform became a living lab to test Exam Engine, AI Insight (skill mastery, spaced repetition) and Learning Analytics before packaging them into standalone products for the EdTech market.',
-            'lessons_citation' => '— The XO Edu Lab Team',
-
-            'meta_title' => 'Topthi — Case Study: Online Exam Practice Platform with AI Skill Insight',
-            'meta_description' => 'How we built an exam practice platform with a module that analyzes student ability per skill, suggests personalized review, and has an architecture ready to scale into Knowledge Tracing.',
-        ]);
-
-        $this->seedSolutionModules($project, [
-            [
-                'vi' => [
-                    'title' => 'Làm bài thi chống gian lận',
-                    'description' => 'Ghi nhận thời gian bắt đầu/kết thúc phía server bằng cập nhật nguyên tử có điều kiện, tránh gian lận chỉnh sửa thời gian phía client, kết hợp snapshot đáp án tại thời điểm thi.',
-                    'features' => ['Server-side timing', 'Chống double-submit', 'Snapshot đáp án'],
-                    'technical_note' => 'Atomic UPDATE có điều kiện (WHERE ended_at IS NULL) thay vì check-then-update, tránh race condition khi nộp bài đồng thời.',
-                ],
-                'en' => [
-                    'title' => 'Cheat-resistant Exam Taking',
-                    'description' => 'Start/end timestamps are recorded server-side via a conditional atomic update, preventing client-side time tampering, combined with an answer snapshot at exam time.',
-                    'features' => ['Server-side timing', 'Double-submit prevention', 'Answer snapshot'],
-                    'technical_note' => 'Conditional atomic UPDATE (WHERE ended_at IS NULL) instead of check-then-update, avoiding race conditions on concurrent submissions.',
-                ],
-            ],
-            [
-                'vi' => [
-                    'title' => 'AI Insight Report',
-                    'description' => 'Sau mỗi lần thi, hệ thống tự động phân tích và chỉ ra học sinh đang yếu ở kỹ năng nào, so sánh tiến bộ theo thời gian và gợi ý đề luyện tiếp theo.',
-                    'features' => ['Top kỹ năng yếu', 'So sánh xu hướng theo thời gian', 'Gợi ý đề luyện tiếp theo'],
-                    'technical_note' => 'Xử lý async qua queue job có retry & idempotency guard; mastery score theo mô hình EMA có trọng số độ khó, phân loại 4 mức critical/weak/moderate/good.',
-                ],
-                'en' => [
-                    'title' => 'AI Insight Report',
-                    'description' => 'After every exam, the system automatically analyzes and pinpoints which skills a student is weak in, compares progress over time, and suggests the next practice exam.',
-                    'features' => ['Top weak skills', 'Trend comparison over time', 'Next practice exam suggestion'],
-                    'technical_note' => 'Processed asynchronously via a queue job with retry & idempotency guards; mastery score uses a difficulty-weighted EMA model, classified into 4 levels: critical/weak/moderate/good.',
-                ],
-            ],
-            [
-                'vi' => [
-                    'title' => 'Lịch ôn tập thông minh',
-                    'description' => 'Tự sinh lịch ôn tập giãn cách cho các kỹ năng yếu ngay sau khi phát hiện qua insight report, kèm theo dõi streak và cột mốc học tập.',
-                    'features' => ['Tabs Đến hạn/Sắp đến hạn', 'Tự động sinh sau insight', 'Streak & milestone học tập'],
-                    'technical_note' => 'Spaced repetition offset 1/3/7 ngày, chống chồng lịch; milestone chống trùng bằng unique constraint.',
-                ],
-                'en' => [
-                    'title' => 'Smart Review Schedule',
-                    'description' => 'Auto-generates a spaced review schedule for weak skills as soon as they are detected via the insight report, alongside streak and milestone tracking.',
-                    'features' => ['Due / Upcoming tabs', 'Auto-generated after insight', 'Streaks & learning milestones'],
-                    'technical_note' => 'Spaced repetition with 1/3/7-day offsets, preventing schedule overlap; milestones deduplicated via a unique constraint.',
-                ],
-            ],
-        ]);
+        $this->seedSolutionModules($project, TopThiContent::solutionModules());
     }
 
     // MSD Learning Platform — draft theo casestudy/msd/case-study-msd.md.

@@ -117,6 +117,12 @@ class ProjectController extends Controller
 
                 'journey_heading' => $t?->journey_heading,
                 'journey_steps' => $t?->journey_steps ?? [],
+                'journey_note' => $t?->journey_note,
+
+                'science_heading' => $t?->science_heading,
+                'science_description' => $t?->science_description,
+                'science_cards' => $t?->science_cards ?? [],
+                'science_note' => $t?->science_note,
 
                 'solution_modules' => $project->solutionModules->map(function ($module) use ($locale) {
                     $mt = $module->translation($locale);

@@ -133,6 +133,17 @@ class ProjectController extends Controller
             'translations.*.journey_steps' => ['array'],
             'translations.*.journey_steps.*.title' => ['nullable', 'string', 'max:255'],
             'translations.*.journey_steps.*.description' => ['nullable', 'string'],
+            'translations.*.journey_note' => ['nullable', 'string'],
+
+            'translations.*.science_heading' => ['nullable', 'string', 'max:255'],
+            'translations.*.science_description' => ['nullable', 'string'],
+            'translations.*.science_cards' => ['array'],
+            'translations.*.science_cards.*.icon' => ['nullable', 'string', 'max:100'],
+            'translations.*.science_cards.*.title' => ['nullable', 'string', 'max:255'],
+            'translations.*.science_cards.*.source' => ['nullable', 'string', 'max:255'],
+            'translations.*.science_cards.*.idea' => ['nullable', 'string'],
+            'translations.*.science_cards.*.in_practice' => ['nullable', 'string'],
+            'translations.*.science_note' => ['nullable', 'string'],
 
             'translations.*.gallery_heading' => ['nullable', 'string', 'max:255'],
             'translations.*.gallery_categories' => ['array'],
@@ -222,6 +233,12 @@ class ProjectController extends Controller
 
                     'journey_heading' => $payload['journey_heading'] ?? null,
                     'journey_steps' => $payload['journey_steps'] ?? [],
+                    'journey_note' => $payload['journey_note'] ?? null,
+
+                    'science_heading' => $payload['science_heading'] ?? null,
+                    'science_description' => $payload['science_description'] ?? null,
+                    'science_cards' => $payload['science_cards'] ?? [],
+                    'science_note' => $payload['science_note'] ?? null,
 
                     'gallery_heading' => $payload['gallery_heading'] ?? null,
                     'gallery_categories' => $payload['gallery_categories'] ?? [],

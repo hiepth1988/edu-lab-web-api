@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\Solution;
+use App\Support\Content\TopThiContent;
 use Illuminate\Database\Seeder;
 
 class ProductsSeeder extends Seeder
@@ -18,12 +19,15 @@ class ProductsSeeder extends Seeder
             return;
         }
 
+        $topthiCopy = TopThiContent::productCopy();
+        $pilotStages = TopThiContent::pilotProductStages();
+
         $products = [
             [
                 'slug' => 'topthi',
                 'stage' => 'live',
-                'vi' => ['name' => 'TopThi', 'role_summary' => 'Living lab và case study chính cho năng lực Exam + AI Learning', 'description' => 'TopThi là nền tảng thi trực tuyến vận hành thực tế, nơi các năng lực Exam Engine, Knowledge Graph, Learning Analytics và AI Learning được thử nghiệm trước khi đóng gói thành sản phẩm.'],
-                'en' => ['name' => 'TopThi', 'role_summary' => 'Living lab and flagship case study for Exam + AI Learning capability', 'description' => 'TopThi is a live online exam platform where Exam Engine, Knowledge Graph, Learning Analytics and AI Learning capabilities are tested before being packaged into products.'],
+                'vi' => ['name' => 'TopThi'] + $topthiCopy['vi'],
+                'en' => ['name' => 'TopThi'] + $topthiCopy['en'],
             ],
             [
                 'slug' => 'exam-engine',
@@ -45,13 +49,13 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'slug' => 'ai-learning-engine',
-                'stage' => '9-18-months',
+                'stage' => $pilotStages['ai-learning-engine'],
                 'vi' => ['name' => 'AI Learning Engine', 'role_summary' => 'Mỗi học viên có một lộ trình học khác nhau, tự động điều chỉnh theo năng lực của họ.', 'description' => 'AI Learning Engine gợi ý nội dung học tiếp theo, phát hiện điểm yếu và cá nhân hóa lộ trình học tập.'],
                 'en' => ['name' => 'AI Learning Engine', 'role_summary' => 'Every learner gets a different path, automatically adjusted to their ability.', 'description' => 'AI Learning Engine recommends what to learn next, detects weaknesses, and personalizes learning paths.'],
             ],
             [
                 'slug' => 'knowledge-graph-engine',
-                'stage' => '12-18-months',
+                'stage' => $pilotStages['knowledge-graph-engine'],
                 'vi' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Biết chính xác học viên cần học gì tiếp theo dựa trên những gì họ đã thành thạo.', 'description' => 'Knowledge Graph Engine mô hình hóa mối quan hệ giữa các đơn vị kiến thức, điều kiện tiên quyết và phụ thuộc kỹ năng (knowledge mapping, prerequisite, skill dependency).'],
                 'en' => ['name' => 'Knowledge Graph Engine', 'role_summary' => 'Know exactly what a learner should study next, based on what they have already mastered.', 'description' => 'Knowledge Graph Engine models relationships between knowledge units, prerequisites and skill dependencies (knowledge mapping, prerequisites, skill dependency).'],
             ],
