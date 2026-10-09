@@ -90,6 +90,7 @@ class ProjectController extends Controller
             return [
                 'id' => $project->id,
                 'slug' => $t?->slug,
+                'alternate_slugs' => $project->translations()->pluck('slug', 'locale'),
                 'title' => $t?->title,
                 'excerpt' => $t?->excerpt,
                 'featured_image' => $project->featured_image,

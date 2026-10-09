@@ -57,6 +57,7 @@ class AudienceController extends Controller
             return [
                 'id' => $audience->id,
                 'slug' => $t?->slug,
+                'alternate_slugs' => $audience->translations()->pluck('slug', 'locale'),
                 'title' => $t?->title,
                 'subheading' => $t?->subheading,
                 'pain_points' => $t?->pain_points,

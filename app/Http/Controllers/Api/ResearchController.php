@@ -62,6 +62,7 @@ class ResearchController extends Controller
             return [
                 'id' => $post->id,
                 'slug' => $t?->slug,
+                'alternate_slugs' => $post->translations()->pluck('slug', 'locale'),
                 'title' => $t?->title,
                 'excerpt' => $t?->excerpt,
                 'content' => $t?->content,

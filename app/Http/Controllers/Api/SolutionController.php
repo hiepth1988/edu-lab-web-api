@@ -59,6 +59,7 @@ class SolutionController extends Controller
             return [
                 'id' => $solution->id,
                 'slug' => $t?->slug,
+                'alternate_slugs' => $solution->translations()->pluck('slug', 'locale'),
                 'title' => $t?->title,
                 'subheading' => $t?->subheading,
                 'problem' => $t?->problem,

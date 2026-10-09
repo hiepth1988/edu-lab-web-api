@@ -99,6 +99,7 @@ class PostController extends Controller
         return response()->json([
             'data' => [
                 ...$this->summary($post, $locale),
+                'alternate_slugs' => $post->translations()->pluck('slug', 'locale'),
                 'content' => $post->translation($locale)?->content,
                 'related_posts' => $related,
             ],

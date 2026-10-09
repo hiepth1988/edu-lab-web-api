@@ -57,6 +57,7 @@ class ProductController extends Controller
             return [
                 'id' => $product->id,
                 'slug' => $t?->slug,
+                'alternate_slugs' => $product->translations()->pluck('slug', 'locale'),
                 'name' => $t?->name,
                 'role_summary' => $t?->role_summary,
                 'description' => $t?->description,
