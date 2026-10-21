@@ -77,9 +77,14 @@ class PostController extends Controller
 
         $post->increment('view_count');
 
-        $related = collect();
+        // Manually curated related posts take priority; fall back to same-category posts.
+        $related = $post->relatedPosts()
+            ->where('status', 'published')
+            ->whereHas('translations', fn ($q) => $q->where('locale', $locale))
+            ->with(['translations' => fn ($q) => $q->where('locale', $locale)])
+            ->get();
 
-        if ($post->category_id) {
+        if ($related->isEmpty() && $post->category_id) {
             $related = Post::query()
                 ->where('status', 'published')
                 ->where('id', '!=', $post->id)
@@ -88,19 +93,31 @@ class PostController extends Controller
                 ->with(['translations' => fn ($q) => $q->where('locale', $locale)])
                 ->orderByDesc('published_at')
                 ->take(3)
-                ->get()
-                ->map(function (Post $related) use ($locale) {
-                    $t = $related->translation($locale);
-
-                    return ['slug' => $t?->slug, 'title' => $t?->title, 'excerpt' => $t?->excerpt];
-                });
+                ->get();
         }
+
+        $related = $related->map(function (Post $related) use ($locale) {
+            $t = $related->translation($locale);
+
+            return [
+                'slug' => $t?->slug,
+                'title' => $t?->title,
+                'excerpt' => $t?->excerpt,
+                'featured_image' => $related->featured_image,
+            ];
+        })->values();
 
         return response()->json([
             'data' => [
                 ...$this->summary($post, $locale),
                 'alternate_slugs' => $post->translations()->pluck('slug', 'locale'),
                 'content' => $post->translation($locale)?->content,
+                // Empty fields fall back to the site-wide default CTA on the front end.
+                'cta' => $post->show_cta ? [
+                    'text' => $post->translation($locale)?->cta_text,
+                    'label' => $post->translation($locale)?->cta_label,
+                    'url' => $post->translation($locale)?->cta_url,
+                ] : null,
                 'related_posts' => $related,
             ],
         ]);

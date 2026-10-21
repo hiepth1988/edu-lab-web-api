@@ -10,6 +10,7 @@ class HomePageSeeder extends Seeder
     public function run(): void
     {
         $this->seedHome();
+        $this->call(PartnershipPageSeeder::class);
         $this->seedSimplePage('about', [
             'vi' => [
                 'title' => 'Vì sao chọn XO',
@@ -316,29 +317,7 @@ class HomePageSeeder extends Seeder
                     ],
                 ],
             ],
-            'partnership' => [
-                'sort_order' => 10,
-                'vi' => [
-                    'heading' => 'Cách chúng tôi hợp tác',
-                    'extra' => [
-                        'plans' => [
-                            ['title' => 'Khám phá sản phẩm', 'body' => 'Sprint 4 tuần để định hình tầm nhìn sản phẩm, mô hình kinh doanh và roadmap.', 'cta_label' => 'Tìm hiểu discovery', 'cta_url' => '/contact', 'featured' => false],
-                            ['title' => 'Xây dựng & Ra mắt', 'body' => 'Thiết kế và phát triển toàn diện sản phẩm giáo dục của bạn từ zero-to-one.', 'cta_label' => 'Bắt đầu xây dựng', 'cta_url' => '/contact', 'featured' => true, 'badge' => 'Phổ biến nhất'],
-                            ['title' => 'Đồng hành dài hạn', 'body' => 'Quản lý sản phẩm liên tục, bảo trì kỹ thuật và thử nghiệm tăng trưởng.', 'cta_label' => 'Đồng hành cùng XO', 'cta_url' => '/contact', 'featured' => false],
-                        ],
-                    ],
-                ],
-                'en' => [
-                    'heading' => 'How we partner',
-                    'extra' => [
-                        'plans' => [
-                            ['title' => 'Product Discovery', 'body' => '4-week sprint to define your product vision, commercial model, and roadmap.', 'cta_label' => 'Explore discovery', 'cta_url' => '/contact', 'featured' => false],
-                            ['title' => 'Build & Launch', 'body' => 'Full-service design and development of your education product from zero to one.', 'cta_label' => 'Start building', 'cta_url' => '/contact', 'featured' => true, 'badge' => 'Most Common'],
-                            ['title' => 'Long-term Partnership', 'body' => 'Ongoing product management, technical maintenance, and growth experimentation.', 'cta_label' => 'Partner with us', 'cta_url' => '/contact', 'featured' => false],
-                        ],
-                    ],
-                ],
-            ],
+            // 'partnership' and 'starter_package' live in PartnershipPageSeeder.
             // Content merged into hero.extra.quote — kept inactive instead of deleted.
             'philosophy' => [
                 'sort_order' => 99,
@@ -398,7 +377,7 @@ class HomePageSeeder extends Seeder
                 ],
             ],
             'final_cta' => [
-                'sort_order' => 11,
+                'sort_order' => 12,
                 'vi' => [
                     'heading' => 'Bạn mang tầm nhìn giáo dục đến. XO giúp bạn xây dựng điều nó có thể trở thành.',
                     'body' => 'Cùng trao đổi về trải nghiệm học tập tiếp theo của bạn.',

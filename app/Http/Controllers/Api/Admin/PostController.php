@@ -13,11 +13,13 @@ class PostController extends Controller
 {
     use EnforcesPublishPermission;
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+        $perPage = min(max((int) $request->query('per_page', 20), 1), 200);
+
         $posts = Post::with(['translations', 'category.translations', 'tags.translations'])
             ->latest()
-            ->paginate(20);
+            ->paginate($perPage);
 
         return response()->json($posts);
     }
@@ -30,6 +32,7 @@ class PostController extends Controller
         $post = Post::create($this->baseFields($data));
         $this->syncTranslations($post, $data['translations']);
         $post->tags()->sync($data['tag_ids'] ?? []);
+        $this->syncRelatedPosts($post, $data['related_post_ids'] ?? []);
 
         return response()->json(['data' => $this->loadPost($post)], 201);
     }
@@ -47,6 +50,7 @@ class PostController extends Controller
         $post->update($this->baseFields($data));
         $this->syncTranslations($post, $data['translations']);
         $post->tags()->sync($data['tag_ids'] ?? []);
+        $this->syncRelatedPosts($post, $data['related_post_ids'] ?? []);
 
         return response()->json(['data' => $this->loadPost($post->fresh())]);
     }
@@ -65,14 +69,20 @@ class PostController extends Controller
             'status' => ['required', 'in:draft,published'],
             'featured_image' => ['nullable', 'string', 'max:2048'],
             'is_featured' => ['boolean'],
+            'show_cta' => ['boolean'],
             'published_at' => ['nullable', 'date'],
             'tag_ids' => ['array'],
             'tag_ids.*' => ['exists:tags,id'],
+            'related_post_ids' => ['array'],
+            'related_post_ids.*' => ['integer', 'exists:posts,id'],
             'translations' => ['required', 'array'],
             'translations.*.title' => ['required', 'string', 'max:255'],
             'translations.*.slug' => ['nullable', 'string', 'max:255'],
             'translations.*.excerpt' => ['nullable', 'string'],
             'translations.*.content' => ['nullable', 'string'],
+            'translations.*.cta_text' => ['nullable', 'string', 'max:1000'],
+            'translations.*.cta_label' => ['nullable', 'string', 'max:255'],
+            'translations.*.cta_url' => ['nullable', 'string', 'max:2048'],
             'translations.*.meta_title' => ['nullable', 'string', 'max:255'],
             'translations.*.meta_description' => ['nullable', 'string'],
             'translations.*.og_image' => ['nullable', 'string', 'max:2048'],
@@ -87,6 +97,7 @@ class PostController extends Controller
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
             'is_featured' => $data['is_featured'] ?? false,
+            'show_cta' => $data['show_cta'] ?? true,
             'published_at' => $data['published_at'] ?? ($data['status'] === 'published' ? now() : null),
         ];
     }
@@ -105,6 +116,9 @@ class PostController extends Controller
                     'slug' => $payload['slug'] ?? Str::slug($payload['title']),
                     'excerpt' => $payload['excerpt'] ?? null,
                     'content' => $payload['content'] ?? null,
+                    'cta_text' => $payload['cta_text'] ?? null,
+                    'cta_label' => $payload['cta_label'] ?? null,
+                    'cta_url' => $payload['cta_url'] ?? null,
                     'meta_title' => $payload['meta_title'] ?? null,
                     'meta_description' => $payload['meta_description'] ?? null,
                     'og_image' => $payload['og_image'] ?? null,
@@ -114,8 +128,23 @@ class PostController extends Controller
         }
     }
 
+    private function syncRelatedPosts(Post $post, array $relatedPostIds): void
+    {
+        $pivotData = [];
+
+        foreach (array_values($relatedPostIds) as $index => $relatedPostId) {
+            if ((int) $relatedPostId === $post->id) {
+                continue;
+            }
+
+            $pivotData[$relatedPostId] = ['sort_order' => $index];
+        }
+
+        $post->relatedPosts()->sync($pivotData);
+    }
+
     private function loadPost(Post $post): Post
     {
-        return $post->load(['translations', 'category.translations', 'tags.translations']);
+        return $post->load(['translations', 'category.translations', 'tags.translations', 'relatedPosts.translations']);
     }
 }

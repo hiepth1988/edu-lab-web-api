@@ -15,6 +15,7 @@ class Post extends Model
         'status',
         'featured_image',
         'is_featured',
+        'show_cta',
         'view_count',
         'published_at',
     ];
@@ -23,6 +24,7 @@ class Post extends Model
     {
         return [
             'is_featured' => 'boolean',
+            'show_cta' => 'boolean',
             'published_at' => 'datetime',
         ];
     }
@@ -45,6 +47,13 @@ class Post extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function relatedPosts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'post_related_posts', 'post_id', 'related_post_id')
+            ->withPivot('sort_order')
+            ->orderBy('post_related_posts.sort_order');
     }
 
     public function translation(string $locale): ?PostTranslation
