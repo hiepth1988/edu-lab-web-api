@@ -62,6 +62,10 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->ip());
         });
 
+        RateLimiter::for('tracking', function ($request) {
+            return Limit::perMinute(40)->by($request->ip());
+        });
+
         RateLimiter::for('search', function ($request) {
             return Limit::perMinute(30)->by($request->ip());
         });

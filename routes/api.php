@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\ResearchTopicController as AdminResearchTopic
 use App\Http\Controllers\Api\Admin\SolutionController as AdminSolutionController;
 use App\Http\Controllers\Api\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Api\Admin\TagController as AdminTagController;
+use App\Http\Controllers\Api\Admin\TrackingController as AdminTrackingController;
 use App\Http\Controllers\Api\AudienceController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LeadController;
@@ -27,11 +28,13 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SolutionController;
 use App\Http\Controllers\Api\SubscriberController;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\TrackingController;
 use Illuminate\Support\Facades\Route;
 
 // Public
 Route::post('/leads', [LeadController::class, 'store'])->middleware('throttle:leads');
 Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->middleware('throttle:newsletter');
+Route::post('/track', [TrackingController::class, 'store'])->middleware('throttle:tracking');
 
 Route::middleware('cache.public:300')->group(function () {
     Route::get('/locales', [LocaleController::class, 'index']);
@@ -95,6 +98,9 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::get('/subscribers', [AdminSubscriberController::class, 'index']);
+
+        Route::get('/tracking/summary', [AdminTrackingController::class, 'summary']);
+        Route::get('/tracking/events', [AdminTrackingController::class, 'events']);
 
         Route::middleware('role:admin')->group(function () {
             Route::get('/audit-logs', [AdminAuditLogController::class, 'index']);

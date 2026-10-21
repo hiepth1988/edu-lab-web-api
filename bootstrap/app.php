@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->statefulApi();
+        // Fire-and-forget analytics beacons carry no CSRF token.
+        $middleware->validateCsrfTokens(except: ['api/track']);
         $middleware->throttleApi();
 
         $middleware->alias([

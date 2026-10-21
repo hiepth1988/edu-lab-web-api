@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TrackingEvent;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -9,3 +10,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('app:backup-database')->dailyAt('02:00');
+
+Schedule::command('tracking:sync-ip-ranges')->monthlyOn(3, '03:00');
+Schedule::command('model:prune', ['--model' => [TrackingEvent::class]])->dailyAt('03:30');
