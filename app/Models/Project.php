@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasLocalizedImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -9,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-    protected $fillable = ['category_id', 'status', 'featured_image', 'is_featured', 'published_at'];
+    use HasLocalizedImages;
+
+    protected $fillable = ['category_id', 'status', 'featured_image', 'featured_image_en', 'is_featured', 'published_at'];
 
     protected function casts(): array
     {

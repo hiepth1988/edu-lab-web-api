@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasLocalizedImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProjectSolutionModule extends Model
 {
-    protected $fillable = ['project_id', 'image', 'sort_order'];
+    use HasLocalizedImages;
+
+    protected $fillable = ['project_id', 'image', 'image_en', 'sort_order'];
 
     public function translations(): HasMany
     {

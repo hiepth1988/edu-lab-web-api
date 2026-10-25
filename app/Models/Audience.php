@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasLocalizedImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Audience extends Model
 {
-    protected $fillable = ['status', 'hero_image', 'sort_order'];
+    use HasLocalizedImages;
+
+    protected $fillable = ['status', 'hero_image', 'hero_image_en', 'sort_order'];
 
     public function translations(): HasMany
     {

@@ -103,7 +103,7 @@ class PostController extends Controller
                 'slug' => $t?->slug,
                 'title' => $t?->title,
                 'excerpt' => $t?->excerpt,
-                'featured_image' => $related->featured_image,
+                'featured_image' => $related->imageFor('featured_image', $locale),
             ];
         })->values();
 
@@ -137,7 +137,7 @@ class PostController extends Controller
             'meta_description' => $translation?->meta_description,
             'og_image' => $translation?->og_image,
             'canonical_url' => $translation?->canonical_url,
-            'featured_image' => $post->featured_image,
+            'featured_image' => $post->imageFor('featured_image', $locale),
             'is_featured' => $post->is_featured,
             'published_at' => $post->published_at?->toIso8601String(),
             'category' => $category ? ['slug' => $category->slug, 'name' => $category->name] : null,

@@ -31,6 +31,7 @@ class ProjectController extends Controller
             'category_id' => $data['category_id'] ?? null,
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
+            'featured_image_en' => $data['featured_image_en'] ?? null,
             'is_featured' => $data['is_featured'] ?? false,
             'published_at' => $data['published_at'] ?? ($data['status'] === 'published' ? now() : null),
         ]);
@@ -58,6 +59,7 @@ class ProjectController extends Controller
             'category_id' => $data['category_id'] ?? null,
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
+            'featured_image_en' => $data['featured_image_en'] ?? null,
             'is_featured' => $data['is_featured'] ?? false,
             'published_at' => $data['published_at'] ?? $project->published_at,
         ]);
@@ -84,6 +86,7 @@ class ProjectController extends Controller
             'category_id' => ['nullable', 'exists:categories,id'],
             'status' => ['required', 'in:draft,published'],
             'featured_image' => ['nullable', 'string', 'max:2048'],
+            'featured_image_en' => ['nullable', 'string', 'max:2048'],
             'is_featured' => ['boolean'],
             'published_at' => ['nullable', 'date'],
 
@@ -182,6 +185,7 @@ class ProjectController extends Controller
 
             'solution_modules' => ['array'],
             'solution_modules.*.image' => ['nullable', 'string', 'max:2048'],
+            'solution_modules.*.image_en' => ['nullable', 'string', 'max:2048'],
             'solution_modules.*.translations' => ['array'],
             'solution_modules.*.translations.*.title' => ['nullable', 'string', 'max:255'],
             'solution_modules.*.translations.*.description' => ['nullable', 'string'],
@@ -192,6 +196,7 @@ class ProjectController extends Controller
             'gallery_images' => ['array'],
             'gallery_images.*.category_key' => ['nullable', 'string', 'max:100'],
             'gallery_images.*.image_url' => ['required_with:gallery_images', 'string', 'max:2048'],
+            'gallery_images.*.image_url_en' => ['nullable', 'string', 'max:2048'],
 
             'related_project_ids' => ['array'],
             'related_project_ids.*' => ['integer', 'exists:projects,id'],
@@ -291,6 +296,7 @@ class ProjectController extends Controller
         foreach ($modules as $index => $module) {
             $model = $project->solutionModules()->create([
                 'image' => $module['image'] ?? null,
+                'image_en' => $module['image_en'] ?? null,
                 'sort_order' => $index,
             ]);
 
@@ -322,6 +328,7 @@ class ProjectController extends Controller
             $project->galleryImages()->create([
                 'category_key' => $image['category_key'] ?? null,
                 'image_url' => $image['image_url'],
+                'image_url_en' => $image['image_url_en'] ?? null,
                 'sort_order' => $index,
             ]);
         }

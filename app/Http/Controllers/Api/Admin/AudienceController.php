@@ -30,6 +30,7 @@ class AudienceController extends Controller
         $audience = Audience::create([
             'status' => $data['status'],
             'hero_image' => $data['hero_image'] ?? null,
+            'hero_image_en' => $data['hero_image_en'] ?? null,
             'sort_order' => $data['sort_order'] ?? 0,
         ]);
 
@@ -52,6 +53,7 @@ class AudienceController extends Controller
         $audience->update([
             'status' => $data['status'],
             'hero_image' => $data['hero_image'] ?? null,
+            'hero_image_en' => $data['hero_image_en'] ?? null,
             'sort_order' => $data['sort_order'] ?? $audience->sort_order,
         ]);
 
@@ -73,6 +75,7 @@ class AudienceController extends Controller
         return $request->validate([
             'status' => ['required', 'in:draft,published'],
             'hero_image' => ['nullable', 'string', 'max:2048'],
+            'hero_image_en' => ['nullable', 'string', 'max:2048'],
             'sort_order' => ['nullable', 'integer'],
             'translations' => ['required', 'array'],
             'translations.*.title' => ['required', 'string', 'max:255'],

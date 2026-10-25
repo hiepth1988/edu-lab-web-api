@@ -34,7 +34,7 @@ class ProjectController extends Controller
                         'slug' => $t?->slug,
                         'title' => $t?->title,
                         'excerpt' => $t?->excerpt,
-                        'featured_image' => $project->featured_image,
+                        'featured_image' => $project->imageFor('featured_image', $locale),
                         'is_featured' => $project->is_featured,
                         'category' => $category ? ['slug' => $category->slug, 'name' => $category->name] : null,
                         'metrics' => $project->metrics->take(1)->map(function ($m) use ($locale) {
@@ -93,7 +93,7 @@ class ProjectController extends Controller
                 'alternate_slugs' => $project->translations()->pluck('slug', 'locale'),
                 'title' => $t?->title,
                 'excerpt' => $t?->excerpt,
-                'featured_image' => $project->featured_image,
+                'featured_image' => $project->imageFor('featured_image', $locale),
                 'is_featured' => $project->is_featured,
                 'category' => $category ? ['slug' => $category->slug, 'name' => $category->name] : null,
 
@@ -129,7 +129,7 @@ class ProjectController extends Controller
                     $mt = $module->translation($locale);
 
                     return [
-                        'image' => $module->image,
+                        'image' => $module->imageFor('image', $locale),
                         'title' => $mt?->title,
                         'description' => $mt?->description,
                         'technical_note' => $mt?->technical_note,
@@ -141,7 +141,7 @@ class ProjectController extends Controller
                 'gallery_categories' => $t?->gallery_categories ?? [],
                 'gallery_images' => $project->galleryImages->map(fn ($image) => [
                     'category_key' => $image->category_key,
-                    'image_url' => $image->image_url,
+                    'image_url' => $image->imageFor('image_url', $locale),
                 ])->values()->all(),
 
                 'architecture_heading' => $t?->architecture_heading,
@@ -162,7 +162,7 @@ class ProjectController extends Controller
                     return [
                         'slug' => $rt?->slug,
                         'title' => $rt?->title,
-                        'featured_image' => $related->featured_image,
+                        'featured_image' => $related->imageFor('featured_image', $locale),
                         'category' => $rc ? ['slug' => $rc->slug, 'name' => $rc->name] : null,
                     ];
                 })->values()->all(),

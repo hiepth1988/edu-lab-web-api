@@ -29,7 +29,7 @@ class AudienceController extends Controller
                         'slug' => $t?->slug,
                         'title' => $t?->title,
                         'subheading' => $t?->subheading,
-                        'hero_image' => $audience->hero_image,
+                        'hero_image' => $audience->imageFor('hero_image', $locale),
                     ];
                 })
                 ->all();
@@ -62,7 +62,7 @@ class AudienceController extends Controller
                 'subheading' => $t?->subheading,
                 'pain_points' => $t?->pain_points,
                 'how_we_help' => $t?->how_we_help,
-                'hero_image' => $audience->hero_image,
+                'hero_image' => $audience->imageFor('hero_image', $locale),
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
                 'og_image' => $t?->og_image,
