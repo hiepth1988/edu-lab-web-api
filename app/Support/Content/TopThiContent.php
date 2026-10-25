@@ -108,7 +108,7 @@ class TopThiContent
                 'lessons_quote' => 'Mô hình đầu tiên của chúng tôi cộng điểm thành thạo theo số câu đã làm, nên học sinh đoán bừa vẫn được xếp loại "khá". Khi chuyển sang mô hình Elo/IRT, nhiều chủ đề trước đó bị đánh giá quá cao. Bài học: không có bản đồ kỹ năng và dữ liệu sạch thì AI không cá nhân hóa được gì, và phần lớn công sức nằm ở đó.',
                 'lessons_citation' => '— Đội ngũ XO Edu Lab',
 
-                'meta_title' => 'TopThi — Case study vòng học tập thích ứng dựa trên khoa học học tập | XO Edu Lab',
+                'meta_title' => 'TopThi — Case study vòng học tập thích ứng dựa trên khoa học học tập',
                 'meta_description' => 'TopThi đo năng lực học sinh theo từng kỹ năng, sinh đề luyện cá nhân mỗi ngày, ôn giãn cách và kiểm chứng tiến bộ bằng đánh giá độc lập. Đây là living lab của XO Edu Lab.',
             ],
 
@@ -198,7 +198,7 @@ class TopThiContent
                 'lessons_quote' => 'Our first model added mastery points for every question attempted, so a student guessing at random could still be rated "good". When we switched to an Elo/IRT model, many topics turned out to have been overrated. The lesson: without a skill map and clean data, AI cannot personalize anything — and that is where most of the effort goes.',
                 'lessons_citation' => '— The XO Edu Lab Team',
 
-                'meta_title' => 'TopThi — Case study: an adaptive learning loop grounded in learning science | XO Edu Lab',
+                'meta_title' => 'TopThi — Case study: an adaptive learning loop grounded in learning science',
                 'meta_description' => 'TopThi measures student ability per skill, generates a personal practice set every day, schedules spaced review and verifies progress with independent assessments. XO Edu Lab\'s living lab.',
             ],
         ];

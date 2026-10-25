@@ -47,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
     private function registerRateLimiters(): void
     {
         RateLimiter::for('api', function ($request) {
+            if (in_array($request->ip(), config('api.unthrottled_ips', []), true)) {
+                return Limit::none();
+            }
+
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
