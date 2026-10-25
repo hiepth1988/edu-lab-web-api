@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Api\Admin\MediaController as AdminMediaController;
+use App\Http\Controllers\Api\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\Admin\ProjectController as AdminProjectController;
@@ -87,6 +88,8 @@ Route::prefix('admin')->group(function () {
             ->middlewareFor('destroy', 'permission:content.delete');
         Route::apiResource('research', AdminResearchController::class)
             ->middlewareFor('destroy', 'permission:content.delete');
+        // Fixed site pages: edit only (no create/delete — each page backs a front route).
+        Route::apiResource('pages', AdminPageController::class)->only(['index', 'show', 'update']);
         Route::apiResource('research-topics', AdminResearchTopicController::class)
             ->only(['index', 'store', 'destroy'])
             ->middlewareFor('destroy', 'permission:content.delete');

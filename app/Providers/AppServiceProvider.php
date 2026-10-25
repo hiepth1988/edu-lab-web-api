@@ -6,6 +6,9 @@ use App\Models\Audience;
 use App\Models\Category;
 use App\Models\Lead;
 use App\Models\Page;
+use App\Models\PageSection;
+use App\Models\PageSectionTranslation;
+use App\Models\PageTranslation;
 use App\Models\Post;
 use App\Models\Product;
 use App\Models\Project;
@@ -33,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, Project::class, Audience::class, ResearchPost::class, Lead::class] as $model) {
+        foreach ([Post::class, Category::class, Tag::class, Solution::class, Product::class, Project::class, Audience::class, ResearchPost::class, Lead::class, Page::class, PageTranslation::class, PageSection::class, PageSectionTranslation::class] as $model) {
             $model::observe(AuditLogObserver::class);
         }
 
