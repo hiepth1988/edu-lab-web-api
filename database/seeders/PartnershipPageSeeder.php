@@ -54,9 +54,9 @@ class PartnershipPageSeeder extends Seeder
         $page->translations()->updateOrCreate(['locale' => 'en'], [
             'slug' => 'partnership',
             'title' => 'Partner with XO Edu Lab',
-            'excerpt' => 'From a course-selling website starting at US$1,000 to a long-term EdTech product — choose the collaboration model that fits your resources and goals.',
-            'meta_title' => 'EdTech product partnership — course-selling websites from US$1,000',
-            'meta_description' => 'A complete course-selling website from US$1,000: payments, video, practice, tests and certificates. Three flexible collaboration models: revenue share, low cost + revenue share, or full-service contract.',
+            'excerpt' => 'From a course-selling website starting at US$2,500 to a long-term EdTech product — choose the collaboration model that fits your resources and goals.',
+            'meta_title' => 'EdTech product partnership — course-selling websites from US$2,500',
+            'meta_description' => 'A complete course-selling website from US$2,500: payments, video, practice, tests and certificates. Three flexible collaboration models: revenue share, low cost + revenue share, or full-service contract.',
         ]);
 
         $starter = $this->starterPackage();
@@ -68,9 +68,9 @@ class PartnershipPageSeeder extends Seeder
         ];
         $starter['en']['extra']['facts'] = [
             ['icon' => 'schedule', 'label' => 'Delivery time', 'value' => '4–6 weeks'],
-            ['icon' => 'cloud', 'label' => 'Hosting (not included)', 'value' => 'From about US$6/month'],
+            ['icon' => 'cloud', 'label' => 'Hosting (not included)', 'value' => 'From US$20/month'],
             ['icon' => 'language', 'label' => 'Domain (not included)', 'value' => 'Depends on the name you choose'],
-            ['icon' => 'build', 'label' => 'Maintenance', 'value' => '16 free hours/month, then US$10/hour'],
+            ['icon' => 'build', 'label' => 'Maintenance', 'value' => '16 free hours/month, then US$20/hour'],
         ];
 
         $this->seedSections($page, [
@@ -211,7 +211,7 @@ class PartnershipPageSeeder extends Seeder
                     'extra' => [
                         'items' => [
                             ['q' => 'How long does the course-selling website take?', 'a' => 'Usually 4–6 weeks, depending on how much customization you need and when your content is ready.'],
-                            ['q' => 'Does the US$1,000 starting price include hosting, domain and maintenance?', 'a' => 'No. Hosting starts at about US$6/month and the domain depends on the name you choose. Maintenance is free for 16 hours/month, then US$10/hour.'],
+                            ['q' => 'Does the US$2,500 starting price include hosting, domain and maintenance?', 'a' => 'No. Hosting starts at US$20/month and the domain depends on the name you choose. Maintenance is free for 16 hours/month, then US$20/hour.'],
                             ['q' => 'What is the revenue-share rate?', 'a' => "The rate and duration are agreed per project, based on each side's contribution."],
                             ['q' => 'Who owns the source code?', 'a' => 'It depends on the model. With a full-service contract, you own the source code of your custom work. With the revenue-share models, XO Edu Lab keeps the platform source code; you always own your brand, content and learner data, and can co-own or buy out the source code as agreed.'],
                             ['q' => 'Can I combine models?', 'a' => 'Yes. For example, you can start with the course-selling website and move to a revenue-share model for later features.'],
@@ -303,14 +303,14 @@ class PartnershipPageSeeder extends Seeder
                 ],
             ],
             'en' => [
-                'heading' => 'A complete course-selling website — from US$1,000',
-                'body' => "You don't need a huge budget to get started. From US\$1,000, you get a course-selling website under your own brand: online payments, video lesson management, practice, tests and certificates — ready for your first learners.",
+                'heading' => 'A complete course-selling website — from US$2,500',
+                'body' => "You don't need a huge budget to get started. From US$2,500, you get a course-selling website under your own brand: online payments, video lesson management, practice, tests and certificates — ready for your first learners.",
                 'cta_label' => 'Get a detailed quote',
                 'cta_url' => '/contact',
                 'extra' => [
                     'eyebrow' => 'Starter package',
                     'price_prefix' => 'From',
-                    'price' => '$1,000',
+                    'price' => '$2,500',
                     'price_unit' => 'USD',
                     'price_note' => 'Hosting and domain not included. Final cost depends on how much customization you need.',
                     'groups' => [
