@@ -92,7 +92,7 @@ class SolutionController extends Controller
                     ->map(function ($p) use ($locale) {
                         $pt = $p->translation($locale);
 
-                        return ['slug' => $pt?->slug, 'title' => $pt?->title, 'excerpt' => $pt?->excerpt];
+                        return ['type' => $p->type, 'slug' => $pt?->slug, 'title' => $pt?->title, 'excerpt' => $pt?->excerpt];
                     })->values()->all(),
             ];
         });

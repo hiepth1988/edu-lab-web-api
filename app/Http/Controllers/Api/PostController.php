@@ -8,8 +8,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
+// Serves articles (/api/posts). ResearchController reuses it for research (/api/research):
+// both types share the same fields and response shape.
 class PostController extends Controller
 {
+    protected string $type = Post::TYPE_POST;
+
+    protected string $cacheTag = 'posts';
+
     public function index(Request $request): JsonResponse
     {
         $locale = $request->attributes->get('locale');
@@ -18,11 +24,11 @@ class PostController extends Controller
         $page = $request->integer('page', 1);
         $perPage = $request->integer('per_page', 9);
 
-        $cacheKey = "posts:index:{$locale}:{$category}:{$tag}:{$page}:{$perPage}";
+        $cacheKey = "{$this->cacheTag}:index:{$locale}:{$category}:{$tag}:{$page}:{$perPage}";
 
-        $payload = Cache::tags(['posts'])->remember($cacheKey, 300, function () use ($locale, $category, $tag, $perPage) {
+        $payload = Cache::tags([$this->cacheTag])->remember($cacheKey, 300, function () use ($locale, $category, $tag, $perPage) {
             $query = Post::query()
-                ->where('type', Post::TYPE_POST)
+                ->where('type', $this->type)
                 ->where('status', 'published')
                 ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
                 ->with([
@@ -67,7 +73,7 @@ class PostController extends Controller
         $locale = $request->attributes->get('locale');
 
         $post = Post::query()
-            ->where('type', Post::TYPE_POST)
+            ->where('type', $this->type)
             ->where('status', 'published')
             ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('slug', $slug)->where('is_hidden', false))
             ->with([
@@ -80,8 +86,8 @@ class PostController extends Controller
         $post->increment('view_count');
 
         // Manually curated related posts take priority; fall back to same-category posts.
+        // Manually picked related items may be articles or research; each carries its type for the link.
         $related = $post->relatedPosts()
-            ->where('type', Post::TYPE_POST)
             ->where('status', 'published')
             ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
             ->with(['translations' => fn ($q) => $q->where('locale', $locale)])
@@ -89,7 +95,7 @@ class PostController extends Controller
 
         if ($related->isEmpty() && $post->category_id) {
             $related = Post::query()
-                ->where('type', Post::TYPE_POST)
+                ->where('type', $this->type)
                 ->where('status', 'published')
                 ->where('id', '!=', $post->id)
                 ->where('category_id', $post->category_id)
@@ -104,6 +110,7 @@ class PostController extends Controller
             $t = $related->translation($locale);
 
             return [
+                'type' => $related->type,
                 'slug' => $t?->slug,
                 'title' => $t?->title,
                 'excerpt' => $t?->excerpt,
@@ -127,13 +134,14 @@ class PostController extends Controller
         ]);
     }
 
-    private function summary(Post $post, string $locale): array
+    protected function summary(Post $post, string $locale): array
     {
         $translation = $post->translation($locale);
         $category = $post->category?->translation($locale);
 
         return [
             'id' => $post->id,
+            'type' => $post->type,
             'slug' => $translation?->slug,
             'title' => $translation?->title,
             'excerpt' => $translation?->excerpt,
