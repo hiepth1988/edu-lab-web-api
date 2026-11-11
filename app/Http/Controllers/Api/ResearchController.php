@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\ResearchPost;
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
+// Research items are posts with type = "research"; their category is shown as the "topic".
 class ResearchController extends Controller
 {
     public function index(Request $request): JsonResponse
@@ -15,27 +17,11 @@ class ResearchController extends Controller
         $locale = $request->attributes->get('locale');
 
         $posts = Cache::tags(['research'])->remember("research:index:{$locale}", 300, function () use ($locale) {
-            return ResearchPost::query()
-                ->where('status', 'published')
-                ->whereHas('translations', fn ($q) => $q->where('locale', $locale))
-                ->with([
-                    'translations' => fn ($q) => $q->where('locale', $locale),
-                    'topic.translations' => fn ($q) => $q->where('locale', $locale),
-                ])
+            return $this->query($locale)
+                ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
                 ->orderByDesc('published_at')
                 ->get()
-                ->map(function (ResearchPost $post) use ($locale) {
-                    $t = $post->translation($locale);
-                    $topic = $post->topic?->translation($locale);
-
-                    return [
-                        'id' => $post->id,
-                        'slug' => $t?->slug,
-                        'title' => $t?->title,
-                        'excerpt' => $t?->excerpt,
-                        'topic' => $topic ? ['slug' => $topic->slug, 'name' => $topic->name] : null,
-                    ];
-                })
+                ->map(fn (Post $post) => $this->summary($post, $locale))
                 ->all();
         });
 
@@ -47,33 +33,49 @@ class ResearchController extends Controller
         $locale = $request->attributes->get('locale');
 
         $data = Cache::tags(['research'])->remember("research:show:{$locale}:{$slug}", 300, function () use ($locale, $slug) {
-            $post = ResearchPost::query()
-                ->where('status', 'published')
-                ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('slug', $slug))
-                ->with([
-                    'translations' => fn ($q) => $q->where('locale', $locale),
-                    'topic.translations' => fn ($q) => $q->where('locale', $locale),
-                ])
+            $post = $this->query($locale)
+                ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('slug', $slug)->where('is_hidden', false))
                 ->firstOrFail();
 
             $t = $post->translation($locale);
-            $topic = $post->topic?->translation($locale);
 
             return [
-                'id' => $post->id,
-                'slug' => $t?->slug,
-                'alternate_slugs' => $post->translations()->pluck('slug', 'locale'),
-                'title' => $t?->title,
-                'excerpt' => $t?->excerpt,
+                ...$this->summary($post, $locale),
+                'alternate_slugs' => $post->translations()->where('is_hidden', false)->pluck('slug', 'locale'),
                 'content' => $t?->content,
                 'meta_title' => $t?->meta_title,
                 'meta_description' => $t?->meta_description,
                 'og_image' => $t?->og_image,
                 'canonical_url' => $t?->canonical_url,
-                'topic' => $topic ? ['slug' => $topic->slug, 'name' => $topic->name] : null,
             ];
         });
 
         return response()->json(['data' => $data]);
+    }
+
+    private function query(string $locale): Builder
+    {
+        return Post::query()
+            ->where('type', Post::TYPE_RESEARCH)
+            ->where('status', 'published')
+            ->with([
+                'translations' => fn ($q) => $q->where('locale', $locale),
+                'category.translations' => fn ($q) => $q->where('locale', $locale),
+            ]);
+    }
+
+    private function summary(Post $post, string $locale): array
+    {
+        $t = $post->translation($locale);
+        $topic = $post->category?->translation($locale);
+
+        return [
+            'id' => $post->id,
+            'slug' => $t?->slug,
+            'title' => $t?->title,
+            'excerpt' => $t?->excerpt,
+            'published_at' => $post->published_at?->toIso8601String(),
+            'topic' => $topic ? ['slug' => $topic->slug, 'name' => $topic->name] : null,
+        ];
     }
 }

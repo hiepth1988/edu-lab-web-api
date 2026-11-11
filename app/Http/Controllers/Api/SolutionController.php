@@ -87,11 +87,13 @@ class SolutionController extends Controller
 
                     return ['slug' => $pt?->slug, 'name' => $pt?->name, 'role_summary' => $pt?->role_summary];
                 })->values()->all(),
-                'related_insights' => $solution->relatedInsights->map(function ($p) use ($locale) {
-                    $pt = $p->translation($locale);
+                'related_insights' => $solution->relatedInsights
+                    ->filter(fn ($p) => ($pt = $p->translation($locale)) && ! $pt->is_hidden)
+                    ->map(function ($p) use ($locale) {
+                        $pt = $p->translation($locale);
 
-                    return ['slug' => $pt?->slug, 'title' => $pt?->title, 'excerpt' => $pt?->excerpt];
-                })->values()->all(),
+                        return ['slug' => $pt?->slug, 'title' => $pt?->title, 'excerpt' => $pt?->excerpt];
+                    })->values()->all(),
             ];
         });
 

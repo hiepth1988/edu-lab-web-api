@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    // "post" or "research" (see Post::TYPES).
+    protected $fillable = ['type'];
+
     public function translations(): HasMany
     {
         return $this->hasMany(CategoryTranslation::class);

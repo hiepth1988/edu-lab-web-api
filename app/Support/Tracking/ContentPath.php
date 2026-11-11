@@ -12,7 +12,7 @@ class ContentPath
     // URL segment => [content_type, translation table, parent key, title column]
     public const DETAIL_ROUTES = [
         'insights' => ['post', 'post_translations', 'post_id', 'title'],
-        'research' => ['research', 'research_post_translations', 'research_post_id', 'title'],
+        'research' => ['research', 'post_translations', 'post_id', 'title'],
         'solutions' => ['solution', 'solution_translations', 'solution_id', 'title'],
         'products' => ['product', 'product_translations', 'product_id', 'name'],
         'our-work' => ['project', 'project_translations', 'project_id', 'title'],

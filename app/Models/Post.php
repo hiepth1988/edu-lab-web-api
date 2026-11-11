@@ -12,7 +12,14 @@ class Post extends Model
 {
     use HasLocalizedImages;
 
+    public const TYPE_POST = 'post';
+
+    public const TYPE_RESEARCH = 'research';
+
+    public const TYPES = [self::TYPE_POST, self::TYPE_RESEARCH];
+
     protected $fillable = [
+        'type',
         'category_id',
         'author_id',
         'status',

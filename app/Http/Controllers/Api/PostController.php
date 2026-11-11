@@ -22,8 +22,9 @@ class PostController extends Controller
 
         $payload = Cache::tags(['posts'])->remember($cacheKey, 300, function () use ($locale, $category, $tag, $perPage) {
             $query = Post::query()
+                ->where('type', Post::TYPE_POST)
                 ->where('status', 'published')
-                ->whereHas('translations', fn ($q) => $q->where('locale', $locale))
+                ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
                 ->with([
                     'translations' => fn ($q) => $q->where('locale', $locale),
                     'category.translations' => fn ($q) => $q->where('locale', $locale),
@@ -66,8 +67,9 @@ class PostController extends Controller
         $locale = $request->attributes->get('locale');
 
         $post = Post::query()
+            ->where('type', Post::TYPE_POST)
             ->where('status', 'published')
-            ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('slug', $slug))
+            ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('slug', $slug)->where('is_hidden', false))
             ->with([
                 'translations' => fn ($q) => $q->where('locale', $locale),
                 'category.translations' => fn ($q) => $q->where('locale', $locale),
@@ -79,17 +81,19 @@ class PostController extends Controller
 
         // Manually curated related posts take priority; fall back to same-category posts.
         $related = $post->relatedPosts()
+            ->where('type', Post::TYPE_POST)
             ->where('status', 'published')
-            ->whereHas('translations', fn ($q) => $q->where('locale', $locale))
+            ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
             ->with(['translations' => fn ($q) => $q->where('locale', $locale)])
             ->get();
 
         if ($related->isEmpty() && $post->category_id) {
             $related = Post::query()
+                ->where('type', Post::TYPE_POST)
                 ->where('status', 'published')
                 ->where('id', '!=', $post->id)
                 ->where('category_id', $post->category_id)
-                ->whereHas('translations', fn ($q) => $q->where('locale', $locale))
+                ->whereHas('translations', fn ($q) => $q->where('locale', $locale)->where('is_hidden', false))
                 ->with(['translations' => fn ($q) => $q->where('locale', $locale)])
                 ->orderByDesc('published_at')
                 ->take(3)
@@ -110,7 +114,7 @@ class PostController extends Controller
         return response()->json([
             'data' => [
                 ...$this->summary($post, $locale),
-                'alternate_slugs' => $post->translations()->pluck('slug', 'locale'),
+                'alternate_slugs' => $post->translations()->where('is_hidden', false)->pluck('slug', 'locale'),
                 'content' => $post->translation($locale)?->content,
                 // Empty fields fall back to the site-wide default CTA on the front end.
                 'cta' => $post->show_cta ? [

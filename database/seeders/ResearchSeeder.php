@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\ResearchPost;
-use App\Models\ResearchTopic;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Database\Seeder;
 
 class ResearchSeeder extends Seeder
 {
     public function run(): void
     {
-        if (ResearchPost::exists()) {
+        // Research items are posts with type = research; topics are research-type categories.
+        if (Post::where('type', Post::TYPE_RESEARCH)->exists()) {
             return;
         }
 
@@ -22,7 +23,7 @@ class ResearchSeeder extends Seeder
 
         $topicModels = [];
         foreach ($topics as $slug => $names) {
-            $topic = ResearchTopic::create();
+            $topic = Category::create(['type' => Post::TYPE_RESEARCH]);
             foreach ($names as $locale => $name) {
                 $topic->translations()->create(['locale' => $locale, 'slug' => $slug, 'name' => $name]);
             }
@@ -78,8 +79,10 @@ class ResearchSeeder extends Seeder
         ];
 
         foreach ($posts as $data) {
-            $post = ResearchPost::create([
-                'research_topic_id' => $topicModels[$data['topic']]->id,
+            $post = Post::create([
+                'type' => Post::TYPE_RESEARCH,
+                'category_id' => $topicModels[$data['topic']]->id,
+                'show_cta' => false,
                 'status' => 'published',
                 'published_at' => now(),
             ]);

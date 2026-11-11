@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -16,8 +17,10 @@ class PostController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage = min(max((int) $request->query('per_page', 20), 1), 200);
+        $type = (string) $request->query('type', '');
 
         $posts = Post::with(['translations', 'category.translations', 'tags.translations'])
+            ->when(in_array($type, Post::TYPES, true), fn ($q) => $q->where('type', $type))
             ->latest()
             ->paginate($perPage);
 
@@ -64,8 +67,12 @@ class PostController extends Controller
 
     private function validated(Request $request): array
     {
+        $type = in_array($request->input('type'), Post::TYPES, true) ? $request->input('type') : Post::TYPE_POST;
+
         return $request->validate([
-            'category_id' => ['nullable', 'exists:categories,id'],
+            'type' => ['sometimes', Rule::in(Post::TYPES)],
+            // The category must belong to the same type (article categories vs research topics).
+            'category_id' => ['nullable', Rule::exists('categories', 'id')->where('type', $type)],
             'status' => ['required', 'in:draft,published'],
             'featured_image' => ['nullable', 'string', 'max:2048'],
             'featured_image_en' => ['nullable', 'string', 'max:2048'],
@@ -77,7 +84,9 @@ class PostController extends Controller
             'related_post_ids' => ['array'],
             'related_post_ids.*' => ['integer', 'exists:posts,id'],
             'translations' => ['required', 'array'],
-            'translations.*.title' => ['required', 'string', 'max:255'],
+            'translations.*.is_hidden' => ['boolean'],
+            // A hidden language version may be left untranslated.
+            'translations.*.title' => ['required_unless:translations.*.is_hidden,true', 'nullable', 'string', 'max:255'],
             'translations.*.slug' => ['nullable', 'string', 'max:255'],
             'translations.*.excerpt' => ['nullable', 'string'],
             'translations.*.content' => ['nullable', 'string'],
@@ -94,6 +103,7 @@ class PostController extends Controller
     private function baseFields(array $data): array
     {
         return [
+            'type' => $data['type'] ?? Post::TYPE_POST,
             'category_id' => $data['category_id'] ?? null,
             'status' => $data['status'],
             'featured_image' => $data['featured_image'] ?? null,
@@ -107,13 +117,20 @@ class PostController extends Controller
     private function syncTranslations(Post $post, array $translations): void
     {
         foreach ($translations as $locale => $payload) {
+            $isHidden = (bool) ($payload['is_hidden'] ?? false);
+
             if (empty($payload['title'])) {
+                // No content to save, but keep the visibility flag of an existing translation in sync.
+                $post->translations()->where('locale', $locale)->get()
+                    ->each(fn ($t) => $t->update(['is_hidden' => $isHidden]));
+
                 continue;
             }
 
             $post->translations()->updateOrCreate(
                 ['locale' => $locale],
                 [
+                    'is_hidden' => $isHidden,
                     'title' => $payload['title'],
                     'slug' => $payload['slug'] ?? Str::slug($payload['title']),
                     'excerpt' => $payload['excerpt'] ?? null,

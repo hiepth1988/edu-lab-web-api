@@ -13,6 +13,7 @@ class PostTranslation extends Model
     protected $fillable = [
         'post_id',
         'locale',
+        'is_hidden',
         'slug',
         'title',
         'excerpt',
@@ -26,6 +27,13 @@ class PostTranslation extends Model
         'canonical_url',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'is_hidden' => 'boolean',
+        ];
+    }
+
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
@@ -33,7 +41,7 @@ class PostTranslation extends Model
 
     public function shouldBeSearchable(): bool
     {
-        return $this->post?->status === 'published';
+        return ! $this->is_hidden && $this->post?->status === 'published';
     }
 
     public function searchableAs(): string
